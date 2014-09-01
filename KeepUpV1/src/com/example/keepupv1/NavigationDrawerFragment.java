@@ -18,12 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation
@@ -62,10 +59,15 @@ public class NavigationDrawerFragment extends Fragment {
 	private int mCurrentSelectedPosition = 0;
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
+	
+	private int navDrawToView = 0;
 
 	public NavigationDrawerFragment() {
 	}
 
+	public NavigationDrawerFragment(int navDrawToView){
+		this.navDrawToView = navDrawToView;
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,7 +84,7 @@ public class NavigationDrawerFragment extends Fragment {
 					.getInt(STATE_SELECTED_POSITION);
 			mFromSavedInstanceState = true;
 		}
-		
+
 		// Select either the default item (0) or the last selected item.
 		selectItem(mCurrentSelectedPosition);
 	}
@@ -98,14 +100,14 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mDrawerListView = (ListView) inflater.inflate(
-				R.layout.fragment_navigation_drawer, container, false);
+		
+		mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer,
+				container, false);
 		mDrawerListView
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
-						
 						selectItem(position);
 					}
 				});
@@ -278,19 +280,12 @@ public class NavigationDrawerFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
-		/* PLACE WHERE LEFT SLIDE MENU OPEN BUTTON IS */
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
-			
 			return true;
 		}
-		
-		/* HOME BUTTON */
+
 		if (item.getItemId() == R.id.action_example) {
-			Intent intent = new Intent(getActivity(), HomeActivity.class);
-	        startActivity(intent);
-	        
-			Toast.makeText(getActivity(), "# unread newsfeed items.", Toast.LENGTH_SHORT)
+			Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT)
 					.show();
 			return true;
 		}
@@ -324,6 +319,4 @@ public class NavigationDrawerFragment extends Fragment {
 		 */
 		void onNavigationDrawerItemSelected(int position);
 	}
-	
-	
 }

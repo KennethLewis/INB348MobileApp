@@ -38,5 +38,13 @@
     <string name="testing_news_area">This is so the news area can be seen</string>
     <string name="news">News</string>
     <string name="title_activity_units">UnitsActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_units_activity2">UnitsActivity2</string>
+    <string name="keeping_up_with">Keeping up with:</string>
+    <string name="noOfUnits">4 units</string>
+    <string name="search_units">Search units...</string>
+    <string name="unit_1_heading">INB270 - Programming</string><string name="unit_2_heading">INB270 - Programming</string><string name="unit_3_heading">INB270 - Programming</string><string name="unit_4_heading">INB270 - Programming</string>
 
 </resources>

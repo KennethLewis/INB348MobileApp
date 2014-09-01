@@ -9,7 +9,7 @@ package com.example.keepupv1;
 
 public final class R {
     public static final class array {
-        public static final int slider_menu_options=0x7f060000;
+        public static final int slider_menu_options=0x7f070000;
     }
     public static final class attr {
     }
@@ -23,6 +23,7 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
+        public static final int keepingUpWithHeadingSize=0x7f040003;
         public static final int navigation_drawer_width=0x7f040002;
     }
     public static final class drawable {
@@ -31,75 +32,102 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int LinearLayout01=0x7f090005;
-        public static final int LinearLayout02=0x7f090008;
-        public static final int LinearLayout1=0x7f090003;
-        public static final int TextView01=0x7f090007;
-        public static final int TextView02=0x7f090006;
-        public static final int TextView03=0x7f09000a;
-        public static final int TextView04=0x7f090009;
-        public static final int action_example=0x7f090015;
-        public static final int action_settings=0x7f090014;
-        public static final int container=0x7f090001;
-        public static final int drawer_layout=0x7f090000;
-        public static final int login_button=0x7f09000f;
-        public static final int navigation_drawer=0x7f090002;
-        public static final int news_area=0x7f09000e;
-        public static final int news_feed_header=0x7f090004;
-        public static final int news_heading=0x7f090011;
-        public static final int password=0x7f090013;
-        public static final int remember_me=0x7f090010;
-        public static final int row_content1=0x7f09000d;
-        public static final int row_header1=0x7f09000c;
-        public static final int table_row=0x7f09000b;
-        public static final int user_name=0x7f090012;
+        public static final int EditText01=0x7f0a001a;
+        public static final int EditText02=0x7f0a001b;
+        public static final int LinearLayout01=0x7f0a0007;
+        public static final int LinearLayout02=0x7f0a000a;
+        public static final int LinearLayout1=0x7f0a0005;
+        public static final int TextView01=0x7f0a0009;
+        public static final int TextView02=0x7f0a0008;
+        public static final int TextView03=0x7f0a000c;
+        public static final int TextView04=0x7f0a000b;
+        public static final int action_example=0x7f0a001d;
+        public static final int action_settings=0x7f0a001c;
+        public static final int calendarView1=0x7f0a0004;
+        public static final int container=0x7f0a0001;
+        public static final int drawer_layout=0x7f0a0000;
+        public static final int login_button=0x7f0a0011;
+        public static final int navigation_drawer=0x7f0a0002;
+        public static final int news_area=0x7f0a0010;
+        public static final int news_feed_header=0x7f0a0006;
+        public static final int news_heading=0x7f0a0013;
+        public static final int noUnits=0x7f0a0003;
+        public static final int password=0x7f0a0015;
+        public static final int remember_me=0x7f0a0012;
+        public static final int row_content1=0x7f0a000f;
+        public static final int row_header1=0x7f0a000e;
+        public static final int searchView1=0x7f0a0018;
+        public static final int section_label=0x7f0a0016;
+        public static final int table_row=0x7f0a000d;
+        public static final int textView1=0x7f0a0017;
+        public static final int unit_1=0x7f0a0019;
+        public static final int user_name=0x7f0a0014;
+    }
+    public static final class integer {
+        public static final int maxUnitLength=0x7f050000;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;
         public static final int activity_main=0x7f030001;
         public static final int activity_units=0x7f030002;
-        public static final int fragment_home=0x7f030003;
-        public static final int fragment_main=0x7f030004;
-        public static final int fragment_navigation_drawer=0x7f030005;
+        public static final int activity_units_activity2=0x7f030003;
+        public static final int fragment_home=0x7f030004;
+        public static final int fragment_main=0x7f030005;
+        public static final int fragment_navigation_drawer=0x7f030006;
+        public static final int fragment_units=0x7f030007;
+        public static final int fragment_units_activity2=0x7f030008;
+        public static final int units_nav_draw=0x7f030009;
     }
     public static final class menu {
-        public static final int global=0x7f080000;
-        public static final int home=0x7f080001;
-        public static final int main=0x7f080002;
-        public static final int units=0x7f080003;
+        public static final int global=0x7f090000;
+        public static final int home=0x7f090001;
+        public static final int main=0x7f090002;
+        public static final int units=0x7f090003;
+        public static final int units_activity2=0x7f090004;
     }
     public static final class string {
-        public static final int action_example=0x7f050015;
-        public static final int action_settings=0x7f050008;
-        public static final int app_name=0x7f050003;
-        public static final int blackboard=0x7f05000f;
-        public static final int forgot_details=0x7f050009;
-        public static final int groups=0x7f05000c;
-        public static final int hello_world=0x7f050005;
-        public static final int login_advice=0x7f050004;
-        public static final int login_button=0x7f050007;
-        public static final int mail=0x7f05000e;
-        public static final int map=0x7f050012;
-        public static final int navigation_drawer_close=0x7f050014;
-        public static final int navigation_drawer_open=0x7f050013;
-        public static final int news=0x7f05001d;
-        public static final int newsfeed_item_content_announcement=0x7f05001a;
-        public static final int newsfeed_item_content_post=0x7f050019;
-        public static final int newsfeed_item_content_postOnYours=0x7f05001b;
-        public static final int newsfeed_item_header_announcement=0x7f050017;
-        public static final int newsfeed_item_header_post=0x7f050016;
-        public static final int newsfeed_item_header_postOnYours=0x7f050018;
-        public static final int password=0x7f050002;
-        public static final int qut_news=0x7f050011;
-        public static final int qut_virtual=0x7f050010;
-        public static final int remember_me=0x7f050006;
-        public static final int testing_news_area=0x7f05001c;
-        public static final int time_table=0x7f05000d;
-        public static final int title_activity_units=0x7f05001e;
-        public static final int title_home=0x7f05000a;
-        public static final int units=0x7f05000b;
-        public static final int user_name=0x7f050000;
-        public static final int welcome=0x7f050001;
+        public static final int action_example=0x7f060015;
+        public static final int action_settings=0x7f060008;
+        public static final int app_name=0x7f060003;
+        public static final int blackboard=0x7f06000f;
+        public static final int forgot_details=0x7f060009;
+        public static final int groups=0x7f06000c;
+        public static final int hello_world=0x7f060005;
+        public static final int keeping_up_with=0x7f060023;
+        public static final int login_advice=0x7f060004;
+        public static final int login_button=0x7f060007;
+        public static final int mail=0x7f06000e;
+        public static final int map=0x7f060012;
+        public static final int navigation_drawer_close=0x7f060014;
+        public static final int navigation_drawer_open=0x7f060013;
+        public static final int news=0x7f06001d;
+        public static final int newsfeed_item_content_announcement=0x7f06001a;
+        public static final int newsfeed_item_content_post=0x7f060019;
+        public static final int newsfeed_item_content_postOnYours=0x7f06001b;
+        public static final int newsfeed_item_header_announcement=0x7f060017;
+        public static final int newsfeed_item_header_post=0x7f060016;
+        public static final int newsfeed_item_header_postOnYours=0x7f060018;
+        public static final int noOfUnits=0x7f060024;
+        public static final int password=0x7f060002;
+        public static final int qut_news=0x7f060011;
+        public static final int qut_virtual=0x7f060010;
+        public static final int remember_me=0x7f060006;
+        public static final int search_units=0x7f060025;
+        public static final int testing_news_area=0x7f06001c;
+        public static final int time_table=0x7f06000d;
+        public static final int title_activity_units=0x7f06001e;
+        public static final int title_activity_units_activity2=0x7f060022;
+        public static final int title_home=0x7f06000a;
+        public static final int title_section1=0x7f06001f;
+        public static final int title_section2=0x7f060020;
+        public static final int title_section3=0x7f060021;
+        public static final int unit_1_heading=0x7f060026;
+        public static final int unit_2_heading=0x7f060027;
+        public static final int unit_3_heading=0x7f060028;
+        public static final int unit_4_heading=0x7f060029;
+        public static final int units=0x7f06000b;
+        public static final int user_name=0x7f060000;
+        public static final int welcome=0x7f060001;
     }
     public static final class style {
         /** 
@@ -123,10 +151,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f080001;
     }
 }
