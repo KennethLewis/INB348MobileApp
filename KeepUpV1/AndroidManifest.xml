@@ -42,6 +42,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.keepupv1.HomeActivity" />
         </activity>
+        <activity
+            android:name=".Group"
+            android:label="@string/title_activity_group"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.keepupv1.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>
