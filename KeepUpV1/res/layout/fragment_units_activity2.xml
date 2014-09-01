@@ -39,30 +39,13 @@
         android:layout_marginTop="52dp"
         android:mode="twoLine" />
 
-    <SearchView
-        android:id="@+id/searchView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_below="@+id/textView2"
-        android:clickable="true"
-        android:contentDescription="@string/search_units"
-        android:gravity="center_vertical|center_horizontal"
-        android:iconifiedByDefault="true"
-        android:inputType="text"
-        android:maxWidth="@dimen/activity_horizontal_margin"
-        android:queryHint="@string/search_units"
-        android:visibility="visible" >
-    </SearchView>
-
     <EditText
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView3"
-        android:layout_marginRight="19dp"
-        android:layout_toLeftOf="@+id/textView2"
         android:ems="10"
+        android:focusable="false"
         android:text="@string/search_units" />
 
     <TextView
@@ -94,5 +77,56 @@
         android:layout_marginTop="21dp"
         android:text="@string/unit_1_heading"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <SearchView
+        android:id="@+id/searchView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_toRightOf="@+id/editText1"
+        android:clickable="true"
+        android:contentDescription="@string/search_units"
+        android:gravity="center_vertical|center_horizontal"
+        android:iconifiedByDefault="true"
+        android:inputType="text"
+        android:maxWidth="@dimen/activity_horizontal_margin"
+        android:queryHint="@string/search_units"
+        android:visibility="visible" >
+    </SearchView>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/textView3"
+        android:layout_marginRight="49dp"
+        android:layout_marginTop="42dp" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+        	android:text= "@string/table1_row1_alert"
+        	android:padding = "3dip">
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>

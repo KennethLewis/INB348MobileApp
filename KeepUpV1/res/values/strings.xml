@@ -53,5 +53,6 @@
     <string name="group1_inb348">Assignment 1 Group</string>
     <string name="keeping_up_with_1_grp">1 group</string>
     <string-array name="groups_joined"></string-array>
+    <string name="table1_row1_alert">Lecture 4pm Thursday Cancelle...</string>
 
 </resources>
