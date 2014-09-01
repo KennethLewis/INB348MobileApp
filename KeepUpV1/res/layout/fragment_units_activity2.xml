@@ -10,108 +10,17 @@
     android:scrollbars="vertical"
     tools:context="com.example.keepupv1.UnitsActivity2$PlaceholderFragment" >
 
-<<<<<<< HEAD
-    <SearchView
-        android:id="@+id/searchView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="22dp"
-        android:layout_toRightOf="@+id/autoCompleteTextView1"
-        android:clickable="true"
-        android:contentDescription="@string/search_units"
-        android:gravity="center_vertical|center_horizontal"
-        android:iconifiedByDefault="true"
-        android:inputType="text"
-        android:maxWidth="@dimen/activity_horizontal_margin"
-        android:queryHint="@string/search_units"
-        android:visibility="visible" >
-    </SearchView>
-
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/searchView1"
         android:layout_alignLeft="@+id/textView1"
-        android:layout_alignTop="@+id/searchView1"
+        android:layout_below="@+id/textView2"
         android:ems="10"
         android:text="@string/search_units" >
 
         <requestFocus />
     </AutoCompleteTextView>
-=======
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
-        android:text="@string/keeping_up_with"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignParentRight="true"
-        android:text="@string/noOfUnits"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TwoLineListItem
-        android:id="@+id/twoLineListItem1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/searchView1"
-        android:layout_below="@+id/textView5"
-        android:layout_marginTop="52dp"
-        android:mode="twoLine" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView3"
-        android:ems="10"
-        android:focusable="false"
-        android:text="@string/search_units" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="86dp"
-        android:text="@string/unit_1_heading"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
->>>>>>> origin/master
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="28dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/noOfUnits"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/searchView1"
-        android:layout_marginRight="19dp"
-        android:layout_toLeftOf="@+id/textView2"
-        android:text="@string/keeping_up_with"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -406,31 +315,15 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
-=======
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="93dp"
-        android:text="@string/unit_1_heading"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/searchView1"
-        android:layout_marginTop="21dp"
-        android:text="@string/unit_1_heading"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <SearchView
         android:id="@+id/searchView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_toRightOf="@+id/editText1"
+        android:layout_alignRight="@+id/scrollView1"
+        android:layout_alignTop="@+id/autoCompleteTextView1"
+        android:layout_marginRight="14dp"
         android:clickable="true"
         android:contentDescription="@string/search_units"
         android:gravity="center_vertical|center_horizontal"
@@ -441,40 +334,25 @@
         android:visibility="visible" >
     </SearchView>
 
-    <TableLayout
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_below="@+id/textView3"
-        android:layout_marginRight="49dp"
-        android:layout_marginTop="42dp" >
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignRight="@+id/searchView1"
+        android:text="@string/noOfUnits"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-        	android:text= "@string/table1_row1_alert"
-        	android:padding = "3dip">
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </TableRow>
-    </TableLayout>
->>>>>>> origin/master
-
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/scrollView1"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/keeping_up_with"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
 </RelativeLayout>

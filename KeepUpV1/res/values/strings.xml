@@ -5,7 +5,7 @@
     <string name="welcome">Welcome to KeepUP</string>
     <string name="password">Password</string>
     <string name="app_name">keepUP</string>
-    <string name="login_advice">Please login with your QUT credentials...</string>
+    <string name="login_advice">Please login with your QUT credentials..</string>
     <string name="hello_world">Hello world!</string>
     <string name="remember_me">Remember Me</string>
     <string name="login_button">Login</string>
@@ -44,7 +44,7 @@
     <string name="title_activity_units_activity2">UnitsActivity2</string>
     <string name="keeping_up_with">Keeping up with:</string>
     <string name="noOfUnits">4 units</string>
-    <string name="search_units">Search units...</string>
+    <string name="search_units">Search units..</string>
     <string name="unit_1_heading">INB270 - Programming</string>
     <string name="unit_2_heading">INB270 - Programming</string>
     <string name="unit_3_heading">INB270 - Programming</string>
@@ -53,10 +53,7 @@
     <string name="group1_inb348">Assignment 1 Group</string>
     <string name="keeping_up_with_1_grp">1 group</string>
     <string-array name="groups_joined"></string-array>
-<<<<<<< HEAD
     <string name="newAnnouncementsNOTIFY">New Announcements Notify Icon</string><string name="newPostsNOTIFY">New Posts Notify Icon</string><string name="newPostsToYoursNOTIFY">New Posts On Your Questions Notify Icon</string>
-=======
-    <string name="table1_row1_alert">Lecture 4pm Thursday Cancelle...</string>
->>>>>>> origin/master
+    <string name="table1_row1_alert">Lecture 4pm Thursday Cancelle..</string>
 
 </resources>

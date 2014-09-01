@@ -56,7 +56,6 @@ public final class R {
         public static final int TextView02=0x7f0a000a;
         public static final int TextView03=0x7f0a000e;
         public static final int TextView04=0x7f0a000d;
-<<<<<<< HEAD
         public static final int TextView05=0x7f0a002b;
         public static final int TextView06=0x7f0a0025;
         public static final int TextView07=0x7f0a0027;
@@ -69,15 +68,10 @@ public final class R {
         public static final int TextView14=0x7f0a0020;
         public static final int action_example=0x7f0a0035;
         public static final int action_settings=0x7f0a0034;
-        public static final int autoCompleteTextView1=0x7f0a001a;
-=======
-        public static final int action_example=0x7f0a0024;
-        public static final int action_settings=0x7f0a0023;
->>>>>>> origin/master
+        public static final int autoCompleteTextView1=0x7f0a0019;
         public static final int calendarView1=0x7f0a0004;
         public static final int container=0x7f0a0000;
         public static final int drawer_layout=0x7f0a0001;
-        public static final int editText1=0x7f0a001c;
         public static final int login_button=0x7f0a0013;
         public static final int navigation_drawer=0x7f0a0002;
         public static final int news_area=0x7f0a0012;
@@ -88,29 +82,14 @@ public final class R {
         public static final int remember_me=0x7f0a0014;
         public static final int row_content1=0x7f0a0011;
         public static final int row_header1=0x7f0a0010;
-<<<<<<< HEAD
-        public static final int scrollView1=0x7f0a001b;
-        public static final int searchView1=0x7f0a0019;
-=======
-        public static final int searchView1=0x7f0a001a;
->>>>>>> origin/master
+        public static final int scrollView1=0x7f0a001a;
+        public static final int searchView1=0x7f0a001b;
         public static final int section_label=0x7f0a0018;
-        public static final int tableRow1=0x7f0a001f;
-        public static final int tableRow2=0x7f0a0020;
-        public static final int tableRow3=0x7f0a0021;
-        public static final int tableRow4=0x7f0a0022;
         public static final int table_row=0x7f0a000f;
         public static final int textView1=0x7f0a0005;
         public static final int textView2=0x7f0a0006;
-<<<<<<< HEAD
         public static final int textView3=0x7f0a0031;
         public static final int unit270=0x7f0a002d;
-=======
-        public static final int textView3=0x7f0a001d;
-        public static final int textView4=0x7f0a001e;
-        public static final int textView5=0x7f0a001b;
-        public static final int twoLineListItem1=0x7f0a0019;
->>>>>>> origin/master
         public static final int user_name=0x7f0a0016;
     }
     public static final class integer {
@@ -171,7 +150,7 @@ public final class R {
         public static final int qut_virtual=0x7f060010;
         public static final int remember_me=0x7f060006;
         public static final int search_units=0x7f060025;
-        public static final int table1_row1_alert=0x7f06002d;
+        public static final int table1_row1_alert=0x7f060030;
         public static final int testing_news_area=0x7f06001c;
         public static final int time_table=0x7f06000d;
         public static final int title_activity_group=0x7f06002a;
