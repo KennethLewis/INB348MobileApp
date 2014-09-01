@@ -54,12 +54,4 @@
         android:longClickable="false"
         android:text="@string/unit_1_heading" />
 
-    <ExpandableListView
-        android:id="@+id/expandableListView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/unit_1"
-        android:layout_centerHorizontal="true" >
-    </ExpandableListView>
-
 </RelativeLayout>

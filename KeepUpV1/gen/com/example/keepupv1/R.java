@@ -9,6 +9,7 @@ package com.example.keepupv1;
 
 public final class R {
     public static final class array {
+        public static final int groups_joined=0x7f070001;
         public static final int slider_menu_options=0x7f070000;
     }
     public static final class attr {
@@ -32,37 +33,36 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int EditText01=0x7f0a001b;
-        public static final int EditText02=0x7f0a001c;
-        public static final int LinearLayout01=0x7f0a000a;
-        public static final int LinearLayout02=0x7f0a000d;
-        public static final int LinearLayout1=0x7f0a0008;
-        public static final int TextView01=0x7f0a000c;
-        public static final int TextView02=0x7f0a000b;
-        public static final int TextView03=0x7f0a000f;
-        public static final int TextView04=0x7f0a000e;
-        public static final int action_example=0x7f0a001e;
-        public static final int action_settings=0x7f0a001d;
+        public static final int EditText01=0x7f0a001a;
+        public static final int EditText02=0x7f0a001b;
+        public static final int LinearLayout01=0x7f0a0009;
+        public static final int LinearLayout02=0x7f0a000c;
+        public static final int LinearLayout1=0x7f0a0007;
+        public static final int TextView01=0x7f0a000b;
+        public static final int TextView02=0x7f0a000a;
+        public static final int TextView03=0x7f0a000e;
+        public static final int TextView04=0x7f0a000d;
+        public static final int action_example=0x7f0a001d;
+        public static final int action_settings=0x7f0a001c;
         public static final int calendarView1=0x7f0a0004;
         public static final int container=0x7f0a0000;
         public static final int drawer_layout=0x7f0a0001;
-        public static final int expandableListView1=0x7f0a0007;
-        public static final int login_button=0x7f0a0014;
+        public static final int login_button=0x7f0a0013;
         public static final int navigation_drawer=0x7f0a0002;
-        public static final int news_area=0x7f0a0013;
-        public static final int news_feed_header=0x7f0a0009;
-        public static final int news_heading=0x7f0a0016;
+        public static final int news_area=0x7f0a0012;
+        public static final int news_feed_header=0x7f0a0008;
+        public static final int news_heading=0x7f0a0015;
         public static final int noUnits=0x7f0a0003;
-        public static final int password=0x7f0a0018;
-        public static final int remember_me=0x7f0a0015;
-        public static final int row_content1=0x7f0a0012;
-        public static final int row_header1=0x7f0a0011;
-        public static final int searchView1=0x7f0a001a;
-        public static final int section_label=0x7f0a0019;
-        public static final int table_row=0x7f0a0010;
+        public static final int password=0x7f0a0017;
+        public static final int remember_me=0x7f0a0014;
+        public static final int row_content1=0x7f0a0011;
+        public static final int row_header1=0x7f0a0010;
+        public static final int searchView1=0x7f0a0019;
+        public static final int section_label=0x7f0a0018;
+        public static final int table_row=0x7f0a000f;
         public static final int textView1=0x7f0a0005;
         public static final int unit_1=0x7f0a0006;
-        public static final int user_name=0x7f0a0017;
+        public static final int user_name=0x7f0a0016;
     }
     public static final class integer {
         public static final int maxUnitLength=0x7f050000;

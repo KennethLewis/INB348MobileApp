@@ -52,5 +52,6 @@
     <string name="title_activity_group">Group</string>
     <string name="group1_inb348">Assignment 1 Group</string>
     <string name="keeping_up_with_1_grp">1 group</string>
+    <string-array name="groups_joined"></string-array>
 
 </resources>
