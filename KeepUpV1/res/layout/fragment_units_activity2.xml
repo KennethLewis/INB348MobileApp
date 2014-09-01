@@ -16,38 +16,27 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="17dp"
-        android:clickable="false"
-        android:focusable="false"
-        android:longClickable="false"
+        android:layout_marginTop="26dp"
         android:text="@string/keeping_up_with"
-        android:textSize="@dimen/keepingUpWithHeadingSize" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
-        android:id="@+id/noUnits"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView1"
         android:layout_alignBottom="@+id/textView1"
-        android:layout_toEndOf="@dimen/keepingUpWithHeadingSize"
-        android:layout_toRightOf="@+id/textView1"
-        android:clickable="false"
-        android:ems="10"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:longClickable="false"
-        android:maxLines="@integer/maxUnitLength"
+        android:layout_alignParentRight="true"
         android:text="@string/noOfUnits"
-        android:textAlignment="inherit"
-        android:textSize="@dimen/keepingUpWithHeadingSize" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <SearchView
         android:id="@+id/searchView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_below="@+id/noUnits"
-        android:layout_marginRight="29dp"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
         android:clickable="true"
         android:contentDescription="@string/search_units"
         android:gravity="center_vertical|center_horizontal"
@@ -58,41 +47,31 @@
         android:visibility="visible" >
     </SearchView>
 
-    <EditText
-        android:id="@+id/unit_1"
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/searchView1"
-        android:clickable="false"
-        android:ems="10"
-        android:longClickable="false"
-        android:text="@string/unit_1_heading" />
+        android:text="@string/unit_1_heading"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
-        android:id="@+id/EditText01"
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/unit_1"
+        android:layout_alignLeft="@+id/textView3"
         android:layout_centerVertical="true"
-        android:clickable="false"
-        android:ems="10"
-        android:longClickable="false"
-        android:text="@string/unit_1_heading" >
+        android:text="@string/unit_1_heading"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/EditText02"
+    <TextView
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/EditText01"
-        android:layout_below="@+id/EditText01"
-        android:layout_marginTop="78dp"
-        android:clickable="false"
-        android:ems="10"
-        android:longClickable="false"
-        android:text="@string/unit_1_heading" />
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="48dp"
+        android:text="@string/unit_1_heading"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

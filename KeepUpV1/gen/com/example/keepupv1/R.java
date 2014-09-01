@@ -33,8 +33,6 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int EditText01=0x7f0a001a;
-        public static final int EditText02=0x7f0a001b;
         public static final int LinearLayout01=0x7f0a0009;
         public static final int LinearLayout02=0x7f0a000c;
         public static final int LinearLayout1=0x7f0a0007;
@@ -42,8 +40,8 @@ public final class R {
         public static final int TextView02=0x7f0a000a;
         public static final int TextView03=0x7f0a000e;
         public static final int TextView04=0x7f0a000d;
-        public static final int action_example=0x7f0a001d;
-        public static final int action_settings=0x7f0a001c;
+        public static final int action_example=0x7f0a001e;
+        public static final int action_settings=0x7f0a001d;
         public static final int calendarView1=0x7f0a0004;
         public static final int container=0x7f0a0000;
         public static final int drawer_layout=0x7f0a0001;
@@ -61,7 +59,10 @@ public final class R {
         public static final int section_label=0x7f0a0018;
         public static final int table_row=0x7f0a000f;
         public static final int textView1=0x7f0a0005;
-        public static final int unit_1=0x7f0a0006;
+        public static final int textView2=0x7f0a0006;
+        public static final int textView3=0x7f0a001a;
+        public static final int textView4=0x7f0a001b;
+        public static final int textView5=0x7f0a001c;
         public static final int user_name=0x7f0a0016;
     }
     public static final class integer {
