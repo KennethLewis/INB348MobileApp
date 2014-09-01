@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="user_name">Username</string>
+    <string name="welcome">Welcome to KeepUP</string>
+    <string name="password">Password</string>
+    <string name="app_name">keepUP</string>
+    <string name="login_advice">Please login with your QUT credentials...</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="login_button">Login</string>
+    <string name="action_settings">Settings</string>
+    <string name="forgot_details">Forgot details?</string>
+    <string name="title_home">News</string>
+    <string name="units">Units</string>
+    <string name="groups">Groups</string>
+    <string name="time_table">Time Table</string>
+    <string name="mail">Mail</string>
+    <string name="blackboard">QUT Blackboard</string>
+    <string name="qut_virtual">QUT Virtual</string>
+    <string name="qut_news">QUT News</string>
+    <string name="map">Map</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Home</string>
+    <string name="newsfeed_item_header_post">New Post in INB377 by @jacksonp</string>
+    <string name="newsfeed_item_header_announcement">New Announcement by lecturer @richards in INB317</string>
+    <string name="newsfeed_item_header_postOnYours">New Post on your question in INB377 by @zackr</string>
+    <string name="newsfeed_item_content_post">"Can anyone help me with some of my questions? I.."</string>
+    <string name="newsfeed_item_content_announcement">"Lecture for Thursday 4pm has been cancelled, for.."</string>
+    <string name="newsfeed_item_content_postOnYours">"You aren't implementing the call correctly. You should.."</string>
+
+    <string-array name="slider_menu_options">
+        <item name="units">Units</item>
+        <item name="groups">Groups</item>
+    </string-array>
+
+    <string name="testing_news_area">This is so the news area can be seen</string>
+    <string name="news">News</string>
+    <string name="title_activity_units">UnitsActivity</string>
+
+</resources>
