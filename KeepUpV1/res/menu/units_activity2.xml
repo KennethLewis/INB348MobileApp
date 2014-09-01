@@ -3,6 +3,10 @@
     tools:context="com.example.keepupv1.UnitsActivity2" >
 
     <item
+        android:id="@+id/action_example"
+        android:showAsAction="withText|ifRoom"
+        android:title="@string/action_example"/>
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"

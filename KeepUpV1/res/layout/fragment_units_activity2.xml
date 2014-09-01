@@ -10,33 +10,14 @@
     android:scrollbars="vertical"
     tools:context="com.example.keepupv1.UnitsActivity2$PlaceholderFragment" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
-        android:text="@string/keeping_up_with"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignParentRight="true"
-        android:text="@string/noOfUnits"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <SearchView
         android:id="@+id/searchView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_below="@+id/textView2"
         android:layout_marginTop="22dp"
+        android:layout_toRightOf="@+id/autoCompleteTextView1"
         android:clickable="true"
         android:contentDescription="@string/search_units"
         android:gravity="center_vertical|center_horizontal"
@@ -47,31 +28,334 @@
         android:visibility="visible" >
     </SearchView>
 
-    <TextView
-        android:id="@+id/textView3"
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView1"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/searchView1"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignTop="@+id/searchView1"
+        android:ems="10"
+        android:text="@string/search_units" >
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/noOfUnits"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/searchView1"
+        android:layout_marginRight="19dp"
+        android:layout_toLeftOf="@+id/textView2"
+        android:text="@string/keeping_up_with"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/searchView1"
-        android:text="@string/unit_1_heading"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:fillViewport="false"
+        android:scrollbars="vertical" >
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_centerVertical="true"
-        android:text="@string/unit_1_heading"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="48dp"
-        android:text="@string/unit_1_heading"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            <LinearLayout
+                android:id="@+id/LinearLayout02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6pt"
+                android:background="#dddddd"
+                android:orientation="vertical"
+                android:padding="6dp" >
+
+                <TextView
+                    android:id="@+id/TextView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unit_1_heading"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4pt" >
+
+                    <ImageView
+                        android:id="@+id/ImageView09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:text="@string/newsfeed_item_content_announcement"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <ImageView
+                        android:id="@+id/ImageView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2pt"
+                        android:contentDescription="@string/newAnnouncementsNOTIFY"
+                        android:src="@drawable/announcement_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView14"
+                        android:layout_width="36dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="2pt"
+                        android:text="x1"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8pt" />
+
+                    <ImageView
+                        android:id="@+id/ImageView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2pt"
+                        android:contentDescription="@string/newPostsNOTIFY"
+                        android:src="@drawable/post_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView11"
+                        android:layout_width="34dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="2pt"
+                        android:text="x3"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8pt" />
+
+                    <ImageView
+                        android:id="@+id/ImageView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2pt"
+                        android:contentDescription="@string/newPostsToYoursNOTIFY"
+                        android:src="@drawable/your_post_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView10"
+                        android:layout_width="42dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="2pt"
+                        android:text="x1"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8pt" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayout01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6pt"
+                android:background="#dddddd"
+                android:orientation="vertical"
+                android:padding="6dp" >
+
+                <TextView
+                    android:id="@+id/TextView06"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unit_1_heading"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4pt" >
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView07"
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:text="@string/newsfeed_item_content_announcement"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <ImageView
+                        android:id="@+id/ImageView08"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2pt"
+                        android:contentDescription="@string/newAnnouncementsNOTIFY"
+                        android:src="@drawable/announcement_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView09"
+                        android:layout_width="36dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="2pt"
+                        android:text="x1"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8pt" />
+
+                    <ImageView
+                        android:id="@+id/ImageView05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2pt"
+                        android:contentDescription="@string/newPostsNOTIFY"
+                        android:src="@drawable/post_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView05"
+                        android:layout_width="34dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="2pt"
+                        android:text="x3"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8pt" />
+
+                    <ImageView
+                        android:id="@+id/ImageView06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2pt"
+                        android:contentDescription="@string/newPostsToYoursNOTIFY"
+                        android:src="@drawable/your_post_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="42dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="2pt"
+                        android:text="x1"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8pt" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/unit270"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6pt"
+                android:background="#dddddd"
+                android:orientation="vertical"
+                android:padding="6dp" >
+
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unit_1_heading"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4pt" >
+
+                    <ImageView
+                        android:id="@+id/ImageView07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView08"
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:text="@string/newsfeed_item_content_announcement"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2pt"
+                        android:contentDescription="@string/newAnnouncementsNOTIFY"
+                        android:src="@drawable/announcement_icon" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="36dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="2pt"
+                        android:text="x1"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8pt" />
+
+                    <ImageView
+                        android:id="@+id/ImageView03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2pt"
+                        android:contentDescription="@string/newPostsNOTIFY"
+                        android:src="@drawable/post_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="34dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="2pt"
+                        android:text="x3"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8pt" />
+
+                    <ImageView
+                        android:id="@+id/ImageView04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2pt"
+                        android:contentDescription="@string/newPostsToYoursNOTIFY"
+                        android:src="@drawable/your_post_icon" />
+
+                    <TextView
+                        android:id="@+id/TextView03"
+                        android:layout_width="42dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="2pt"
+                        android:text="x1"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8pt" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

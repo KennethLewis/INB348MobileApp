@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UnitsActivity extends Activity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -120,9 +121,20 @@ public class UnitsActivity extends Activity implements
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		
+		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		
+		//CLICK HOME BUTTON -JACK
+		if (id == R.id.action_example) {
+			Intent intentUnits = new Intent(this, HomeActivity.class);
+			startActivity(intentUnits);
+			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();
+			return true;
+		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 

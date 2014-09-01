@@ -28,11 +28,27 @@ public final class R {
         public static final int navigation_drawer_width=0x7f040002;
     }
     public static final class drawable {
-        public static final int drawer_shadow=0x7f020000;
-        public static final int ic_drawer=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
+        public static final int announcement_icon=0x7f020000;
+        public static final int arrow_icon=0x7f020001;
+        public static final int drawer_shadow=0x7f020002;
+        public static final int ic_drawer=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int post_icon=0x7f020005;
+        public static final int your_post_icon=0x7f020006;
     }
     public static final class id {
+        public static final int ImageView01=0x7f0a0026;
+        public static final int ImageView02=0x7f0a0030;
+        public static final int ImageView03=0x7f0a0032;
+        public static final int ImageView04=0x7f0a0033;
+        public static final int ImageView05=0x7f0a002a;
+        public static final int ImageView06=0x7f0a002c;
+        public static final int ImageView07=0x7f0a002e;
+        public static final int ImageView08=0x7f0a0028;
+        public static final int ImageView09=0x7f0a001d;
+        public static final int ImageView10=0x7f0a0021;
+        public static final int ImageView11=0x7f0a0023;
+        public static final int ImageView12=0x7f0a001f;
         public static final int LinearLayout01=0x7f0a0009;
         public static final int LinearLayout02=0x7f0a000c;
         public static final int LinearLayout1=0x7f0a0007;
@@ -40,8 +56,19 @@ public final class R {
         public static final int TextView02=0x7f0a000a;
         public static final int TextView03=0x7f0a000e;
         public static final int TextView04=0x7f0a000d;
-        public static final int action_example=0x7f0a001e;
-        public static final int action_settings=0x7f0a001d;
+        public static final int TextView05=0x7f0a002b;
+        public static final int TextView06=0x7f0a0025;
+        public static final int TextView07=0x7f0a0027;
+        public static final int TextView08=0x7f0a002f;
+        public static final int TextView09=0x7f0a0029;
+        public static final int TextView10=0x7f0a0024;
+        public static final int TextView11=0x7f0a0022;
+        public static final int TextView12=0x7f0a001c;
+        public static final int TextView13=0x7f0a001e;
+        public static final int TextView14=0x7f0a0020;
+        public static final int action_example=0x7f0a0035;
+        public static final int action_settings=0x7f0a0034;
+        public static final int autoCompleteTextView1=0x7f0a001a;
         public static final int calendarView1=0x7f0a0004;
         public static final int container=0x7f0a0000;
         public static final int drawer_layout=0x7f0a0001;
@@ -55,14 +82,14 @@ public final class R {
         public static final int remember_me=0x7f0a0014;
         public static final int row_content1=0x7f0a0011;
         public static final int row_header1=0x7f0a0010;
+        public static final int scrollView1=0x7f0a001b;
         public static final int searchView1=0x7f0a0019;
         public static final int section_label=0x7f0a0018;
         public static final int table_row=0x7f0a000f;
         public static final int textView1=0x7f0a0005;
         public static final int textView2=0x7f0a0006;
-        public static final int textView3=0x7f0a001a;
-        public static final int textView4=0x7f0a001b;
-        public static final int textView5=0x7f0a001c;
+        public static final int textView3=0x7f0a0031;
+        public static final int unit270=0x7f0a002d;
         public static final int user_name=0x7f0a0016;
     }
     public static final class integer {
@@ -107,6 +134,9 @@ public final class R {
         public static final int map=0x7f060012;
         public static final int navigation_drawer_close=0x7f060014;
         public static final int navigation_drawer_open=0x7f060013;
+        public static final int newAnnouncementsNOTIFY=0x7f06002d;
+        public static final int newPostsNOTIFY=0x7f06002e;
+        public static final int newPostsToYoursNOTIFY=0x7f06002f;
         public static final int news=0x7f06001d;
         public static final int newsfeed_item_content_announcement=0x7f06001a;
         public static final int newsfeed_item_content_post=0x7f060019;
