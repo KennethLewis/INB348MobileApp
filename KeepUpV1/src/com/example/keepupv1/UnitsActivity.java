@@ -1,30 +1,30 @@
 package com.example.keepupv1;
 
-import com.example.keepupv1.R.string;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.keepupv1.user.User;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
 
 public class UnitsActivity extends Activity {
+	
+	//Global database connection
+	DatabaseHandler db;
 
+	private ArrayList<User> readUsers = new ArrayList<User>();
 	private String[][] stringTests =   {{"INB100 - UnitName1", "Test announcement Lorem ipsum1"}, 
 										{"INB123 - UnitName2", "Test announcement Lorem ipsum2"}, 
 										{"INB270 - UnitName3", "Test announcement Lorem ipsum3"}, 
@@ -42,16 +42,39 @@ public class UnitsActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.units_top_container, new PlaceholderFragment()).commit();
 		}
+
+		//DATABASE TESTING
+		db = new DatabaseHandler(this);
+	        
+        // Inserting Contacts
+        Log.d("User", "Inserting ..");
+        db.addUser(new User("Jacksane", "insidesin@live.com.au", 0));
+        db.addUser(new User("Kenneth", "kenneth@live.com.au", 0));
+        
+        // Reading all contacts
+        Log.d("User", "Reading all contacts..");
+        List<User> users = db.getAllUsers();       
+ 
+        for (User user : users) {
+            String log = "Id: "+user.GetId()+", Username: " + user.GetUsername() 
+            		+ ", Email: " + user.GetEmail();
+        
+            // Writing Contacts to log
+            Log.d("User", log);
+            readUsers.add(user);
+        }
 		 
-		 LinearLayout unitList = (LinearLayout) findViewById(R.id.units_list);
-		 for(int i = 0; i < intTests.length; i++)  {
-			 View rootView = getLayoutInflater().inflate(R.layout.unit_template, null);
+        //ADD UNIT LISTINGS 1 BY 1
+		LinearLayout unitList = (LinearLayout) findViewById(R.id.units_list);
+		for(int i = 0; i < stringTests.length; i++)  {
+			View rootView = getLayoutInflater().inflate(R.layout.unit_template, null);
 			 
-			 rootView = setupUnitView(i, rootView);
+			rootView = setupUnitView(i, rootView);
 			 
 		 	//Add to view.
-			 unitList.addView(rootView);
-		 }
+			unitList.addView(rootView);
+		}
+		
 	}
 	
 	private View setupUnitView(int i, View rootView) {
@@ -94,9 +117,11 @@ public class UnitsActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		
+
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
+			db.emptyDatabase();
+			Log.v("Button", "Settings button clicked");
 			return true;
 		}
 		
@@ -105,15 +130,14 @@ public class UnitsActivity extends Activity {
 			Intent intentUnits = new Intent(this, HomeActivity.class);
 			startActivity(intentUnits);
 			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();
+			Log.v("Button", "Home button clicked");
 			return true;
 		}
 		
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
+	//A placeholder fragment containing a simple view.
 	public static class PlaceholderFragment extends Fragment {
 
 		public PlaceholderFragment() {
