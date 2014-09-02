@@ -54,7 +54,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager
 				.beginTransaction()
-				.replace(R.id.container,
+				.replace(R.id.units_toplevel_container,
 						PlaceholderFragment.newInstance(position + 1)).commit();
 	}
 
@@ -65,7 +65,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 			break;
 		case 2:
 			mTitle = getString(R.string.units);
-			Intent intent = new Intent(this, UnitsActivity.class);
+			Intent intent = new Intent(this, UnitsActivityTEST.class);
 			startActivity(intent);
 			break;
 		case 3:

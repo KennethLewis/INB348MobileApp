@@ -21,7 +21,7 @@ public class Group extends Activity {
 		setContentView(R.layout.activity_group);
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.units_toplevel_container, new PlaceholderFragment()).commit();
 		}
 	}
 
