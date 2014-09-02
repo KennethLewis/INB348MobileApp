@@ -1,14 +1,19 @@
 package com.example.keepupv1;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.example.keepupv1.user.User;
 
 import post.Post;
+import post.PostDatabaseHandler;
 import android.R.layout;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,11 +27,14 @@ import android.os.Build;
 
 public class IndividualUnitActivity extends Activity {
 
-	DatabaseHandler db;
+	
 	private Post testPost = new Post ("TestUser", "Thursday 12:01pm", 
 			"This is a test post which has been added automatically");
 	private ArrayList<Post> allPosts = new ArrayList<Post>();
 	
+	public IndividualUnitActivity (){
+		
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,14 +57,18 @@ public class IndividualUnitActivity extends Activity {
 		
 		LinearLayout postList = (LinearLayout) findViewById(R.id.posts_list);
 		
-		for (Post post : allPosts){
+		// Reading all contacts
+       // Log.d("Post", "Reading all posts..");
+        //List<Post> posts = DBVariableHolder.POSTDATABASEHANDLER.getAllPosts(); 
+		for (Post publish : DBVariableHolder.allPosts){
 			View rootView = getLayoutInflater().inflate(R.layout.unit_post_template, null);
 			 
-			rootView = setupUnitView(post, rootView);
+			rootView = setupUnitView(publish, rootView);
 			 
 		 	//Add to view.
 			postList.addView(rootView);
 		}
+		
 	}
 	
 	private View setupUnitView(Post p, View rootView) {
@@ -98,8 +110,16 @@ public class IndividualUnitActivity extends Activity {
 		//reload on create with has a list of the current posts
 		EditText userPost = (EditText)findViewById(R.id.text_to_publish);
 		String post = userPost.toString();
-		Post newPost = new Post("User", "11/11/11", post);
-		allPosts.add(newPost);
+		String shit = userPost.getText().toString();
+		Post newPost = new Post("User", "11/11/11", shit);
+        
+		DBVariableHolder.allPosts.add(newPost);
+        // Inserting Contacts
+        //Log.d("Post", "Inserting ..");
+        //DBVariableHolder.POSTDATABASEHANDLER.addPost(newPost);
+        
+        recreate();
+		
 	}
 
 	/**

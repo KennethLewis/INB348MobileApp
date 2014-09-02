@@ -17,6 +17,7 @@ import android.os.Build;
 
 public class MainActivity extends Activity {
 
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
                     .add(R.id.units_toplevel_container, new PlaceholderFragment())
                     .commit();
         }
+        
     }
 
     public void goToHome(View v){

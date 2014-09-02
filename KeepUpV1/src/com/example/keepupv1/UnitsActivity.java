@@ -23,6 +23,8 @@ public class UnitsActivity extends Activity {
 	
 	//Global database connection
 	DatabaseHandler db;
+	
+	DBVariableHolder dbPosts;
 
 	private ArrayList<User> readUsers = new ArrayList<User>();
 	private String[][] stringTests =   {{"INB100 - UnitNameX", "Test announcement Lorem ipsum1"}, 
@@ -45,7 +47,7 @@ public class UnitsActivity extends Activity {
 
 		//DATABASE TESTING
 		db = new DatabaseHandler(this);
-	        
+		dbPosts = new DBVariableHolder();    
         // Inserting Contacts
         Log.d("User", "Inserting ..");
         db.addUser(new User("Jacksane", "insidesin@live.com.au", 0));
