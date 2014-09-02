@@ -60,5 +60,8 @@
     <string name="newPostsToYoursNOTIFY">New Posts On Your Questions Notify Icon</string>
     <string name="table1_row1_alert">Lecture 4pm Thursday Cancelle..</string>
     <string name="title_activity_unit_test">UnitTest</string>
+    <string name="title_activity_individual_unit">IndividualUnitActivity</string>
+    <string name="example_time">Thursday 12:01pm</string>
+    <string name="user_published_post"/>
 
 </resources>

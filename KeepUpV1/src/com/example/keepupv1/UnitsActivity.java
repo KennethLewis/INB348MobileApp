@@ -25,7 +25,7 @@ public class UnitsActivity extends Activity {
 	DatabaseHandler db;
 
 	private ArrayList<User> readUsers = new ArrayList<User>();
-	private String[][] stringTests =   {{"INB100 - UnitName1", "Test announcement Lorem ipsum1"}, 
+	private String[][] stringTests =   {{"INB100 - UnitNameX", "Test announcement Lorem ipsum1"}, 
 										{"INB123 - UnitName2", "Test announcement Lorem ipsum2"}, 
 										{"INB270 - UnitName3", "Test announcement Lorem ipsum3"}, 
 										{"INB380 - UnitName4", "Test announcement Lorem ipsum4"}};
@@ -102,6 +102,16 @@ public class UnitsActivity extends Activity {
 			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
 		 
 		return rootView;
+	}
+	
+	public void unitDetails(View v){
+		
+		TextView unitId = (TextView) v.findViewById(R.id.unitname_unit);
+		String id = (String) unitId.getText();
+		Intent intent = new Intent(this, IndividualUnitActivity.class);
+		intent.putExtra("unitId", id);
+		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
 	}
 
 	@Override

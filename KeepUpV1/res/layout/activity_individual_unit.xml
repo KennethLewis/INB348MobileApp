@@ -1,0 +1,42 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.keepupv1.IndividualUnitActivity"
+    tools:ignore="MergeRootFrame" >
+
+     <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:id="@+id/posts_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1pt"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+        </ScrollView>
+    <Button
+        android:id="@+id/messageSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:text="Send" 
+        android:onClick="publishUserPost"/>
+
+    <EditText
+        android:id="@+id/text_to_publish"
+        android:layout_width="258dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+</FrameLayout>
+

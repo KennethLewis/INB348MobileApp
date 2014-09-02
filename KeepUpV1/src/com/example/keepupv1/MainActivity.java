@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
     }
 
     public void goToHome(View v){
+    	
 		Intent intent = new Intent(this, HomeActivity.class);
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

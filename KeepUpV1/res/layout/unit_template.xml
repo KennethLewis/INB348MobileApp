@@ -15,6 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/unit_1_heading"
+        android:onClick= "unitDetails"
+        android:clickable="true"
+   
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
