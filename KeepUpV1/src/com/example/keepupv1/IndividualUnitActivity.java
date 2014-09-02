@@ -30,7 +30,6 @@ public class IndividualUnitActivity extends Activity {
 	
 	private Post testPost = new Post ("TestUser", "Thursday 12:01pm", 
 			"This is a test post which has been added automatically");
-	private ArrayList<Post> allPosts = new ArrayList<Post>();
 	
 	public IndividualUnitActivity (){
 		
@@ -38,7 +37,6 @@ public class IndividualUnitActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		allPosts.add(testPost);
 		setContentView(R.layout.activity_individual_unit);
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
