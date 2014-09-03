@@ -6,65 +6,65 @@ public class User {
 	private int id;
 	private String username;
 	private String email;
-	private UserType rights;
-	private enum UserType { ADMIN, USER, UNVERIFIED };
+	private int rights;
+	private String unit;
 	
 	// Empty constructor
 	public User() { }
 	
 	// Constructors
-	public User(int id, String username, String email, int rights) {
+	public User(int id, String username, String email, int rights, String unit) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
-		SetRights(rights);
+		this.rights = rights;
+		this.unit = unit;
 	}
-	public User(String username, String email, int rights) {
+	public User(String username, String email, int rights, String unit) {
 		this.username = username;
 		this.email = email;
-		SetRights(rights);
+		this.rights = rights;
+		this.unit = unit;
 	}
 
 	//Get and Set User's Id
-	public int GetId() {
+	public int getId() {
 		return this.id;
 	}
-	public void SetId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
 	//Get and Set User's Username
-	public String GetUsername() {
+	public String getUsername() {
 		return this.username;
 	}
-	public void SetUsername(String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 
 	//Get and Set User's Email
-	public String GetEmail() {
+	public String getEmail() {
 		return this.email;
 	}
-	public void SetEmail(String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 	
 	//Gives user a rights enum
-	public void SetRights(int rights) {
-		//Give the user rights based on integer.
-		switch(rights) {
-		case 0:
-			this.rights = UserType.ADMIN;
-			break;
-		case 1:
-			this.rights = UserType.USER;
-			break;
-		case 2:
-			this.rights = UserType.UNVERIFIED;
-			break;
-		default:
-			this.rights = UserType.USER;
-			break;
-		}
+	public void setRights(int rights) {
+		this.rights = rights;
 	}
+	public int getRights() {
+		return rights;
+	}
+
+	//Get and Set User's Email
+	public String getUnit() {
+		return this.unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	
 }

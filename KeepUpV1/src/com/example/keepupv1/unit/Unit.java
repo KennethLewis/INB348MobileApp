@@ -5,7 +5,7 @@ import com.example.keepupv1.user.User;
 public class Unit {
 
 	//private variables
-	private char[] unitCode = new char[6];
+	private String unitCode;
 	private String name;
 	private User coordinator;
 	
@@ -13,7 +13,7 @@ public class Unit {
 	public Unit() { }
 	
 	// Constructors
-	public Unit(char[] unitCode, String name, User coordinator) {
+	public Unit(String unitCode, String name, User coordinator) {
 		this.unitCode = unitCode;
 		this.name = name;
 		this.coordinator = coordinator;
@@ -24,18 +24,18 @@ public class Unit {
 	}
 
 	//Get and Set Unit's unit code
-	public char[] GetCode() {
+	public String getCode() {
 		return this.unitCode;
 	}
-	public void SetCode(char[] unitCode) {
+	public void setCode(String unitCode) {
 		this.unitCode = unitCode;
 	}
 
 	//Get and Set Unit's name
-	public String GetName() {
+	public String getName() {
 		return this.name;
 	}
-	public void SetName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

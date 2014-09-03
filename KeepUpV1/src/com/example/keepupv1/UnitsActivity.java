@@ -3,7 +3,10 @@ package com.example.keepupv1;
 import java.util.ArrayList;
 import java.util.List;
 
+import post.Post;
+
 import com.example.keepupv1.user.User;
+import com.example.keepupv1.user.UserDatabaseController;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -22,22 +25,19 @@ import android.widget.Toast;
 public class UnitsActivity extends Activity {
 	
 	//Global database connection
-	DatabaseHandler db;
-	
-	DBVariableHolder dbPosts;
+	UserDatabaseController db;
 
-	private ArrayList<User> readUsers = new ArrayList<User>();
-	private String[][] stringTests =   {{"INB100 - UnitNameX", "Test announcement Lorem ipsum1"}, 
-										{"INB123 - UnitName2", "Test announcement Lorem ipsum2"}, 
-										{"INB270 - UnitName3", "Test announcement Lorem ipsum3"}, 
-										{"INB380 - UnitName4", "Test announcement Lorem ipsum4"}};
+	private String[][] stringTests =   {{"INB100", "Test announcement Lorem ipsum1"}, 
+										{"INB123", "Test announcement Lorem ipsum2"}, 
+										{"INB270", "Test announcement Lorem ipsum3"}, 
+										{"INB380", "Test announcement Lorem ipsum4"}};
 	private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_units_activity2);
+		setContentView(R.layout.activity_units_activity);
 		
 		//Add fragment (small view that you make and import)
 		if (savedInstanceState == null) {
@@ -46,35 +46,28 @@ public class UnitsActivity extends Activity {
 		}
 
 		//DATABASE TESTING
-		db = new DatabaseHandler(this);
-		dbPosts = new DBVariableHolder();    
-        // Inserting Contacts
+		db = new UserDatabaseController(this);
+		
+        // Inserting
         Log.d("User", "Inserting ..");
-        db.addUser(new User("Jacksane", "insidesin@live.com.au", 0));
-        db.addUser(new User("Kenneth", "kenneth@live.com.au", 0));
+        //db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB270"));
+        //db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB100"));
+        //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB270"));
+        //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB123"));
         
-        // Reading all contacts
-        Log.d("User", "Reading all contacts..");
-        List<User> users = db.getAllUsers();       
- 
-        for (User user : users) {
-            String log = "Id: "+user.GetId()+", Username: " + user.GetUsername() 
-            		+ ", Email: " + user.GetEmail();
-        
-            // Writing Contacts to log
-            Log.d("User", log);
-            readUsers.add(user);
-        }
 		 
         //ADD UNIT LISTINGS 1 BY 1
 		LinearLayout unitList = (LinearLayout) findViewById(R.id.units_list);
 		for(int i = 0; i < stringTests.length; i++)  {
 			View rootView = getLayoutInflater().inflate(R.layout.unit_template, null);
 			 
-			rootView = setupUnitView(i, rootView);
+			User user = db.getUserWithUnit(1, stringTests[i][0]);
+			if(user != null) {
+				rootView = setupUnitView(i, rootView);
 			 
-		 	//Add to view.
-			unitList.addView(rootView);
+				//Add to view.
+				unitList.addView(rootView);
+			}
 		}
 		
 	}
@@ -119,7 +112,7 @@ public class UnitsActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.units_activity2, menu);
+		getMenuInflater().inflate(R.menu.units_activity, menu);
 		return true;
 	}
 
@@ -158,7 +151,7 @@ public class UnitsActivity extends Activity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_units_activity2,
+			View rootView = inflater.inflate(R.layout.fragment_units_activity,
 					container, false);
 			return rootView;
 		}

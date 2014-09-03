@@ -41,7 +41,7 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-    <string name="title_activity_units_activity2">UnitsActivity2</string>
+    <string name="title_activity_units_activity">UnitsActivity</string>
     <string name="keeping_up_with">Keeping up with:</string>
     <string name="noOfUnits">4 units</string>
     <string name="search_units">Search units..</string>

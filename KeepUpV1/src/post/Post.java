@@ -1,71 +1,63 @@
 package post;
 
-import java.sql.Date;
-
-import com.example.keepupv1.user.User;
-
 public class Post {
 
-	private User user;
-	private String student; //for testing incase no user present
-	private Date date;
-	private String testDate;
-	private String post;
+	private int id;
+	private String user;
+	private String date;
+	private String content;
+	private String unit;
 	
-	public Post(){
-		
-	}
+	public Post() { }
 	
-	public Post (String student, String testDate, String post){
-		this.student = student;
-		this.testDate = testDate;
-		this.post = post;
-	}
-	
-	public String getStudent() {
-		return student;
-	}
-
-	public void setStudent(String student) {
-		this.student = student;
-	}
-
-	public String getTestDate() {
-		return testDate;
-	}
-
-	public void setTestDate(String testDate) {
-		this.testDate = testDate;
-	}
-
-	public Post (User user, Date date, String post){
+	public Post(int id, String user, String date, String content, String unit) {
+		this.id = id;
 		this.user = user;
 		this.date = date;
-		this.post = post;
+		this.content = content;
+		this.unit = unit;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
+	public Post(String user, String date, String content, String unit) {
 		this.user = user;
+		this.date = date;
+		this.content = content;
+		this.unit = unit;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public String getPost() {
-		return post;
+	public String getUser() {
+		return user;
 	}
-
-	public void setPost(String post) {
-		this.post = post;
+	public void setUser(String user) {
+		this.user = user;
+	}
+	
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 	

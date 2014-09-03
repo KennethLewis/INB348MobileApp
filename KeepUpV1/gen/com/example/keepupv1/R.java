@@ -100,14 +100,14 @@ public final class R {
         public static final int activity_individual_unit=0x7f030002;
         public static final int activity_main=0x7f030003;
         public static final int activity_units=0x7f030004;
-        public static final int activity_units_activity2=0x7f030005;
+        public static final int activity_units_activity=0x7f030005;
         public static final int fragment_group=0x7f030006;
         public static final int fragment_home=0x7f030007;
         public static final int fragment_individual_unit=0x7f030008;
         public static final int fragment_main=0x7f030009;
         public static final int fragment_navigation_drawer=0x7f03000a;
         public static final int fragment_units=0x7f03000b;
-        public static final int fragment_units_activity2=0x7f03000c;
+        public static final int fragment_units_activity=0x7f03000c;
         public static final int unit_post_template=0x7f03000d;
         public static final int unit_template=0x7f03000e;
         public static final int units_nav_draw=0x7f03000f;
@@ -120,7 +120,7 @@ public final class R {
         public static final int main=0x7f0a0004;
         public static final int unit_test=0x7f0a0005;
         public static final int units=0x7f0a0006;
-        public static final int units_activity2=0x7f0a0007;
+        public static final int units_activity=0x7f0a0007;
     }
     public static final class string {
         public static final int action_example=0x7f070015;
@@ -163,7 +163,7 @@ public final class R {
         public static final int title_activity_individual_unit=0x7f070032;
         public static final int title_activity_unit_test=0x7f070031;
         public static final int title_activity_units=0x7f07001e;
-        public static final int title_activity_units_activity2=0x7f070022;
+        public static final int title_activity_units_activity=0x7f070022;
         public static final int title_home=0x7f07000a;
         public static final int title_section1=0x7f07001f;
         public static final int title_section2=0x7f070020;
