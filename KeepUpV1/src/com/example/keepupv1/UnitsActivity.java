@@ -49,9 +49,13 @@ public class UnitsActivity extends Activity {
 		db = new UserDatabaseController(this);
 		
         // Inserting
+		/**
+		 * PLEASE COMMENT IN/OUT TO CHANGE STUDENTS AT THIS STAGE TO ENABLE
+		 * POSTING.
+		 */
         Log.d("User", "Inserting ..");
-        //db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB270"));
-        //db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB100"));
+        db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB270"));
+        db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB100"));
         //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB270"));
         //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB123"));
         
