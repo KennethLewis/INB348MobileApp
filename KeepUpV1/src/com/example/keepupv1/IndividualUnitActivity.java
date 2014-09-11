@@ -27,9 +27,6 @@ public class IndividualUnitActivity extends Activity {
 	
 	//Global database connection
 	PostDatabaseController db;
-
-	//private Post testPost = new Post ("TestUser", "Thursday 12:01pm", 
-	//		"This is a test post which has been added automatically");
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +62,8 @@ public class IndividualUnitActivity extends Activity {
 
 			/* EDIT USER CHECK HERE */
 			UserDatabaseController userDb = new UserDatabaseController(this);
-			User standardUser = userDb.getUserWithUnit(1, String.valueOf(this.getTitle()));
+			User standardUser = userDb.getUserWithUnit(
+					DatabaseVariables.USERLOGGEDIN.getId(), String.valueOf(this.getTitle()));
 			
 			if(standardUser != null) {
 				Post post = db.getPostWithUnit(i, standardUser.getUnit());
@@ -141,7 +139,8 @@ public class IndividualUnitActivity extends Activity {
 
 		/* EDIT USER CHECK HERE */
 		UserDatabaseController userDb = new UserDatabaseController(this);
-		User standardUser = userDb.getUserWithUnit(2, String.valueOf(this.getTitle()));
+		User standardUser = userDb.getUserWithUnit(
+				DatabaseVariables.USERLOGGEDIN.getId(), String.valueOf(this.getTitle()));
 		
 		if(standardUser == null)
 			return;

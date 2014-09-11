@@ -27,10 +27,12 @@ public class UnitsActivity extends Activity {
 	//Global database connection
 	UserDatabaseController db;
 
-	private String[][] stringTests =   {{"INB100", "Test announcement Lorem ipsum1"}, 
+	/*private String[][] stringTests =   {{"INB100", "Test announcement Lorem ipsum1"}, 
 										{"INB123", "Test announcement Lorem ipsum2"}, 
 										{"INB270", "Test announcement Lorem ipsum3"}, 
-										{"INB380", "Test announcement Lorem ipsum4"}};
+										{"INB380", "Test announcement Lorem ipsum4"}};*/
+	private String [] stringTests = {"Test announcement Lorem ipsum1"};
+	List<String> userSubs = new ArrayList<String>();
 	private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
 	
 	@Override
@@ -62,11 +64,12 @@ public class UnitsActivity extends Activity {
 		 
         //ADD UNIT LISTINGS 1 BY 1
 		LinearLayout unitList = (LinearLayout) findViewById(R.id.units_list);
-		for(int i = 0; i < stringTests.length; i++)  {
+		String sub = DatabaseVariables.USERLOGGEDIN.getUnit();
+		userSubs.add(sub);
+		for(int i = 0; i < userSubs.size(); i++)  {
 			View rootView = getLayoutInflater().inflate(R.layout.unit_template, null);
 			 
-			User user = db.getUserWithUnit
-					(5279615, stringTests[i][0]);
+			User user = DatabaseVariables.USERLOGGEDIN;
 			if(user != null) {
 				rootView = setupUnitView(i, rootView);
 			 
@@ -81,11 +84,11 @@ public class UnitsActivity extends Activity {
 		
 		//Setup Unit Name.
 		TextView unitName = (TextView) rootView.findViewById(R.id.unitname_unit);
-		unitName.setText(stringTests[i][0]);
+		unitName.setText(userSubs.get(i));
 		
 		//Setup last announcement.
 		TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
-		announcementLast.setText(stringTests[i][1]);
+		announcementLast.setText(stringTests[0]);
 		
 		//Setup notification counts.
 		TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);
@@ -130,7 +133,7 @@ public class UnitsActivity extends Activity {
 
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			DatabaseVariables.getUSERDATABASECONTROLLER().emptyDatabase();
+			db.emptyDatabase();
 			Log.v("Button", "Settings button clicked");
 			return true;
 		}

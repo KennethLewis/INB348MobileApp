@@ -26,7 +26,6 @@ import android.os.Build;
 public class MainActivity extends Activity {
 
 	private UserDatabaseController db;
-	private DatabaseVariables dbv;
 	private List<User> checkUsers;
 	private User testUser;
 	
@@ -41,12 +40,12 @@ public class MainActivity extends Activity {
         }
         
        db = new UserDatabaseController(this);
-       checkUsers = new ArrayList<User>();
+       /*checkUsers = new ArrayList<User>();
        
        testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "INB270");
        checkUsers.add(testUser);
        db.addUser(testUser);
-       checkUsers = db.getAllUsers();
+       checkUsers = db.getAllUsers();*/
        
        //Log.d("User", "Inserting ..");
        //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB270"));
@@ -64,6 +63,7 @@ public class MainActivity extends Activity {
     	
     	//for(User allUsers: checkUsers){
     		if(db.getUser(userId) != null){
+    			DatabaseVariables.USERLOGGEDIN = db.getUser(userId);
     			Intent intent = new Intent(this, HomeActivity.class);
         		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         	    startActivity(intent);
