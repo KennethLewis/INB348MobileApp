@@ -141,7 +141,7 @@ public class IndividualUnitActivity extends Activity {
 
 		/* EDIT USER CHECK HERE */
 		UserDatabaseController userDb = new UserDatabaseController(this);
-		User standardUser = userDb.getUserWithUnit(1, String.valueOf(this.getTitle()));
+		User standardUser = userDb.getUserWithUnit(2, String.valueOf(this.getTitle()));
 		
 		if(standardUser == null)
 			return;

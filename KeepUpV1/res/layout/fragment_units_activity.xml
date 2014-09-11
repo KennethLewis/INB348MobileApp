@@ -21,14 +21,14 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignBaseline="@+id/register"
+        android:layout_alignBottom="@+id/register"
         android:layout_alignRight="@+id/searchView1"
         android:text="@string/noOfUnits"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/searchView1"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignLeft="@+id/register"
         android:ems="10"
         android:text="@string/search_units" />
 

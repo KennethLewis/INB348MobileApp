@@ -62,6 +62,13 @@
     <string name="title_activity_unit_test">UnitTest</string>
     <string name="title_activity_individual_unit">IndividualUnitActivity</string>
     <string name="example_time">Thursday 12:01pm</string>
-    <string name="user_published_post"/>
+    <string name="user_published_post" />
+    <string name="register">Register</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="register_UniId">QUT Student No</string>
+    <string name="register_name">Name</string>
+    <string name="register_email">QUT Email Address</string>
+    <string name="register_pw">KeepUp Password</string>
+    <string name="register_partial_qutemail">student.qut.edu.au</string>
 
 </resources>

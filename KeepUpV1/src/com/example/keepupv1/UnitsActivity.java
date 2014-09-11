@@ -53,19 +53,20 @@ public class UnitsActivity extends Activity {
 		 * PLEASE COMMENT IN/OUT TO CHANGE STUDENTS AT THIS STAGE TO ENABLE
 		 * POSTING.
 		 */
-        Log.d("User", "Inserting ..");
-        db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB270"));
-        db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB100"));
+        //Log.d("User", "Inserting ..");
+        //db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB270"));
+        //db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB100"));
         //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB270"));
         //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB123"));
-        
+       
 		 
         //ADD UNIT LISTINGS 1 BY 1
 		LinearLayout unitList = (LinearLayout) findViewById(R.id.units_list);
 		for(int i = 0; i < stringTests.length; i++)  {
 			View rootView = getLayoutInflater().inflate(R.layout.unit_template, null);
 			 
-			User user = db.getUserWithUnit(1, stringTests[i][0]);
+			User user = db.getUserWithUnit
+					(5279615, stringTests[i][0]);
 			if(user != null) {
 				rootView = setupUnitView(i, rootView);
 			 
@@ -129,7 +130,7 @@ public class UnitsActivity extends Activity {
 
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			db.emptyDatabase();
+			DatabaseVariables.getUSERDATABASECONTROLLER().emptyDatabase();
 			Log.v("Button", "Settings button clicked");
 			return true;
 		}
