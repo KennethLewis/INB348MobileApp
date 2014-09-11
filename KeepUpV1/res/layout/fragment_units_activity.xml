@@ -15,52 +15,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
+   
+        <TextView
+   		 android:text="Add Units"
+		 android:id="@+id/add_units"
+    	 android:layout_width="fill_parent"
+   		 android:layout_height="wrap_content"
+    	 android:padding="5dip" />
+
+	  <Button
+	    android:layout_height="wrap_content"
+	    android:layout_width="fill_parent"
+	    android:text="Select Units"
+	    android:id="@+id/select_units"
+	    android:onClick="showUnits"
+	    android:padding="5dip" />
+  
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/register"
-        android:layout_alignBottom="@+id/register"
-        android:layout_alignRight="@+id/searchView1"
-        android:text="@string/noOfUnits"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/keeping_up_with"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <SearchView
-        android:id="@+id/searchView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/test"
-        android:layout_below="@+id/textView2"
-        android:layout_marginRight="14dp"
-        android:clickable="true"
-        android:contentDescription="@string/search_units"
-        android:gravity="center_vertical|center_horizontal"
-        android:iconifiedByDefault="true"
-        android:inputType="text"
-        android:maxWidth="@dimen/activity_horizontal_margin"
-        android:queryHint="@string/search_units"
-        android:visibility="visible" >
-    </SearchView>
-
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/searchView1"
-        android:layout_alignLeft="@+id/register"
-        android:ems="10"
-        android:text="@string/search_units" />
-
+    
 </RelativeLayout>

@@ -1,5 +1,10 @@
 package com.example.keepupv1.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.keepupv1.unit.Unit;
+
 public class User {
 
 	//private variables
@@ -10,6 +15,8 @@ public class User {
 	private int rights;
 	private String unit;
 	private String pw;
+	
+	private List<Unit> allSubjects = new ArrayList<Unit>();
 	
 	// Empty constructor
 	public User() { }
@@ -25,21 +32,7 @@ public class User {
 		this.email = email;
 		this.pw = pw;
 	}
-	public String getUniId() {
-		return uniId;
-	}
-
-	public void setUniId(String uniId) {
-		this.uniId = uniId;
-	}
-
-	public String getPw() {
-		return pw;
-	}
-
-	public void setPw(String pw) {
-		this.pw = pw;
-	}
+	
 
 	// Constructors
 	public User(int id, String username, String email, int rights, String unit) {
@@ -95,5 +88,31 @@ public class User {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
+	public String getUniId() {
+		return uniId;
+	}
+
+	public void setUniId(String uniId) {
+		this.uniId = uniId;
+	}
+
+	public String getPw() {
+		return pw;
+	}
+
+	public void setPw(String pw) {
+		this.pw = pw;
+	}
+
+	public List<Unit> getAllSubjects() {
+		return allSubjects;
+	}
+
+	public void setAllSubjects(List<Unit> allSubjects) {
+		this.allSubjects = allSubjects;
+	}
 	
+	public void addSubject (Unit subject){
+		allSubjects.add(subject);
+	}
 }

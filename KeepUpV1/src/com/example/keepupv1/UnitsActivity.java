@@ -5,11 +5,15 @@ import java.util.List;
 
 import post.Post;
 
+import com.example.keepupv1.unit.Unit;
 import com.example.keepupv1.user.User;
 import com.example.keepupv1.user.UserDatabaseController;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,11 +22,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UnitsActivity extends Activity {
+public class UnitsActivity extends Activity implements OnClickListener {
 	
 	//Global database connection
 	UserDatabaseController db;
@@ -32,8 +37,10 @@ public class UnitsActivity extends Activity {
 										{"INB270", "Test announcement Lorem ipsum3"}, 
 										{"INB380", "Test announcement Lorem ipsum4"}};*/
 	private String [] stringTests = {"Test announcement Lorem ipsum1"};
-	List<String> userSubs = new ArrayList<String>();
+	private List<String> userSubsCode = new ArrayList<String>();
+	private List<String> userSubsNames = new ArrayList<String>();
 	private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
+	private List<Unit> selectedUnits = new ArrayList<Unit>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,11 @@ public class UnitsActivity extends Activity {
 		//DATABASE TESTING
 		db = new UserDatabaseController(this);
 		
-        // Inserting
+		Button selectUnitsButton = (Button)findViewById(R.id.select_units);
+		//selectUnitsButton.setOnClickListener(this);
+        
+		
+		// Inserting
 		/**
 		 * PLEASE COMMENT IN/OUT TO CHANGE STUDENTS AT THIS STAGE TO ENABLE
 		 * POSTING.
@@ -65,8 +76,12 @@ public class UnitsActivity extends Activity {
         //ADD UNIT LISTINGS 1 BY 1
 		LinearLayout unitList = (LinearLayout) findViewById(R.id.units_list);
 		String sub = DatabaseVariables.USERLOGGEDIN.getUnit();
-		userSubs.add(sub);
-		for(int i = 0; i < userSubs.size(); i++)  {
+		
+		for (Unit units: DatabaseVariables.USERLOGGEDIN.getAllSubjects()){
+			userSubsCode.add(units.getCode());
+			userSubsNames.add(units.getName());
+		}
+		for(int i = 0; i < userSubsNames.size(); i++)  {
 			View rootView = getLayoutInflater().inflate(R.layout.unit_template, null);
 			 
 			User user = DatabaseVariables.USERLOGGEDIN;
@@ -80,11 +95,75 @@ public class UnitsActivity extends Activity {
 		
 	}
 	
+	//Displays the list of units to enable selection
+	public void showUnits(View v){
+		
+		switch (v.getId()){
+		
+		case R.id.select_units:
+			showUnitOptions();
+			break;
+			
+		default:
+		break;
+		}
+	}
+	
+	//Method to show the unit options and enable them to be clicked.
+	protected void showUnitOptions(){
+		
+		boolean[] checkedUnits = new boolean[DatabaseVariables.ALLUNITS.length];
+		int count = DatabaseVariables.ALLUNITS.length;
+		
+		for(int i = 0; i < count; i++)
+			checkedUnits[i] = selectedUnits.contains(DatabaseVariables.ALLUNITS[i]);
+		
+		DialogInterface.OnMultiChoiceClickListener 
+			unitsDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					// TODO Auto-generated method stub
+					if(isChecked)
+						selectedUnits.add(DatabaseVariables.ALLUNITS[which]);
+					else
+						selectedUnits.remove(DatabaseVariables.ALLUNITS[which]);
+					
+					onChangeSelectedUnits();
+				}
+			};
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Select Units");
+			
+			CharSequence [] unitNames = new CharSequence[DatabaseVariables.ALLUNITS.length];
+			for(int i =0; i < DatabaseVariables.ALLUNITS.length; i++)
+				unitNames[i] = DatabaseVariables.ALLUNITS[i].getName();
+			
+			builder.setMultiChoiceItems(unitNames, checkedUnits, unitsDialogListener);
+			
+			
+			AlertDialog dialog = builder.create();
+			dialog.show();
+					
+	}
+	
+	//Will refresh the users page once unit is selected
+	public void onChangeSelectedUnits(){
+		//ADD UNITS TO PAGE, MAYBE REFRESH?
+		for(Unit unit: selectedUnits){
+			DatabaseVariables.USERLOGGEDIN.addSubject(unit);
+		}
+		this.recreate();
+	}
 	private View setupUnitView(int i, View rootView) {
 		
 		//Setup Unit Name.
+		TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
+		unitCode.setText(userSubsCode.get(i));
+		
 		TextView unitName = (TextView) rootView.findViewById(R.id.unitname_unit);
-		unitName.setText(userSubs.get(i));
+		unitName.setText(userSubsNames.get(i));
 		
 		//Setup last announcement.
 		TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
@@ -109,8 +188,9 @@ public class UnitsActivity extends Activity {
 	
 	public void unitDetails(View v){
 		
-		TextView unitId = (TextView) v.findViewById(R.id.unitname_unit);
+		TextView unitId = (TextView) v.findViewById(R.id.unitcode_code);
 		String id = (String) unitId.getText();
+		DatabaseVariables.USERLOGGEDIN.setUnit(id);
 		Intent intent = new Intent(this, IndividualUnitActivity.class);
 		intent.putExtra("unitId", id);
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -133,7 +213,7 @@ public class UnitsActivity extends Activity {
 
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			db.emptyDatabase();
+			db.emptyDatabase();//CLEARS USERS DATABASE!
 			Log.v("Button", "Settings button clicked");
 			return true;
 		}
@@ -163,6 +243,12 @@ public class UnitsActivity extends Activity {
 					container, false);
 			return rootView;
 		}
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -27,6 +27,7 @@ public class IndividualUnitActivity extends Activity {
 	
 	//Global database connection
 	PostDatabaseController db;
+	private List<Post> posts; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,21 +55,17 @@ public class IndividualUnitActivity extends Activity {
         // Inserting
         Log.d("Post", "Inserting ..");
         //db.addPost(new Post("Jackson P", "Today, 1/1/2014", "Some post content here, lorem ipsum testaroonie."));
-        
+        posts = new ArrayList<Post>();
+        posts = db.getAllPosts();
 		
 		LinearLayout postList = (LinearLayout) findViewById(R.id.posts_list);
-		for(int i = 1; i < db.getPostsCount() + 1; i++)  {
+		for(int i = 0; i < posts.size(); i++)  {
 			View rootView = getLayoutInflater().inflate(R.layout.unit_post_template, null);
-
-			/* EDIT USER CHECK HERE */
-			UserDatabaseController userDb = new UserDatabaseController(this);
-			User standardUser = userDb.getUserWithUnit(
-					DatabaseVariables.USERLOGGEDIN.getId(), String.valueOf(this.getTitle()));
 			
-			if(standardUser != null) {
-				Post post = db.getPostWithUnit(i, standardUser.getUnit());
+			if(DatabaseVariables.USERLOGGEDIN != null) {
+				Post post = db.getPostWithUnit(i, DatabaseVariables.USERLOGGEDIN.getUnit());
 				if(post != null) {
-					rootView = setupUnitView(post, i-1, rootView);
+					rootView = setupUnitView(post, i, rootView);
 				 
 					//Add to view.
 					postList.addView(rootView);
@@ -137,16 +134,13 @@ public class IndividualUnitActivity extends Activity {
 		//reload on create with has a list of the current posts
 		EditText userPost = (EditText)findViewById(R.id.text_to_publish);
 
-		/* EDIT USER CHECK HERE */
-		UserDatabaseController userDb = new UserDatabaseController(this);
-		User standardUser = userDb.getUserWithUnit(
-				DatabaseVariables.USERLOGGEDIN.getId(), String.valueOf(this.getTitle()));
 		
-		if(standardUser == null)
+		if(DatabaseVariables.USERLOGGEDIN == null)
 			return;
 			
 		String content = userPost.getText().toString();
-		Post newPost = new Post(standardUser.getUsername(), "11/11/11", content, standardUser.getUnit());
+		Post newPost = new Post(DatabaseVariables.USERLOGGEDIN.getUsername(), 
+				"11/11/11", content, DatabaseVariables.USERLOGGEDIN.getUnit());
         
 		db.addPost(newPost);
         

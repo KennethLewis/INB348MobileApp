@@ -50,7 +50,7 @@ public class RegisterActivity extends Activity {
 		String email = userEmail.getText().toString();
 		String pw = userPw.getText().toString();
 		
-		newUser = new User (id,name,email,0,"INB270");
+		newUser = new User (id,name,email,0,"");
 		db.addUser(newUser);
 		
 		Intent intent = new Intent(this, MainActivity.class);

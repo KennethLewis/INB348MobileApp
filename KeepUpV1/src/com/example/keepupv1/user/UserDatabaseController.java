@@ -43,7 +43,7 @@ public class UserDatabaseController extends SQLiteOpenHelper {
 				+ KEY_USERNAME + " TEXT NOT NULL,"
 				+ KEY_EMAIL + " TEXT," 
 				+ KEY_RIGHTS + " INTEGER," 
-				+ KEY_UNITCODE + " TEXT NOT NULL, "
+				+ KEY_UNITCODE + " TEXT, "
 				+ "PRIMARY KEY( " + KEY_ID + ", " + KEY_USERNAME + ", " + KEY_UNITCODE + ")" 
 				+ ")";
 		db.execSQL(CREATE_USERS_TABLE);

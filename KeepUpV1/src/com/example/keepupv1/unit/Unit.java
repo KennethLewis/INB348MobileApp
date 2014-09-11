@@ -1,5 +1,8 @@
 package com.example.keepupv1.unit;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.keepupv1.user.User;
 
 public class Unit {
@@ -9,9 +12,15 @@ public class Unit {
 	private String name;
 	private User coordinator;
 	
+	private List<User> enrolledUsers = new ArrayList<User>();
+	
 	// Empty constructor
 	public Unit() { }
 	
+	public Unit (String unitCode, String name){
+		this.unitCode = unitCode;
+		this.name = name;
+	}
 	// Constructors
 	public Unit(String unitCode, String name, User coordinator) {
 		this.unitCode = unitCode;
@@ -46,5 +55,32 @@ public class Unit {
 	public void SetCoordinator(User coordinator) {
 		this.coordinator = coordinator;
 	}
+
+	public String getUnitCode() {
+		return unitCode;
+	}
+
+	public void setUnitCode(String unitCode) {
+		this.unitCode = unitCode;
+	}
+
+	public User getCoordinator() {
+		return coordinator;
+	}
+
+	public void setCoordinator(User coordinator) {
+		this.coordinator = coordinator;
+	}
+
+	public List<User> getEnrolledUsers() {
+		return enrolledUsers;
+	}
+
+	public void setEnrolledUsers(List<User> enrolledUsers) {
+		this.enrolledUsers = enrolledUsers;
+	}
 	
+	public void addUserToUnit (User u){
+		enrolledUsers.add(u);
+	}
 }
