@@ -28,4 +28,15 @@
         android:text="@string/keeping_up_with_1_grp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/register"
+        android:layout_below="@+id/register"
+        android:layout_marginTop="28dp"
+        android:text="@string/create_group"
+        android:clickable="true"
+        android:onClick="createGroup" />
+
 </RelativeLayout>

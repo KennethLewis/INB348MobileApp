@@ -1,5 +1,7 @@
 package com.example.keepupv1;
 
+import group.Group;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class DatabaseVariables {
 	
 	
 	public static User USERLOGGEDIN;
+	public static Group POSSIBLEGROUP;
 	private static final Unit unit1 = new Unit ("INB100", "Introduction to IT");
 	private static final Unit unit2 = new Unit ("INB123", "Programming 101");
 	private static final Unit unit3 = new Unit ("INB348", "Mobile App Dev");

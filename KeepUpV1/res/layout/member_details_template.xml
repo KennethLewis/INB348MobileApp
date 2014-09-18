@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4pt"
+    android:background="#dddddd"
+    android:orientation="vertical"
+    android:padding="4pt" >
+
+	<TextView
+	    android:id="@+id/members_name"
+	    android:layout_width="match_parent"
+	    android:layout_height="25dp"
+	    android:text="@string/member_name"
+	    android:textAppearance="?android:attr/textAppearanceLarge" />
+     
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_margin="4pt" >
+        
+        <TextView
+            android:id="@+id/members_id"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:text="@string/member_id"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="6pt" />
+        <TextView
+            android:id="@+id/members_email"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:text="@string/member_email"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="6pt" /> 
+    </LinearLayout>
+</LinearLayout>

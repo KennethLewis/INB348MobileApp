@@ -1,5 +1,7 @@
 package com.example.keepupv1;
 
+import group.GroupDatabaseController;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public class UnitsActivity extends Activity implements OnClickListener {
 	
 	//Global database connection
 	UserDatabaseController db;
+	GroupDatabaseController groupDb;
 
 	/*private String[][] stringTests =   {{"INB100", "Test announcement Lorem ipsum1"}, 
 										{"INB123", "Test announcement Lorem ipsum2"}, 
@@ -56,26 +59,14 @@ public class UnitsActivity extends Activity implements OnClickListener {
 
 		//DATABASE TESTING
 		db = new UserDatabaseController(this);
+		groupDb = new GroupDatabaseController(this);
 		
 		Button selectUnitsButton = (Button)findViewById(R.id.select_units);
 		//selectUnitsButton.setOnClickListener(this);
         
-		
-		// Inserting
-		/**
-		 * PLEASE COMMENT IN/OUT TO CHANGE STUDENTS AT THIS STAGE TO ENABLE
-		 * POSTING.
-		 */
-        //Log.d("User", "Inserting ..");
-        //db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB270"));
-        //db.addUser(new User(1, "Jacksane", "insidesin@live.com.au", 0, "INB100"));
-        //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB270"));
-        //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB123"));
-       
 		 
         //ADD UNIT LISTINGS 1 BY 1
 		LinearLayout unitList = (LinearLayout) findViewById(R.id.units_list);
-		String sub = DatabaseVariables.USERLOGGEDIN.getUnit();
 		
 		for (Unit units: DatabaseVariables.USERLOGGEDIN.getAllSubjects()){
 			userSubsCode.add(units.getCode());
@@ -95,6 +86,35 @@ public class UnitsActivity extends Activity implements OnClickListener {
 		
 	}
 	
+	private View setupUnitView(int i, View rootView) {
+		
+		//Setup Unit Name.
+		TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
+		unitCode.setText(userSubsCode.get(i));
+		
+		TextView unitName = (TextView) rootView.findViewById(R.id.unitname_unit);
+		unitName.setText(userSubsNames.get(i));
+		
+		//Setup last announcement.
+		TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
+		announcementLast.setText(stringTests[0]);
+		
+		//Setup notification counts.
+		TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);
+		announcementCount.setText("x " + String.valueOf(intTests[i][0]));
+		TextView postCount = (TextView) rootView.findViewById(R.id.post_value_unit);
+		postCount.setText("x " + String.valueOf(intTests[i][1]));
+		TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_unit);
+		postOnYoursCount.setText("x " + String.valueOf(intTests[i][2]));
+
+		 //Change background colour based on element id.
+		 if(i % 2 == 0)
+			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+		 else
+			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+		 
+		return rootView;
+	}
 	//Displays the list of units to enable selection
 	public void showUnits(View v){
 		
@@ -156,35 +176,7 @@ public class UnitsActivity extends Activity implements OnClickListener {
 		}
 		this.recreate();
 	}
-	private View setupUnitView(int i, View rootView) {
-		
-		//Setup Unit Name.
-		TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
-		unitCode.setText(userSubsCode.get(i));
-		
-		TextView unitName = (TextView) rootView.findViewById(R.id.unitname_unit);
-		unitName.setText(userSubsNames.get(i));
-		
-		//Setup last announcement.
-		TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
-		announcementLast.setText(stringTests[0]);
-		
-		//Setup notification counts.
-		TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);
-		announcementCount.setText("x " + String.valueOf(intTests[i][0]));
-		TextView postCount = (TextView) rootView.findViewById(R.id.post_value_unit);
-		postCount.setText("x " + String.valueOf(intTests[i][1]));
-		TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_unit);
-		postOnYoursCount.setText("x " + String.valueOf(intTests[i][2]));
-
-		 //Change background colour based on element id.
-		 if(i % 2 == 0)
-			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-		 else
-			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
-		 
-		return rootView;
-	}
+	
 	
 	public void unitDetails(View v){
 		
@@ -213,7 +205,8 @@ public class UnitsActivity extends Activity implements OnClickListener {
 
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			db.emptyDatabase();//CLEARS USERS DATABASE!
+			//db.emptyDatabase();//CLEARS USERS DATABASE!
+			groupDb.emptyDatabase();
 			Log.v("Button", "Settings button clicked");
 			return true;
 		}

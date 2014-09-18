@@ -28,6 +28,9 @@ public class MainActivity extends Activity {
 	private UserDatabaseController db;
 	private List<User> checkUsers;
 	private User testUser;
+	private User testUser2;
+	private User dummyUser1;
+	private User dummyUser2;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +43,14 @@ public class MainActivity extends Activity {
         }
         
        db = new UserDatabaseController(this);
-       /*checkUsers = new ArrayList<User>();
-       
-       testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "INB270");
-       checkUsers.add(testUser);
+       testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "");
+       testUser2 = new User(999999, "Jackson","Jackson@live.com.au", 0, "");
+       dummyUser1 = new User(123456, "Dummy1", "Dummy1@live.com.au", 0, "");
+       dummyUser2 = new User (987654, "Dummy2", "Dummy2@live.com.au", 0, "");
        db.addUser(testUser);
-       checkUsers = db.getAllUsers();*/
-       
-       //Log.d("User", "Inserting ..");
-       //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB270"));
-       //db.addUser(new User(2, "Kenneth", "kenneth@live.com.au", 0, "INB123"));
-       //dbv = new DatabaseVariables();
-       //DatabaseVariables.setUSERDATABASECONTROLLER(db);
+       db.addUser(testUser2);
+       db.addUser(dummyUser1);
+       db.addUser(dummyUser2);
     }
 
     public void goToHome(View v){
@@ -97,6 +96,7 @@ public class MainActivity extends Activity {
 		
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
+			db.emptyDatabase();
 			return true;
 		}
 		

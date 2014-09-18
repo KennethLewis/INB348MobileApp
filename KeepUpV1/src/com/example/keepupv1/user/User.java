@@ -1,5 +1,7 @@
 package com.example.keepupv1.user;
 
+import group.Group;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class User {
 	private String pw;
 	
 	private List<Unit> allSubjects = new ArrayList<Unit>();
+	private List<Group> allGroups = new ArrayList<Group>();
+	private List<User> usersForGroup = new ArrayList<User>();
 	
 	// Empty constructor
 	public User() { }
@@ -115,4 +119,33 @@ public class User {
 	public void addSubject (Unit subject){
 		allSubjects.add(subject);
 	}
+
+	public List<Group> getAllGroups() {
+		return allGroups;
+	}
+
+	public void setAllGroups(List<Group> allGroups) {
+		this.allGroups = allGroups;
+	}
+	
+	public void addGroup(Group g){
+		allGroups.add(g);
+	}
+	
+	public void clearUsersForGroup (){
+		this.usersForGroup = new ArrayList<User>();
+	}
+
+	public List<User> getUsersForGroup() {
+		return usersForGroup;
+	}
+
+	public void setUsersForGroup(List<User> usersForGroup) {
+		this.usersForGroup = usersForGroup;
+	}
+	
+	public void addUserForGroup(User user){
+		usersForGroup.add(user);
+	}
+	
 }

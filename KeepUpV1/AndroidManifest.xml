@@ -47,7 +47,7 @@
                 android:value="com.example.keepupv1.HomeActivity" />
         </activity>
         <activity
-            android:name=".Group"
+            android:name=".GroupActivity"
             android:label="@string/title_activity_group"
             android:parentActivityName=".HomeActivity" >
             <meta-data
@@ -69,6 +69,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.keepupv1.MainActivity" />
+        </activity>
+        <activity
+            android:name=".CreateGroupActivity"
+            android:label="@string/title_activity_create_group"
+            android:parentActivityName=".GroupActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.keepupv1.Group" />
         </activity>
     </application>
 

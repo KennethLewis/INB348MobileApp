@@ -1,5 +1,7 @@
 package com.example.keepupv1;
 
+import group.GroupDatabaseController;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class IndividualUnitActivity extends Activity {
 	
 	//Global database connection
 	PostDatabaseController db;
+	GroupDatabaseController groupDb;
 	private List<Post> posts; 
 	
 	@Override
@@ -51,6 +54,7 @@ public class IndividualUnitActivity extends Activity {
 		
 		//DATABASE TESTING
 		db = new PostDatabaseController(this);
+		groupDb = new GroupDatabaseController(this);
 		
         // Inserting
         Log.d("Post", "Inserting ..");

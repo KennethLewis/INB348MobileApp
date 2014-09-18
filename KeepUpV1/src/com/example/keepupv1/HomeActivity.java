@@ -72,7 +72,7 @@ public class HomeActivity extends Activity implements
 			break;
 		case 3:
 			mTitle = getString(R.string.groups);
-			Intent intentGroups = new Intent(this, Group.class);
+			Intent intentGroups = new Intent(this, GroupActivity.class);
 			startActivity(intentGroups);
 			break;
 		case 4:
