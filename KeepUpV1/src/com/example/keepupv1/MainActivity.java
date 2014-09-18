@@ -39,6 +39,8 @@ public class MainActivity extends Activity {
                     .add(R.id.units_toplevel_container, new PlaceholderFragment())
                     .commit();
         }
+        userDb = new UserDatabaseController(this);
+        unitDb = new UnitDatabaseController(this);
         addAllTestData();
     }
 
@@ -56,12 +58,6 @@ public class MainActivity extends Activity {
         		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         	    startActivity(intent);
     		}
-    	//}
-    		//else {
-			//Intent intent = new Intent(this, UnitsActivity.class);
-			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	       // startActivity(intent);
-    		//}
 	}
     
     public void goToRegister(View v){
@@ -116,9 +112,6 @@ public class MainActivity extends Activity {
     }
     
     public void addAllTestData(){
-    	
-    	userDb = new UserDatabaseController(this);
-        unitDb = new UnitDatabaseController(this);
          
         User testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "");
         User testUser2 = new User(999999, "Jackson","Jackson@live.com.au", 0, "");

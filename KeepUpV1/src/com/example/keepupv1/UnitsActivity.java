@@ -41,7 +41,6 @@ public class UnitsActivity extends Activity implements OnClickListener {
 	private String [] stringTests = {"Test announcement Lorem ipsum1"};
 	private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
 	
-	private List<Unit> unitsFromDb;
 	private List<Unit> selectedUnits = new ArrayList<Unit>();
 	private List<Unit> unitsToDisplay = new ArrayList<Unit>();
 	
@@ -65,8 +64,6 @@ public class UnitsActivity extends Activity implements OnClickListener {
 		groupDb = new GroupDatabaseController(this);
 		unitDb = new UnitDatabaseController(this);
 		
-		unitsFromDb = unitDb.getAllUnits();
-		 
 		List<Integer> studentsIdNo;
 		for(Unit unit: unitDb.getAllUnits()){
 			studentsIdNo = unit.gatherUsersId();
@@ -136,11 +133,11 @@ public class UnitsActivity extends Activity implements OnClickListener {
 	//Method to show the unit options and enable them to be clicked.
 	protected void showUnitOptions(){
 		
-		boolean[] checkedUnits = new boolean[unitsFromDb.size()];
-		int count = unitsFromDb.size();
+		boolean[] checkedUnits = new boolean[unitDb.getAllUnits().size()];
+		int count = unitDb.getAllUnits().size();
 		
 		for(int i = 0; i < count; i++)
-			checkedUnits[i] = selectedUnits.contains(unitsFromDb.get(i));
+			checkedUnits[i] = selectedUnits.contains(unitDb.getAllUnits().get(i));
 		
 		DialogInterface.OnMultiChoiceClickListener 
 			unitsDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
@@ -149,9 +146,9 @@ public class UnitsActivity extends Activity implements OnClickListener {
 				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 					// TODO Auto-generated method stub
 					if(isChecked)
-						selectedUnits.add(unitsFromDb.get(which));
+						selectedUnits.add(unitDb.getAllUnits().get(which));
 					else
-						selectedUnits.remove(unitsFromDb.get(which));
+						selectedUnits.remove(unitDb.getAllUnits().get(which));
 					
 					onChangeSelectedUnits();
 				}
@@ -160,9 +157,9 @@ public class UnitsActivity extends Activity implements OnClickListener {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Select Units");
 			
-			CharSequence [] unitNames = new CharSequence[unitsFromDb.size()];
-			for(int i =0; i < unitsFromDb.size(); i++)
-				unitNames[i] = unitsFromDb.get(i).getName();
+			CharSequence [] unitNames = new CharSequence[unitDb.getAllUnits().size()];
+			for(int i =0; i < unitDb.getAllUnits().size(); i++)
+				unitNames[i] = unitDb.getAllUnits().get(i).getName();
 			
 			builder.setMultiChoiceItems(unitNames, checkedUnits, unitsDialogListener);
 			
