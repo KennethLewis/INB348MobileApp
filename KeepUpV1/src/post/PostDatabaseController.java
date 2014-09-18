@@ -96,12 +96,12 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 	}
 
 	// Getting single User
-	public Post getPostWithUnit(int id, String unitCode) {
+	public Post getPostWithUnit(String unitCode) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = db.query(TABLE_POSTS, new String[] { KEY_ID,
-				KEY_USER_ID, KEY_DATE, KEY_CONTENT, KEY_UNITCODE }, KEY_ID + "=? AND " + KEY_UNITCODE + "=?",
-				new String[] { String.valueOf(id), unitCode }, null, null, null, null);
+				KEY_USER_ID, KEY_DATE, KEY_CONTENT, KEY_UNITCODE }, KEY_UNITCODE + "=?",
+				new String[] { unitCode }, null, null, null, null);
 		
 		Post post = null;
 		if (cursor != null)

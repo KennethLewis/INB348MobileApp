@@ -172,7 +172,10 @@ public class UnitsActivity extends Activity implements OnClickListener {
 	public void onChangeSelectedUnits(){
 		//ADD UNITS TO PAGE, MAYBE REFRESH?
 		for(Unit unit: selectedUnits){
-			DatabaseVariables.USERLOGGEDIN.addSubject(unit);
+			if(DatabaseVariables.USERLOGGEDIN.getAllSubjects().contains(unit) == false){
+				DatabaseVariables.USERLOGGEDIN.addSubject(unit);
+				//Add this user to the Unit
+			}
 		}
 		this.recreate();
 	}

@@ -1,5 +1,6 @@
 package com.example.keepupv1;
 
+import group.Group;
 import group.GroupDatabaseController;
 
 import java.util.ArrayList;
@@ -58,18 +59,20 @@ public class IndividualUnitActivity extends Activity {
 		
         // Inserting
         Log.d("Post", "Inserting ..");
-        //db.addPost(new Post("Jackson P", "Today, 1/1/2014", "Some post content here, lorem ipsum testaroonie."));
-        posts = new ArrayList<Post>();
-        posts = db.getAllPosts();
+		List<Post> postWithUnit = new ArrayList<Post>();
+		
+		for(Post post: db.getAllPosts()){
+			if(post.getUnit().matches(this.getTitle().toString()))
+				postWithUnit.add(post);
+		}
 		
 		LinearLayout postList = (LinearLayout) findViewById(R.id.posts_list);
-		for(int i = 0; i < posts.size(); i++)  {
+		for(int i = 0; i < postWithUnit.size(); i++)  {
 			View rootView = getLayoutInflater().inflate(R.layout.unit_post_template, null);
 			
 			if(DatabaseVariables.USERLOGGEDIN != null) {
-				Post post = db.getPostWithUnit(i, DatabaseVariables.USERLOGGEDIN.getUnit());
-				if(post != null) {
-					rootView = setupUnitView(post, i, rootView);
+				if(postWithUnit.get(i) != null) {
+					rootView = setupUnitView(postWithUnit.get(i), i, rootView);
 				 
 					//Add to view.
 					postList.addView(rootView);
@@ -138,10 +141,9 @@ public class IndividualUnitActivity extends Activity {
 		//reload on create with has a list of the current posts
 		EditText userPost = (EditText)findViewById(R.id.text_to_publish);
 
-		
 		if(DatabaseVariables.USERLOGGEDIN == null)
 			return;
-			
+		
 		String content = userPost.getText().toString();
 		Post newPost = new Post(DatabaseVariables.USERLOGGEDIN.getUsername(), 
 				"11/11/11", content, DatabaseVariables.USERLOGGEDIN.getUnit());
