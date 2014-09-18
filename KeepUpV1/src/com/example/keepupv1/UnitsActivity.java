@@ -1,5 +1,6 @@
 package com.example.keepupv1;
 
+import group.Group;
 import group.GroupDatabaseController;
 
 import java.util.ArrayList;
@@ -38,12 +39,13 @@ public class UnitsActivity extends Activity implements OnClickListener {
 	GroupDatabaseController groupDb;
 	
 	private String [] stringTests = {"Test announcement Lorem ipsum1"};
-	private List<String> userSubsCode = new ArrayList<String>();
-	private List<String> userSubsNames = new ArrayList<String>();
 	private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
 	
 	private List<Unit> unitsFromDb;
 	private List<Unit> selectedUnits = new ArrayList<Unit>();
+	private List<Unit> unitsToDisplay = new ArrayList<Unit>();
+	
+
 	
 	
 	@Override
@@ -63,18 +65,18 @@ public class UnitsActivity extends Activity implements OnClickListener {
 		groupDb = new GroupDatabaseController(this);
 		unitDb = new UnitDatabaseController(this);
 		
-		unitsFromDb = unitDb.getAllGroups();
+		unitsFromDb = unitDb.getAllUnits();
 		 
+		List<Integer> studentsIdNo;
+		for(Unit unit: unitDb.getAllUnits()){
+			studentsIdNo = unit.gatherUsersId();
+			if(studentsIdNo.contains(DatabaseVariables.USERLOGGEDIN.getId()))
+				unitsToDisplay.add(unit);
+		}
         //ADD UNIT LISTINGS 1 BY 1
 		LinearLayout unitList = (LinearLayout) findViewById(R.id.units_list);
 		
-		
-		
-		for (Unit units: DatabaseVariables.USERLOGGEDIN.getAllSubjects()){
-			userSubsCode.add(units.getCode());
-			userSubsNames.add(units.getName());
-		}
-		for(int i = 0; i < userSubsNames.size(); i++)  {
+		for(int i = 0; i < unitsToDisplay.size(); i++)  {
 			View rootView = getLayoutInflater().inflate(R.layout.unit_template, null);
 			 
 			User user = DatabaseVariables.USERLOGGEDIN;
@@ -92,10 +94,10 @@ public class UnitsActivity extends Activity implements OnClickListener {
 		
 		//Setup Unit Name.
 		TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
-		unitCode.setText(userSubsCode.get(i));
+		unitCode.setText(unitsToDisplay.get(i).getUnitCode());
 		
 		TextView unitName = (TextView) rootView.findViewById(R.id.unitname_unit);
-		unitName.setText(userSubsNames.get(i));
+		unitName.setText(unitsToDisplay.get(i).getName());
 		
 		//Setup last announcement.
 		TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
@@ -177,6 +179,12 @@ public class UnitsActivity extends Activity implements OnClickListener {
 			if(DatabaseVariables.USERLOGGEDIN.getAllSubjects().contains(unit) == false){
 				DatabaseVariables.USERLOGGEDIN.addSubject(unit);
 				//Add this user to the Unit
+				Unit unitCopy = unit;
+				unitCopy.addUserToUnit(DatabaseVariables.USERLOGGEDIN);
+				Unit newUnit = new Unit (unitCopy.getUnitCode(),unitCopy.getName(),
+								unitCopy.getAllUsersNames(), unitCopy.getAllUsersStudentId());
+				unitDb.deleteUnit(unit);
+				unitDb.addUnit(newUnit);
 			}
 		}
 		this.recreate();

@@ -40,13 +40,8 @@ public class GroupActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.groups_top_container, new PlaceholderFragment()).commit();
 		}
-		//db = new UserDatabaseController(this);
+		
 		groupDb = new GroupDatabaseController(this);
-		/*Group group = new Group ("Test Group", "Kenneth,Jackson,User1,User2",
-				"5279615,2,01,02","Example group description");
-		if(groupDb.getAllGroups().contains(group) == false)
-			groupDb.addGroup(group);
-		*/
 		List<Integer> studentNos;
 		
 		for(Group groups: groupDb.getAllGroups()){

@@ -101,6 +101,12 @@ public class Unit {
 		this.allUsers = allUsers;
 	}
 
+	public String getAllUsersNames(){
+		for(User user: enrolledUsers)
+			allUsers += user.getUsername() + ",";
+		return allUsers;
+			
+	}
 	public String getAllUsersStudentId() {
 		for(User user: enrolledUsers)
 			allUsersStudentId += user.getId() + ",";
@@ -111,4 +117,17 @@ public class Unit {
 		this.allUsersStudentId = allUsersStudentId;
 	}
 	
+	public List<Integer> gatherUsersId(){
+		
+		List<Integer> studentNoAfterParse = new ArrayList<Integer>();
+		String [] delimtedStudentNo;
+		if(allUsersStudentId.isEmpty() == false){
+			delimtedStudentNo = this.allUsersStudentId.split(",");		
+			for(String s: delimtedStudentNo){
+				s = s.replace(",","");
+				studentNoAfterParse.add(Integer.parseInt(s));
+			}
+		}
+		return studentNoAfterParse;
+	}
 }

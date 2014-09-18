@@ -115,7 +115,7 @@ public class UnitDatabaseController extends SQLiteOpenHelper {
 		}*/
 		
 		// Getting All Users
-		public List<Unit> getAllGroups() {
+		public List<Unit> getAllUnits() {
 			List<Unit> allUnits = new ArrayList<Unit>();
 			// Select All Query
 			String selectQuery = "SELECT  * FROM " + TABLE_UNITS;
@@ -141,7 +141,7 @@ public class UnitDatabaseController extends SQLiteOpenHelper {
 		// Deleting single User
 		public void deleteUnit(Unit unit) {
 			SQLiteDatabase db = this.getWritableDatabase();
-			db.delete(TABLE_UNITS, KEY_UNIT_NAME + " = ?",
+			db.delete(TABLE_UNITS, KEY_UNIT_CODE + " = ?",
 					new String[] { String.valueOf(unit.getUnitCode()) });
 			db.close();
 		}
