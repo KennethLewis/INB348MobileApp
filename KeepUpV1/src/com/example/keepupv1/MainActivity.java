@@ -3,6 +3,8 @@ package com.example.keepupv1;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.keepupv1.unit.Unit;
+import com.example.keepupv1.unit.UnitDatabaseController;
 import com.example.keepupv1.user.User;
 import com.example.keepupv1.user.UserDatabaseController;
 
@@ -25,12 +27,9 @@ import android.os.Build;
 
 public class MainActivity extends Activity {
 
-	private UserDatabaseController db;
+	private UserDatabaseController userDb;
+	private UnitDatabaseController unitDb;
 	private List<User> checkUsers;
-	private User testUser;
-	private User testUser2;
-	private User dummyUser1;
-	private User dummyUser2;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +40,7 @@ public class MainActivity extends Activity {
                     .add(R.id.units_toplevel_container, new PlaceholderFragment())
                     .commit();
         }
-        
-       db = new UserDatabaseController(this);
-       testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "");
-       testUser2 = new User(999999, "Jackson","Jackson@live.com.au", 0, "");
-       dummyUser1 = new User(123456, "Dummy1", "Dummy1@live.com.au", 0, "");
-       dummyUser2 = new User (987654, "Dummy2", "Dummy2@live.com.au", 0, "");
-       db.addUser(testUser);
-       db.addUser(testUser2);
-       db.addUser(dummyUser1);
-       db.addUser(dummyUser2);
+        addAllTestData();
     }
 
     public void goToHome(View v){
@@ -61,8 +51,8 @@ public class MainActivity extends Activity {
     	int userId = Integer.parseInt(userName.getText().toString());
     	
     	//for(User allUsers: checkUsers){
-    		if(db.getUser(userId) != null){
-    			DatabaseVariables.USERLOGGEDIN = db.getUser(userId);
+    		if(userDb.getUser(userId) != null){
+    			DatabaseVariables.USERLOGGEDIN = userDb.getUser(userId);
     			Intent intent = new Intent(this, HomeActivity.class);
         		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         	    startActivity(intent);
@@ -96,7 +86,7 @@ public class MainActivity extends Activity {
 		
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			db.emptyDatabase();
+			userDb.emptyDatabase();
 			return true;
 		}
 		
@@ -123,5 +113,29 @@ public class MainActivity extends Activity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
+    }
+    
+    public void addAllTestData(){
+    	
+    	userDb = new UserDatabaseController(this);
+        unitDb = new UnitDatabaseController(this);
+         
+        User testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "");
+        User testUser2 = new User(999999, "Jackson","Jackson@live.com.au", 0, "");
+        User dummyUser1 = new User(123456, "Dummy1", "Dummy1@live.com.au", 0, "");
+        User dummyUser2 = new User (987654, "Dummy2", "Dummy2@live.com.au", 0, "");
+        userDb.addUser(testUser);
+        userDb.addUser(testUser2);
+        userDb.addUser(dummyUser1);
+        userDb.addUser(dummyUser2);
+         
+        Unit unit1 = new Unit ("INB100", "Introduction to IT", "","");
+     	Unit unit2 = new Unit ("INB123", "Programming 101", "","");
+     	Unit unit3 = new Unit ("INB348", "Mobile App Dev", "","");
+     	Unit unit4 = new Unit ("INB270", "Advanced Programming", "","");
+     	unitDb.addUnit(unit1);
+     	unitDb.addUnit(unit2);
+     	unitDb.addUnit(unit3);
+     	unitDb.addUnit(unit4);
     }
 }

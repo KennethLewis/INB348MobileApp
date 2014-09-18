@@ -11,12 +11,21 @@ public class Unit {
 	private String unitCode;
 	private String name;
 	private User coordinator;
+	private String allUsers;
+	private String allUsersStudentId;
 	
 	private List<User> enrolledUsers = new ArrayList<User>();
 	
 	// Empty constructor
 	public Unit() { }
 	
+	public Unit (String unitCode, String name, String allUsers, 
+					String allUsersStudentId){
+		this.unitCode = unitCode;
+		this.name = name;
+		this.allUsers = allUsers;
+		this.allUsersStudentId = allUsersStudentId;
+	}
 	public Unit (String unitCode, String name){
 		this.unitCode = unitCode;
 		this.name = name;
@@ -83,4 +92,23 @@ public class Unit {
 	public void addUserToUnit (User u){
 		enrolledUsers.add(u);
 	}
+
+	public String getAllUsers() {
+		return allUsers;
+	}
+
+	public void setAllUsers(String allUsers) {
+		this.allUsers = allUsers;
+	}
+
+	public String getAllUsersStudentId() {
+		for(User user: enrolledUsers)
+			allUsersStudentId += user.getId() + ",";
+		return allUsersStudentId;
+	}
+
+	public void setAllUsersStudentId(String allUsersStudentId) {
+		this.allUsersStudentId = allUsersStudentId;
+	}
+	
 }

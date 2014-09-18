@@ -8,6 +8,7 @@ import java.util.List;
 import post.Post;
 
 import com.example.keepupv1.unit.Unit;
+import com.example.keepupv1.unit.UnitDatabaseController;
 import com.example.keepupv1.user.User;
 import com.example.keepupv1.user.UserDatabaseController;
 
@@ -32,18 +33,18 @@ import android.widget.Toast;
 public class UnitsActivity extends Activity implements OnClickListener {
 	
 	//Global database connection
-	UserDatabaseController db;
+	UserDatabaseController userDb;
+	UnitDatabaseController unitDb;
 	GroupDatabaseController groupDb;
-
-	/*private String[][] stringTests =   {{"INB100", "Test announcement Lorem ipsum1"}, 
-										{"INB123", "Test announcement Lorem ipsum2"}, 
-										{"INB270", "Test announcement Lorem ipsum3"}, 
-										{"INB380", "Test announcement Lorem ipsum4"}};*/
+	
 	private String [] stringTests = {"Test announcement Lorem ipsum1"};
 	private List<String> userSubsCode = new ArrayList<String>();
 	private List<String> userSubsNames = new ArrayList<String>();
 	private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
+	
+	private List<Unit> unitsFromDb;
 	private List<Unit> selectedUnits = new ArrayList<Unit>();
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +59,16 @@ public class UnitsActivity extends Activity implements OnClickListener {
 		}
 
 		//DATABASE TESTING
-		db = new UserDatabaseController(this);
+		userDb = new UserDatabaseController(this);
 		groupDb = new GroupDatabaseController(this);
+		unitDb = new UnitDatabaseController(this);
 		
-		Button selectUnitsButton = (Button)findViewById(R.id.select_units);
-		//selectUnitsButton.setOnClickListener(this);
-        
+		unitsFromDb = unitDb.getAllGroups();
 		 
         //ADD UNIT LISTINGS 1 BY 1
 		LinearLayout unitList = (LinearLayout) findViewById(R.id.units_list);
+		
+		
 		
 		for (Unit units: DatabaseVariables.USERLOGGEDIN.getAllSubjects()){
 			userSubsCode.add(units.getCode());
@@ -132,11 +134,11 @@ public class UnitsActivity extends Activity implements OnClickListener {
 	//Method to show the unit options and enable them to be clicked.
 	protected void showUnitOptions(){
 		
-		boolean[] checkedUnits = new boolean[DatabaseVariables.ALLUNITS.length];
-		int count = DatabaseVariables.ALLUNITS.length;
+		boolean[] checkedUnits = new boolean[unitsFromDb.size()];
+		int count = unitsFromDb.size();
 		
 		for(int i = 0; i < count; i++)
-			checkedUnits[i] = selectedUnits.contains(DatabaseVariables.ALLUNITS[i]);
+			checkedUnits[i] = selectedUnits.contains(unitsFromDb.get(i));
 		
 		DialogInterface.OnMultiChoiceClickListener 
 			unitsDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
@@ -145,9 +147,9 @@ public class UnitsActivity extends Activity implements OnClickListener {
 				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 					// TODO Auto-generated method stub
 					if(isChecked)
-						selectedUnits.add(DatabaseVariables.ALLUNITS[which]);
+						selectedUnits.add(unitsFromDb.get(which));
 					else
-						selectedUnits.remove(DatabaseVariables.ALLUNITS[which]);
+						selectedUnits.remove(unitsFromDb.get(which));
 					
 					onChangeSelectedUnits();
 				}
@@ -156,9 +158,9 @@ public class UnitsActivity extends Activity implements OnClickListener {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Select Units");
 			
-			CharSequence [] unitNames = new CharSequence[DatabaseVariables.ALLUNITS.length];
-			for(int i =0; i < DatabaseVariables.ALLUNITS.length; i++)
-				unitNames[i] = DatabaseVariables.ALLUNITS[i].getName();
+			CharSequence [] unitNames = new CharSequence[unitsFromDb.size()];
+			for(int i =0; i < unitsFromDb.size(); i++)
+				unitNames[i] = unitsFromDb.get(i).getName();
 			
 			builder.setMultiChoiceItems(unitNames, checkedUnits, unitsDialogListener);
 			
