@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/groups_top_container" >
+    
+<LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60pt"
+        android:layout_marginLeft="8pt"
+        android:layout_marginRight="8pt"
+        android:layout_marginBottom="20pt"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:id="@+id/groups_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1pt"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

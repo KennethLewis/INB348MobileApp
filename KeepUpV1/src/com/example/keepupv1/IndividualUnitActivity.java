@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -141,12 +142,17 @@ public class IndividualUnitActivity extends Activity {
 		//reload on create with has a list of the current posts
 		EditText userPost = (EditText)findViewById(R.id.text_to_publish);
 
+		Time dateTime = new Time(Time.getCurrentTimezone());
+		dateTime.setToNow();
+		String postTime = dateTime.monthDay + "/" + dateTime.month + "/"
+					+ dateTime.year + " at " + dateTime.hour + ":" +
+					dateTime.minute;
 		if(DatabaseVariables.USERLOGGEDIN == null)
 			return;
 		
 		String content = userPost.getText().toString();
 		Post newPost = new Post(DatabaseVariables.USERLOGGEDIN.getUsername(), 
-				"11/11/11", content, DatabaseVariables.USERLOGGEDIN.getUnit());
+				postTime, content, DatabaseVariables.USERLOGGEDIN.getUnit());
         
 		db.addPost(newPost);
         

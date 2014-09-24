@@ -142,9 +142,10 @@ public final class R {
         public static final int fragment_units_activity=0x7f030010;
         public static final int group_template=0x7f030011;
         public static final int member_details_template=0x7f030012;
-        public static final int unit_post_template=0x7f030013;
-        public static final int unit_template=0x7f030014;
-        public static final int units_nav_draw=0x7f030015;
+        public static final int test_layout=0x7f030013;
+        public static final int unit_post_template=0x7f030014;
+        public static final int unit_template=0x7f030015;
+        public static final int units_nav_draw=0x7f030016;
     }
     public static final class menu {
         public static final int create_group=0x7f0a0000;

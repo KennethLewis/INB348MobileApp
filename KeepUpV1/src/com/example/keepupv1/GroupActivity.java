@@ -6,6 +6,7 @@ import java.util.List;
 import group.Group;
 import group.GroupDatabaseController;
 
+import com.example.keepupv1.HomeActivity.PlaceholderFragment;
 import com.example.keepupv1.unit.Unit;
 import com.example.keepupv1.user.User;
 import com.example.keepupv1.user.UserDatabaseController;
@@ -13,8 +14,10 @@ import com.example.keepupv1.user.UserDatabaseController;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +34,8 @@ public class GroupActivity extends Activity {
 	GroupDatabaseController groupDb;
 	List<Group> allGroups = new ArrayList<Group>();
 	private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
+	private CharSequence mTitle;
+	private NavigationDrawerFragment mNavigationDrawerFragment;
 	@Override
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +44,15 @@ public class GroupActivity extends Activity {
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.groups_top_container, new PlaceholderFragment()).commit();
+			
 		}
+		/*mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
+				.findFragmentById(R.id.navigation_drawer);
+		mTitle = getTitle();
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+				(DrawerLayout) findViewById(R.id.drawer_layout));*/
 		
+				
 		groupDb = new GroupDatabaseController(this);
 		List<Integer> studentNos;
 		
@@ -106,6 +118,15 @@ public class GroupActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.group, menu);
 		return true;
+		/*if (!mNavigationDrawerFragment.isDrawerOpen()) {
+			// Only show items in the action bar relevant to this screen
+			// if the drawer is not showing. Otherwise, let the drawer
+			// decide what to show in the action bar.
+			getMenuInflater().inflate(R.menu.group, menu);
+			restoreActionBar();
+			return true;
+		}
+		return super.onCreateOptionsMenu(menu);*/
 	}
 
 	@Override
@@ -137,6 +158,16 @@ public class GroupActivity extends Activity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 
+		/*private static final String ARG_SECTION_NUMBER = "section_number";
+		
+		public static PlaceholderFragment newInstance(int sectionNumber) {
+			PlaceholderFragment fragment = new PlaceholderFragment();
+			Bundle args = new Bundle();
+			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+			fragment.setArguments(args);
+			return fragment;
+		}*/
+		
 		public PlaceholderFragment() {
 		}
 
@@ -147,5 +178,62 @@ public class GroupActivity extends Activity {
 					container, false);
 			return rootView;
 		}
+		/*public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			((GroupActivity) activity).onSectionAttached(getArguments().getInt(
+					ARG_SECTION_NUMBER));
+		}*/
 	}
+
+	public void onSectionAttached(int number) {
+		switch (number) {
+		case 1:
+			mTitle = getString(R.string.news);
+			Intent intentHome = new Intent(this, HomeActivity.class);
+			startActivity(intentHome);
+			break;
+		case 2:
+			mTitle = getString(R.string.units);
+			Intent intentUnits = new Intent(this, UnitsActivity.class);
+			startActivity(intentUnits);
+			break;
+		case 3:
+			mTitle = getString(R.string.groups);
+			break;
+		case 4:
+			mTitle = getString(R.string.time_table);
+			break;
+		case 5:
+			mTitle = getString(R.string.mail);
+			break;
+		case 6:
+			mTitle = getString(R.string.blackboard);
+			break;
+		case 7:
+			mTitle = getString(R.string.qut_virtual);
+			break;
+		case 8:
+			mTitle = getString(R.string.qut_news);
+			break;
+		case 9:
+			mTitle = getString(R.string.map);
+			break;
+		}
+	}
+	/*public void restoreActionBar() {
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setTitle(mTitle);
+	}
+
+	@Override
+	public void onNavigationDrawerItemSelected(int position) {
+		// TODO Auto-generated method stub
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager
+				.beginTransaction()
+				.replace(R.id.units_toplevel_container,
+						PlaceholderFragment.newInstance(position + 1)).commit();
+	}*/
 }
