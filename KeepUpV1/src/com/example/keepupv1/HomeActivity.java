@@ -1,5 +1,12 @@
 package com.example.keepupv1;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.keepupv1.IndividualUnitActivity.PlaceholderFragment;
+
+import post.Post;
+import post.PostDatabaseController;
 import android.app.Activity;
 
 import android.app.ActionBar;
@@ -17,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,12 +43,14 @@ public class HomeActivity extends Activity implements
 	 * {@link #restoreActionBar()}.
 	 */
 	private CharSequence mTitle;
+	private static PostDatabaseController postDb;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
+		
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
@@ -48,8 +58,12 @@ public class HomeActivity extends Activity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+		
+		postDb = new PostDatabaseController(this);
+		
+		
 	}
-
+	
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
@@ -168,9 +182,43 @@ public class HomeActivity extends Activity implements
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_home, container,
 					false);
+			LinearLayout newsList = (LinearLayout) rootView.findViewById(R.id.news_list);
+			for(int i = 0; i < postDb.getAllPosts().size(); i++)  {
+				View newsTemplate = inflater.inflate(R.layout.news_update_template, null);
+				
+				if(DatabaseVariables.USERLOGGEDIN != null) {
+					if(postDb.getAllPosts().get(i) != null) {
+						newsTemplate = setUpNewsArticle(postDb.getAllPosts().get(i), i, newsTemplate);
+						newsList.addView(newsTemplate);
+						//news.add(newsTemplate);
+						//Add to view.
+						//((ViewGroup) rootView).addView((View) newsTemplate);
+					}
+				}
+			}
 			return rootView;
 		}
 
+		private View setUpNewsArticle(Post p, int indexNum, View rootView) {
+			
+			//Setup Unit Name.
+			TextView userName = (TextView) rootView.findViewById(R.id.post_source);
+			userName.setText(p.getUnit() + " by:" + p.getUser());
+			
+			TextView dateTime = (TextView) rootView.findViewById(R.id.news_date_time);
+			dateTime.setText(p.getDate());
+			
+			TextView post = (TextView) rootView.findViewById(R.id.news_article);
+			post.setText(p.getContent());
+
+			 //Change background colour based on element id.
+			 if(indexNum % 2 == 0)
+				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+			 else
+				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+			 
+			return rootView;
+		}
 		@Override
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
