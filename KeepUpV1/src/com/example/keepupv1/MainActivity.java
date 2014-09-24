@@ -117,7 +117,7 @@ public class MainActivity extends Activity {
         User testUser2 = new User(999999, "Jackson","Jackson@live.com.au", 0, "");
         User dummyUser1 = new User(123456, "Dummy1", "Dummy1@live.com.au", 0, "");
         User dummyUser2 = new User (987654, "Dummy2", "Dummy2@live.com.au", 0, "");
-        if(userDb.getAllUsers().contains(testUser) == false){
+        if(userDb.getAllUsers().isEmpty()){
 	        userDb.addUser(testUser);
 	        userDb.addUser(testUser2);
 	        userDb.addUser(dummyUser1);
@@ -127,7 +127,7 @@ public class MainActivity extends Activity {
      	Unit unit2 = new Unit ("INB123", "Programming 101", "","");
      	Unit unit3 = new Unit ("INB348", "Mobile App Dev", "","");
      	Unit unit4 = new Unit ("INB270", "Advanced Programming", "","");
-     	if (unitDb.getAllUnits().contains(unit1) == false){
+     	if (unitDb.getAllUnits().isEmpty()){
 	     	unitDb.addUnit(unit1);
 	     	unitDb.addUnit(unit2);
 	     	unitDb.addUnit(unit3);
