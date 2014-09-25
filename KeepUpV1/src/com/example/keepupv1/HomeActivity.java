@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.keepupv1.IndividualUnitActivity.PlaceholderFragment;
+import com.example.keepupv1.unit.Unit;
 
 import post.Post;
 import post.PostDatabaseController;
@@ -162,7 +163,7 @@ public class HomeActivity extends Activity implements
 		 * fragment.
 		 */
 		private static final String ARG_SECTION_NUMBER = "section_number";
-
+		private List<Post> postsForUser = new ArrayList<Post>();
 		/**
 		 * Returns a new instance of this fragment for the given section number.
 		 */
@@ -183,6 +184,13 @@ public class HomeActivity extends Activity implements
 			View rootView = inflater.inflate(R.layout.fragment_home, container,
 					false);
 			LinearLayout newsList = (LinearLayout) rootView.findViewById(R.id.news_list);
+			
+			/**
+			 * TODO
+			 * MAKE IT SO ONLY THE UNIT AND GROUP POSTS WHICH THE USER IS ENROLLED
+			 * IN ARE VISABLE
+			 */
+			
 			for(int i = 0; i < postDb.getAllPosts().size(); i++)  {
 				View newsTemplate = inflater.inflate(R.layout.news_update_template, null);
 				

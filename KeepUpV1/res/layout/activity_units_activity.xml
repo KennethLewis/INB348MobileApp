@@ -1,39 +1,39 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/units_top_container"
+    android:id="@+id/unit_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.keepupv1.UnitsActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:context="com.example.keepupv1.UnitsActivity" >
 
-    <LinearLayout
-        android:id="@+id/container"
+    <!--
+         As the main content view, the view below consumes the entire
+         space available using match_parent in both dimensions.
+    -->
+
+    <FrameLayout
+        android:id="@+id/units_toplevel_container"
         android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--
+         android:layout_gravity="start" tells DrawerLayout to treat
+         this as a sliding drawer on the left side for left-to-right
+         languages and on the right side for right-to-left languages.
+         If you're not building against API 17 or higher, use
+         android:layout_gravity="left" instead.
+    -->
+    <!--
+         The drawer is given a fixed width in dp and extends the full height of
+         the container.
+    -->
+
+    <fragment
+        android:id="@+id/units_navigation_drawer"
+        android:name="com.example.keepupv1.NavigationDrawerFragment"
+        android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="60pt"
-        android:layout_marginLeft="8pt"
-        android:layout_marginRight="8pt"
-        android:layout_marginBottom="8pt"
-        android:orientation="vertical" >
+        android:layout_gravity="start"
+        tools:layout="@layout/fragment_navigation_drawer" />
 
-        <ScrollView
-            android:id="@+id/scrollView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <LinearLayout
-                android:id="@+id/units_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="1pt"
-                android:orientation="vertical" >
-
-            </LinearLayout>
-        </ScrollView>
-
-    </LinearLayout>
-
-</RelativeLayout>
-
+</android.support.v4.widget.DrawerLayout>

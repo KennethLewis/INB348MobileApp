@@ -36,7 +36,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
+		setContentView(R.layout.activity_group);
 
 		defaultNavDraw.onCreate(savedInstanceState);
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
@@ -54,7 +54,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager
 				.beginTransaction()
-				.replace(R.id.units_toplevel_container,
+				.replace(R.id.groups_toplevel_container,
 						PlaceholderFragment.newInstance(position + 1)).commit();
 	}
 
@@ -65,8 +65,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 			break;
 		case 2:
 			mTitle = getString(R.string.units);
-			Intent intent = new Intent(this, UnitsActivityTEST.class);
-			startActivity(intent);
+			//Intent intent = new Intent(this, UnitsActivityTEST.class);
+			//startActivity(intent);
 			break;
 		case 3:
 			mTitle = getString(R.string.groups);
@@ -105,7 +105,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.
-			getMenuInflater().inflate(R.menu.home, menu);
+			getMenuInflater().inflate(R.menu.group, menu);
 			restoreActionBar();
 			return true;
 		}
@@ -151,17 +151,17 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_home, container,
+			View rootView = inflater.inflate(R.layout.fragment_group, container,
 					false);
 			return rootView;
 		}
 
-		/*public void onAttach(Activity activity) {
+		public void onAttach(Activity activity) {
 			super.onAttach(activity);
-			((HomeActivity) activity).onSectionAttached(getArguments().getInt(
+			((GroupActivity) activity).onSectionAttached(getArguments().getInt(
 					ARG_SECTION_NUMBER));
 		}
-		*/
+		
 		
 		
 	}

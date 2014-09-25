@@ -9,28 +9,61 @@
     android:scrollbarStyle="insideOverlay"
     android:scrollbars="vertical"
     tools:context="com.example.keepupv1.UnitsActivity2$PlaceholderFragment" >
+    
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5pt"
+        android:layout_marginLeft="8pt"
+        android:layout_marginRight="8pt"
+        android:layout_marginBottom="40pt"
+        android:orientation="vertical" >
 
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:id="@+id/units_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1pt"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-   
-        <TextView
-   		 android:text="Add Units"
-		 android:id="@+id/add_units"
-    	 android:layout_width="fill_parent"
-   		 android:layout_height="wrap_content"
-    	 android:padding="5dip" />
-
-	  <Button
-	    android:layout_height="wrap_content"
-	    android:layout_width="fill_parent"
-	    android:text="Select Units"
-	    android:id="@+id/select_units"
-	    android:onClick="showUnits"
-	    android:padding="5dip" />
   
     </LinearLayout>
-    
+
+    <Button
+        android:id="@+id/select_units"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/test"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:onClick="showUnits"
+        android:padding="5dip"
+        android:text="Select Units" />
+
+    <TextView
+        android:id="@+id/add_units"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/select_units"
+        android:layout_alignParentLeft="true"
+        android:padding="5dip"
+        android:text="Add Units" />
+
 </RelativeLayout>
