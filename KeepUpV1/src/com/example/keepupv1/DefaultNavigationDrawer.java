@@ -158,8 +158,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
-			((GroupActivity) activity).onSectionAttached(getArguments().getInt(
-					ARG_SECTION_NUMBER));
+			//((GroupActivity) activity).onSectionAttached(getArguments().getInt(
+				//	ARG_SECTION_NUMBER));
 		}
 		
 		

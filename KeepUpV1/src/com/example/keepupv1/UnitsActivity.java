@@ -42,14 +42,11 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	private static UserDatabaseController userDb;
 	private static UnitDatabaseController unitDb;
 	private static GroupDatabaseController groupDb;
-	
-	
-	
 	private List<Unit> selectedUnits = new ArrayList<Unit>();
-	
 	
 	private CharSequence mTitle;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,7 +58,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			getFragmentManager().beginTransaction()
 					.add(R.id.units_top_container, new PlaceholderFragment()).commit();
 		}*/
-		mNavigationDrawerFragment = new NavigationDrawerFragment();
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.units_navigation_drawer);
 		mTitle = getTitle();
@@ -72,9 +68,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		userDb = new UserDatabaseController(this);
 		groupDb = new GroupDatabaseController(this);
 		unitDb = new UnitDatabaseController(this);
-		
-		
-		
+		mNavigationDrawerFragment.selectItem(1);
 	}
 	
 	
@@ -284,12 +278,13 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	public void onSectionAttached(int number) {
 		switch (number) {
 		case 1:
-			mTitle = getString(R.string.units);
-			break;
-		case 2:
 			mTitle = getString(R.string.news);
 			Intent intentHome = new Intent(this, HomeActivity.class);
 			startActivity(intentHome);
+			break;
+			
+		case 2:
+			mTitle = getString(R.string.units);
 			break;
 		case 3:
 			mTitle = getString(R.string.groups);

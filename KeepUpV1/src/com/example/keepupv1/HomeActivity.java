@@ -61,7 +61,7 @@ public class HomeActivity extends Activity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 		
 		postDb = new PostDatabaseController(this);
-		
+		mNavigationDrawerFragment.selectItem(0);
 		
 	}
 	
@@ -71,7 +71,7 @@ public class HomeActivity extends Activity implements
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager
 				.beginTransaction()
-				.replace(R.id.units_toplevel_container,
+				.replace(R.id.home_toplevel_container,
 						PlaceholderFragment.newInstance(position + 1)).commit();
 	}
 
@@ -86,7 +86,7 @@ public class HomeActivity extends Activity implements
 			startActivity(intentUnits);
 			break;
 		case 3:
-			mTitle = getString(R.string.groups);
+			mTitle = getString(R.string.groups); 
 			Intent intentGroups = new Intent(this, GroupActivity.class);
 			startActivity(intentGroups);
 			break;

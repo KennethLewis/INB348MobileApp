@@ -17,5 +17,6 @@ public class DatabaseVariables {
 	
 	
 	public static User USERLOGGEDIN;
+	public static NavigationDrawerFragment NAVIGATIONDRAWER;
 
 }
