@@ -39,13 +39,11 @@ public class UnitsActivity extends Activity implements
 NavigationDrawerFragment.NavigationDrawerCallbacks{
 	
 	//Global database connection
-	private static UserDatabaseController userDb;
 	private static UnitDatabaseController unitDb;
-	private static GroupDatabaseController groupDb;
 	private List<Unit> selectedUnits = new ArrayList<Unit>();
 	
 	private CharSequence mTitle;
-	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private NavigationDrawerFragment uNavigationDrawerFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +56,15 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			getFragmentManager().beginTransaction()
 					.add(R.id.units_top_container, new PlaceholderFragment()).commit();
 		}*/
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
+		uNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.units_navigation_drawer);
 		mTitle = getTitle();
-		mNavigationDrawerFragment.setUp(R.id.units_navigation_drawer,
+		uNavigationDrawerFragment.setUp(R.id.units_navigation_drawer,
 				(DrawerLayout) findViewById(R.id.unit_drawer_layout));
 
 		//DATABASE TESTING
-		userDb = new UserDatabaseController(this);
-		groupDb = new GroupDatabaseController(this);
 		unitDb = new UnitDatabaseController(this);
-		mNavigationDrawerFragment.selectItem(1);
+		uNavigationDrawerFragment.selectItem(1);
 	}
 	
 	
@@ -160,7 +156,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		//getMenuInflater().inflate(R.menu.units_activity, menu);
 		//return true;
-		if (!mNavigationDrawerFragment.isDrawerOpen()) {
+		if (!uNavigationDrawerFragment.isDrawerOpen()) {
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.
@@ -272,6 +268,11 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
 			 
 			return rootView;
+		}
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			((UnitsActivity) activity).onSectionAttached(getArguments().getInt(
+					ARG_SECTION_NUMBER));
 		}
 	}
 
