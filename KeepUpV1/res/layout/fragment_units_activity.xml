@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:scrollbarStyle="insideOverlay"
     android:scrollbars="vertical"
-    tools:context="com.example.keepupv1.UnitsActivity2$PlaceholderFragment" >
+    tools:context="com.keepupv1.UnitsActivity2$PlaceholderFragment" >
     
     <LinearLayout
         android:id="@+id/container"
@@ -55,15 +55,6 @@
         android:layout_marginBottom="16dp"
         android:onClick="showUnits"
         android:padding="5dip"
-        android:text="Select Units" />
-
-    <TextView
-        android:id="@+id/add_units"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/select_units"
-        android:layout_alignParentLeft="true"
-        android:padding="5dip"
-        android:text="Add Units" />
+        android:text="@string/add_remove_units" />
 
 </RelativeLayout>

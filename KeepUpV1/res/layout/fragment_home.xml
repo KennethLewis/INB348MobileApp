@@ -15,7 +15,7 @@
     android:scrollbarAlwaysDrawVerticalTrack="true"
     android:scrollbarStyle="insideOverlay"
     android:scrollbars="vertical"
-    tools:context="com.example.keepupv1.HomeActivity$PlaceholderFragment" >
+    tools:context="com.keepupv1.HomeActivity$PlaceholderFragment" >
 
     <TextView
         android:id="@+id/news_feed_header"

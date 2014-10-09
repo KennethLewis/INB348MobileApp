@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.keepupv1.IndividualUnitActivity"
+    tools:context="com.keepupv1.IndividualUnitActivity"
     tools:ignore="MergeRootFrame" >
 
      <ScrollView

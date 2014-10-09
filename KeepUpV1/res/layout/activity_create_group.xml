@@ -3,7 +3,7 @@
     android:id="@+id/create_group_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.keepupv1.CreateGroupActivity"
+    tools:context="com.keepupv1.CreateGroupActivity"
     tools:ignore="MergeRootFrame" >
 
     <LinearLayout
@@ -36,7 +36,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/username_caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

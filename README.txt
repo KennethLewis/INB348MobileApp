@@ -1,4 +1,4 @@
-KeepUp Version 1.0
+KeepUp
 
 Currently the application contains a few main pages but mainly to navigate through to certain areas.
 The main implementation of the application is contained in the "UnitsActivity" where by students can

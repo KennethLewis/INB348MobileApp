@@ -8,17 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.keepupv1.MainActivity$PlaceholderFragment" >
-
-    <TextView
-        android:id="@+id/news_area"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:text="@string/forgot_details"
-        android:textSize="8pt" />
+    tools:context="com.keepupv1.MainActivity$PlaceholderFragment" >
 
     <TextView
         android:id="@+id/news_heading"
@@ -36,42 +26,76 @@
         android:textSize="10pt" />
 
     <EditText
-        android:id="@+id/user_name"
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/username"
+        android:layout_below="@+id/username"
+        android:layout_marginTop="44dp"
+        android:ems="10"
+        android:inputType="textPassword" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/news_heading"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
-        android:inputType="number"
-        android:text="@string/user_name" />
+        android:inputType="text"
+        android:text="@string/prefill_username" />
 
-    <EditText
-        android:id="@+id/password"
+    <TextView
+        android:id="@+id/username_caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/user_name"
-        android:layout_below="@+id/user_name"
-        android:layout_marginTop="23dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:text="@string/password" />
+        android:layout_alignLeft="@+id/username"
+        android:layout_below="@+id/news_heading"
+        android:layout_marginTop="17dp"
+        android:text="@string/username"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/password_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/password"
+        android:layout_below="@+id/username"
+        android:layout_marginTop="19dp"
+        android:text="@string/password"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <CheckBox
         android:id="@+id/remember_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/news_heading"
+        android:layout_below="@+id/password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="33dp"
         android:text="@string/remember_me" />
+
+    <TextView
+        android:id="@+id/news_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/forgot_details"
+        android:textSize="8pt" />
 
     <Button
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/remember_me"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_alignBaseline="@+id/remember_me"
+        android:layout_alignBottom="@+id/remember_me"
+        android:layout_alignRight="@+id/password"
         android:onClick="goToHome"
         android:text="@string/login_button" />
 
@@ -81,10 +105,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:text="@string/register"
+        android:layout_marginTop="20dp"
         android:clickable="true"
         android:onClick="goToRegister"
+        android:text="@string/register"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

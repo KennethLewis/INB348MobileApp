@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.keepupv1.Group$PlaceholderFragment" >
+    tools:context="com.keepupv1.Group$PlaceholderFragment" >
 
     <TextView
         android:id="@+id/register"
@@ -26,7 +26,7 @@
         android:layout_alignBaseline="@+id/register"
         android:layout_alignBottom="@+id/register"
         android:layout_alignParentRight="true"
-        android:text="@string/keeping_up_with_1_grp"
+        android:text="@string/group_count"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
