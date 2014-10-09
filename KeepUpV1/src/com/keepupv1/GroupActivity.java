@@ -3,6 +3,13 @@ package com.keepupv1;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD:KeepUpV1/src/com/keepupv1/GroupActivity.java
+=======
+import navDrawFragments.GroupNavDrawerFragment;
+
+import group.Group;
+import group.GroupDatabaseController;
+>>>>>>> origin/master:KeepUpV1/src/com/example/keepupv1/GroupActivity.java
 
 import com.keepupv1.R;
 import com.keepupv1.HomeActivity.PlaceholderFragment;
@@ -43,16 +50,26 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
 	private CharSequence mTitle;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private static int drawerSelection;
+	private static boolean selection = false;
 	@Override
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_group);
+		/*Intent intent = getIntent();
+		Bundle extras = intent.getExtras();
+		if(extras!= null) {
+			drawerSelection =  (Integer) extras.get("DrawSelection");
+			//gNavigationDrawerFragment = new NavigationDrawerFragment(drawSelection);
+		}*/
 		//if (savedInstanceState == null) {
-		//	getFragmentManager().beginTransaction()
-		//			.add(R.id.groups_top_container, new PlaceholderFragment()).commit();
-			
-		//}
+				//	getFragmentManager().beginTransaction()
+				//			.add(R.id.groups_top_container, new PlaceholderFragment()).commit();
+					
+				//}
+		setContentView(R.layout.activity_group);
+		
+		
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.group_navigation_drawer);
 		mTitle = getTitle();
@@ -60,7 +77,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 				(DrawerLayout) findViewById(R.id.group_drawer_layout));
 		
 		groupDb = new GroupDatabaseController(this);
-			
+		mNavigationDrawerFragment.selectItem(2);
 	}
 	
 	
@@ -115,13 +132,13 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	 */
 	public static class PlaceholderFragment extends Fragment {
 
-		private static final String ARG_SECTION_NUMBER = "group_section_number";
+		private static final String ARG_GROUP_NUMBER = "group_section_number";
 		List<Group> allGroups = new ArrayList<Group>();
 		
 		public static PlaceholderFragment newInstance(int sectionNumber) {
 			PlaceholderFragment fragment = new PlaceholderFragment();
 			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+			args.putInt(ARG_GROUP_NUMBER, sectionNumber);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -193,24 +210,27 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
 			((GroupActivity) activity).onSectionAttached(getArguments().getInt(
-					ARG_SECTION_NUMBER));
+					ARG_GROUP_NUMBER));
 		}
 	}
 
 	public void onSectionAttached(int number) {
 		switch (number) {
+		
 		case 1:
 			mTitle = getString(R.string.groups);
-			break;
-		case 2:
-			mTitle = getString(R.string.news);
 			Intent intentHome = new Intent(this, HomeActivity.class);
 			startActivity(intentHome);
 			break;
-		case 3:
+			
+		case 2:
 			mTitle = getString(R.string.units);
 			Intent intentUnits = new Intent(this, UnitsActivity.class);
 			startActivity(intentUnits);
+			break;
+			
+		case 3:
+			mTitle = getString(R.string.groups);
 			break;
 		case 4:
 			mTitle = getString(R.string.time_table);
