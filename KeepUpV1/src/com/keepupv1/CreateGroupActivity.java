@@ -5,18 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.keepupv1.R;
-import com.keepupv1.R.color;
-import com.keepupv1.R.id;
-import com.keepupv1.R.layout;
-import com.keepupv1.R.menu;
 import com.keepupv1.group.Group;
 import com.keepupv1.group.GroupDatabaseController;
-import com.keepupv1.unit.Unit;
 import com.keepupv1.user.User;
 import com.keepupv1.user.UserDatabaseController;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -27,12 +21,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.os.Build;
 
 public class CreateGroupActivity extends Activity {
 

@@ -1,11 +1,9 @@
 package com.keepupv1.post;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import com.keepupv1.user.User;
-import com.keepupv1.user.UserDatabaseController;
 
 import android.content.ContentValues;
 import android.content.Context;

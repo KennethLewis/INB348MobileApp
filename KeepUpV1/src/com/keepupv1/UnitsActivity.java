@@ -6,27 +6,15 @@ import java.util.List;
 
 
 import com.keepupv1.R;
-import com.keepupv1.GroupActivity.PlaceholderFragment;
-import com.keepupv1.R.color;
-import com.keepupv1.R.id;
-import com.keepupv1.R.layout;
-import com.keepupv1.R.menu;
-import com.keepupv1.R.string;
-import com.keepupv1.group.Group;
-import com.keepupv1.group.GroupDatabaseController;
-import com.keepupv1.post.Post;
 import com.keepupv1.unit.Unit;
 import com.keepupv1.unit.UnitDatabaseController;
 import com.keepupv1.user.User;
-import com.keepupv1.user.UserDatabaseController;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -36,7 +24,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;

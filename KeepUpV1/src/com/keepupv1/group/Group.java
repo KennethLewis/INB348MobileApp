@@ -3,9 +3,7 @@ package com.keepupv1.group;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.keepupv1.post.Post;
-import com.keepupv1.user.User;
 
 public class Group {
 

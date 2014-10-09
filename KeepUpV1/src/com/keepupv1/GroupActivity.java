@@ -3,27 +3,11 @@ package com.keepupv1;
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD:KeepUpV1/src/com/keepupv1/GroupActivity.java
-=======
-import navDrawFragments.GroupNavDrawerFragment;
-
-import group.Group;
-import group.GroupDatabaseController;
->>>>>>> origin/master:KeepUpV1/src/com/example/keepupv1/GroupActivity.java
-
-import com.keepupv1.R;
-import com.keepupv1.HomeActivity.PlaceholderFragment;
-import com.keepupv1.R.color;
-import com.keepupv1.R.id;
-import com.keepupv1.R.layout;
-import com.keepupv1.R.menu;
-import com.keepupv1.R.string;
 import com.keepupv1.group.Group;
 import com.keepupv1.group.GroupDatabaseController;
-import com.keepupv1.unit.Unit;
-import com.keepupv1.user.User;
-import com.keepupv1.user.UserDatabaseController;
 
+import com.keepupv1.R;
+import com.keepupv1.user.User;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -39,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
 
 public class GroupActivity extends Activity implements
 NavigationDrawerFragment.NavigationDrawerCallbacks{

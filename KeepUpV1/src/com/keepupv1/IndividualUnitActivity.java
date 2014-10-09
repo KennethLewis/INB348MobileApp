@@ -1,21 +1,12 @@
 package com.keepupv1;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import com.keepupv1.R;
-import com.keepupv1.R.color;
-import com.keepupv1.R.id;
-import com.keepupv1.R.layout;
-import com.keepupv1.R.menu;
-import com.keepupv1.group.Group;
 import com.keepupv1.group.GroupDatabaseController;
 import com.keepupv1.post.Post;
 import com.keepupv1.post.PostDatabaseController;
-import com.keepupv1.user.User;
-import com.keepupv1.user.UserDatabaseController;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;

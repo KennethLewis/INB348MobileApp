@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.keepupv1.post.Post;
 import com.keepupv1.user.User;
 
 public class GroupDatabaseController extends SQLiteOpenHelper {

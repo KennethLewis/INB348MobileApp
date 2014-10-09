@@ -1,14 +1,10 @@
 package com.keepupv1;
 
 import com.keepupv1.R;
-import com.keepupv1.R.id;
-import com.keepupv1.R.layout;
-import com.keepupv1.R.menu;
 import com.keepupv1.user.User;
 import com.keepupv1.user.UserDatabaseController;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.os.Build;
 
 public class RegisterActivity extends Activity {
 

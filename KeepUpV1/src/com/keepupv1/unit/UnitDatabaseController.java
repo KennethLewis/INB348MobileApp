@@ -10,10 +10,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.keepupv1.group.Group;
-import com.keepupv1.group.GroupDatabaseController;
-import com.keepupv1.user.User;
-
 public class UnitDatabaseController extends SQLiteOpenHelper {
 
 	// All Static variables
