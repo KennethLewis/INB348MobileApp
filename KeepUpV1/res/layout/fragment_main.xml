@@ -22,8 +22,9 @@
         android:gravity="center_vertical|center"
         android:longClickable="false"
         android:selectAllOnFocus="false"
-        android:text="@string/login_advice"
-        android:textSize="10pt" />
+        android:text="@string/app_name"
+        android:textColor="@color/keepup_darkblue_headings"
+        android:textSize="14pt" />
 
     <EditText
         android:id="@+id/password"
@@ -109,6 +110,7 @@
         android:clickable="true"
         android:onClick="goToRegister"
         android:text="@string/register"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="8pt" />
 
 </RelativeLayout>

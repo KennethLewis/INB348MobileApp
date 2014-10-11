@@ -1,11 +1,19 @@
-package com.keepupv1;
+package com.keepupv1.activities;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 
+import com.keepupv1.GlobalVariables;
+import com.keepupv1.NavigationDrawerFragment;
 import com.keepupv1.R;
+import com.keepupv1.NavigationDrawerFragment.NavigationDrawerCallbacks;
+import com.keepupv1.R.color;
+import com.keepupv1.R.id;
+import com.keepupv1.R.layout;
+import com.keepupv1.R.menu;
+import com.keepupv1.R.string;
 import com.keepupv1.unit.Unit;
 import com.keepupv1.unit.UnitDatabaseController;
 import com.keepupv1.user.User;
@@ -42,7 +50,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_units_activity);
+		setContentView(R.layout.activity_units);
 		
 		//Add fragment (small view that you make and import)
 		/*if (savedInstanceState == null) {
@@ -207,7 +215,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_units_activity,
+			View rootView = inflater.inflate(R.layout.fragment_units,
 					container, false);
 			
 			List<Integer> studentsIdNo;
@@ -237,10 +245,10 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			
 			//Setup Unit Name.
 			TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
-			unitCode.setText(unitsToDisplay.get(i).getUnitCode());
+			unitCode.setText(unitsToDisplay.get(i).getUnitCode() + " - " + unitsToDisplay.get(i).getName());
 			
-			TextView unitName = (TextView) rootView.findViewById(R.id.unitname_unit);
-			unitName.setText(unitsToDisplay.get(i).getName());
+			//TextView unitName = (TextView) rootView.findViewById(R.id.unitname_unit);
+			//unitName.setText(unitsToDisplay.get(i).getName());
 			
 			//Setup last announcement.
 			TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
@@ -255,10 +263,10 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			postOnYoursCount.setText("x " + String.valueOf(intTests[i][2]));
 
 			 //Change background colour based on element id.
-			 if(i % 2 == 0)
-				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-			 else
-				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+			 //if(i % 2 == 0)
+				 //rootView.findViewById(R.id.unit_template_content).setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+			 //else
+				 //rootView.findViewById(R.id.unit_template_content).setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
 			 
 			return rootView;
 		}

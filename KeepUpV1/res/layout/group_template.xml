@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayout02"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/unit_template_main_layout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="6pt"
     android:layout_marginBottom="4pt"
-    android:padding="4pt"
+    android:layout_marginTop="6pt"
     android:background="#dddddd"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="4pt" >
 
     <TextView
         android:id="@+id/group_name"
@@ -44,8 +43,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
 
         <ImageView
             android:id="@+id/announcement_icon_unit"

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+    
+    <color name="lightblue_background">#e2eaff</color>
     <color name="unit_grey_odd">#deddff</color>
     <color name="unit_grey_even">#f0f0ff</color>
+    <color name="keepup_blue_headings">#2e55e4</color>
+    <color name="keepup_darkblue_headings">#4946ff</color>
     
 </resources>

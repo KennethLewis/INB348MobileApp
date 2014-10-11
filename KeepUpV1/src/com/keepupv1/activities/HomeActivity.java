@@ -1,9 +1,17 @@
-package com.keepupv1;
+package com.keepupv1.activities;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.keepupv1.GlobalVariables;
+import com.keepupv1.NavigationDrawerFragment;
 import com.keepupv1.R;
+import com.keepupv1.NavigationDrawerFragment.NavigationDrawerCallbacks;
+import com.keepupv1.R.color;
+import com.keepupv1.R.id;
+import com.keepupv1.R.layout;
+import com.keepupv1.R.menu;
+import com.keepupv1.R.string;
 import com.keepupv1.post.Post;
 import com.keepupv1.post.PostDatabaseController;
 import android.app.Activity;

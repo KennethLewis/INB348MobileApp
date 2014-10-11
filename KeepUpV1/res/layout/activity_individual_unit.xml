@@ -1,42 +1,46 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.keepupv1.IndividualUnitActivity"
+    android:orientation="vertical"
+    tools:context="com.keepupv1.activities.IndividualUnitActivity"
     tools:ignore="MergeRootFrame" >
 
-     <ScrollView
-            android:id="@+id/scrollView1"
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/text_to_publish"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:id="@+id/posts_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <LinearLayout
-                android:id="@+id/posts_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="1pt"
-                android:orientation="vertical" >
-
-            </LinearLayout>
-        </ScrollView>
-    <Button
-        android:id="@+id/messageSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:text="Send" 
-        android:onClick="publishUserPost"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="1pt"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </ScrollView>
 
     <EditText
         android:id="@+id/text_to_publish"
-        android:layout_width="258dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:ems="10" >
+        android:layout_above="@+id/messageSend"
+        android:layout_alignParentLeft="true"
+        android:ems="10"
+        android:minLines="2" android:inputType="text"/>
 
-        <requestFocus />
-    </EditText>
+    <Button
+        android:id="@+id/messageSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="publishUserPost"
+        android:text="Send" />
 
-</FrameLayout>
-
+</RelativeLayout>

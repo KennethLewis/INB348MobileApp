@@ -1,6 +1,10 @@
-package com.keepupv1;
+package com.keepupv1.activities;
 
+import com.keepupv1.GlobalVariables;
 import com.keepupv1.R;
+import com.keepupv1.R.id;
+import com.keepupv1.R.layout;
+import com.keepupv1.R.menu;
 import com.keepupv1.unit.Unit;
 import com.keepupv1.unit.UnitDatabaseController;
 import com.keepupv1.user.User;

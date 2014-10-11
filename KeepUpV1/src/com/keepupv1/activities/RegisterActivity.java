@@ -1,6 +1,9 @@
-package com.keepupv1;
+package com.keepupv1.activities;
 
 import com.keepupv1.R;
+import com.keepupv1.R.id;
+import com.keepupv1.R.layout;
+import com.keepupv1.R.menu;
 import com.keepupv1.user.User;
 import com.keepupv1.user.UserDatabaseController;
 

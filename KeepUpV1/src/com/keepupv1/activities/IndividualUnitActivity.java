@@ -1,9 +1,14 @@
-package com.keepupv1;
+package com.keepupv1.activities;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.keepupv1.GlobalVariables;
 import com.keepupv1.R;
+import com.keepupv1.R.color;
+import com.keepupv1.R.id;
+import com.keepupv1.R.layout;
+import com.keepupv1.R.menu;
 import com.keepupv1.group.GroupDatabaseController;
 import com.keepupv1.post.Post;
 import com.keepupv1.post.PostDatabaseController;
@@ -58,7 +63,7 @@ public class IndividualUnitActivity extends Activity {
         Log.d("Post", "Inserting ..");
 		List<Post> postWithUnit = new ArrayList<Post>();
 		
-		for(Post post: db.getAllPosts()){
+		for(Post post: db.getAllPosts()) {
 			if(post.getUnit().matches(this.getTitle().toString()))
 				postWithUnit.add(post);
 		}
@@ -66,7 +71,6 @@ public class IndividualUnitActivity extends Activity {
 		LinearLayout postList = (LinearLayout) findViewById(R.id.posts_list);
 		for(int i = 0; i < postWithUnit.size(); i++)  {
 			View rootView = getLayoutInflater().inflate(R.layout.unit_post_template, null);
-			
 			if(GlobalVariables.USERLOGGEDIN != null) {
 				if(postWithUnit.get(i) != null) {
 					rootView = setupUnitView(postWithUnit.get(i), i, rootView);
