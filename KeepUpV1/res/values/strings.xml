@@ -18,6 +18,7 @@
     <string name="register_pw_confirm">Confirm Password</string>
     <string name="register_prefill_qutemail"></string>
     
+    <string name="notification_count">0</string>
     <string name="welcome">Welcome to KeepUP</string>
     <string name="app_name">keepUP</string>
     <string name="hello_world">Hello world!</string>

@@ -6,12 +6,6 @@ import java.util.List;
 import com.keepupv1.GlobalVariables;
 import com.keepupv1.NavigationDrawerFragment;
 import com.keepupv1.R;
-import com.keepupv1.NavigationDrawerFragment.NavigationDrawerCallbacks;
-import com.keepupv1.R.color;
-import com.keepupv1.R.id;
-import com.keepupv1.R.layout;
-import com.keepupv1.R.menu;
-import com.keepupv1.R.string;
 import com.keepupv1.post.Post;
 import com.keepupv1.post.PostDatabaseController;
 import android.app.Activity;
@@ -184,7 +178,7 @@ public class HomeActivity extends Activity implements
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_home, container,
 					false);
-			LinearLayout newsList = (LinearLayout) rootView.findViewById(R.id.news_list);
+			LinearLayout newsList = (LinearLayout) rootView.findViewById(R.id.news_post_list);
 			
 			/**
 			 * TODO
@@ -193,7 +187,7 @@ public class HomeActivity extends Activity implements
 			 */
 			
 			for(int i = 0; i < postDb.getAllPosts().size(); i++)  {
-				View newsTemplate = inflater.inflate(R.layout.news_update_template, null);
+				View newsTemplate = inflater.inflate(R.layout.unit_post_template, null);
 				
 				if(GlobalVariables.USERLOGGEDIN != null) {
 					if(postDb.getAllPosts().get(i) != null) {
@@ -211,13 +205,13 @@ public class HomeActivity extends Activity implements
 		private View setUpNewsArticle(Post p, int indexNum, View rootView) {
 			
 			//Setup Unit Name.
-			TextView userName = (TextView) rootView.findViewById(R.id.post_source);
-			userName.setText(p.getUnit() + " by:" + p.getUser());
+			TextView userName = (TextView) rootView.findViewById(R.id.username);
+			userName.setText(p.getUser());
 			
-			TextView dateTime = (TextView) rootView.findViewById(R.id.news_date_time);
+			TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
 			dateTime.setText(p.getDate());
 			
-			TextView post = (TextView) rootView.findViewById(R.id.news_article);
+			TextView post = (TextView) rootView.findViewById(R.id.published_user_post);
 			post.setText(p.getContent());
 
 			 //Change background colour based on element id.

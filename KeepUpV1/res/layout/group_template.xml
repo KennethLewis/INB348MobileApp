@@ -1,101 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/unit_template_main_layout"
+    android:id="@+id/group_template_main_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="4pt"
     android:layout_marginTop="6pt"
-    android:background="#dddddd"
-    android:orientation="vertical"
-    android:padding="4pt" >
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:clickable="true"
+        android:onClick="unitDetails"
         android:text="@string/example_grp_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-   <TextView
-        android:id="@+id/group_members"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/example_members_list"  
-        android:textSize="6pt" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4pt" >
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@layout/layout_bg"
+        android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/arrow_icon_unit"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/group_members"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_icon" />
+            android:layout_marginLeft="5pt"
+            android:layout_marginTop="5pt"
+            android:text="@string/example_members_list"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="6pt" >
+
+        </TextView>
 
         <TextView
             android:id="@+id/last_group_post"
             android:layout_width="match_parent"
             android:layout_height="34dp"
+            android:layout_margin="2pt"
+            android:drawableLeft="@drawable/arrow_icon"
             android:text="@string/newsfeed_item_content_announcement"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="6pt" />
+            android:textSize="6pt" >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" >
+
+            <ImageView
+                android:id="@+id/announcement_icon_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2pt"
+                android:contentDescription="@string/newAnnouncementsNOTIFY"
+                android:src="@drawable/announcement_icon" />
+
+            <TextView
+                android:id="@+id/announcement_value_unit"
+                android:layout_width="36dp"
+                android:layout_height="30dp"
+                android:layout_margin="2pt"
+                android:text="@string/notification_count"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="8pt" />
+
+            <ImageView
+                android:id="@+id/post_icon_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2pt"
+                android:contentDescription="@string/newPostsNOTIFY"
+                android:src="@drawable/post_icon" />
+
+            <TextView
+                android:id="@+id/post_value_unit"
+                android:layout_width="34dp"
+                android:layout_height="30dp"
+                android:layout_margin="2pt"
+                android:text="@string/notification_count"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="8pt" />
+
+            <ImageView
+                android:id="@+id/postsOnYours_icon_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2pt"
+                android:contentDescription="@string/newPostsToYoursNOTIFY"
+                android:src="@drawable/your_post_icon" />
+
+            <TextView
+                android:id="@+id/postsOnYours_value_unit"
+                android:layout_width="42dp"
+                android:layout_height="30dp"
+                android:layout_margin="2pt"
+                android:text="@string/notification_count"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="8pt" />
+
+            
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-
-        <ImageView
-            android:id="@+id/announcement_icon_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2pt"
-            android:contentDescription="@string/newAnnouncementsNOTIFY"
-            android:src="@drawable/announcement_icon" />
-
-        <TextView
-            android:id="@+id/announcement_value_unit"
-            android:layout_width="36dp"
-            android:layout_height="30dp"
-            android:layout_margin="2pt"
-            android:text="x1"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="8pt" />
-
-        <ImageView
-            android:id="@+id/post_icon_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2pt"
-            android:contentDescription="@string/newPostsNOTIFY"
-            android:src="@drawable/post_icon" />
-
-        <TextView
-            android:id="@+id/post_value_unit"
-            android:layout_width="34dp"
-            android:layout_height="30dp"
-            android:layout_margin="2pt"
-            android:text="x3"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="8pt" />
-
-        <ImageView
-            android:id="@+id/postsOnYours_icon_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2pt"
-            android:contentDescription="@string/newPostsToYoursNOTIFY"
-            android:src="@drawable/your_post_icon" />
-
-        <TextView
-            android:id="@+id/postsOnYours_value_unit"
-            android:layout_width="42dp"
-            android:layout_height="30dp"
-            android:layout_margin="2pt"
-            android:text="x1"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="8pt" />
-    </LinearLayout>
 </LinearLayout>

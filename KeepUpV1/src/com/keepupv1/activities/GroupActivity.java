@@ -38,11 +38,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	//UserDatabaseController db;
 	private static GroupDatabaseController groupDb;
 	
-	private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
 	private CharSequence mTitle;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
-	private static int drawerSelection;
-	private static boolean selection = false;
 	@Override
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -190,11 +187,11 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_unit);
 			postOnYoursCount.setText("x " + String.valueOf(intTests[i][2]));
 		*/
-			 //Change background colour based on element id.
-			 if(i % 2 == 0)
-				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-			 else
-				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+			//Change background colour based on element id.
+			//if(i % 2 == 0)
+			//	rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+			//else
+			//	rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
 			 
 			return rootView;
 		}

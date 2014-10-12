@@ -5,6 +5,7 @@ import com.keepupv1.R;
 import com.keepupv1.R.id;
 import com.keepupv1.R.layout;
 import com.keepupv1.R.menu;
+import com.keepupv1.group.GroupDatabaseController;
 import com.keepupv1.unit.Unit;
 import com.keepupv1.unit.UnitDatabaseController;
 import com.keepupv1.user.User;
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
 
 	private UserDatabaseController userDb;
 	private UnitDatabaseController unitDb;
+	private GroupDatabaseController groupDb;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,7 @@ public class MainActivity extends Activity {
 		if (id == R.id.action_settings) {
 			userDb.emptyDatabase();
 			unitDb.emptyDatabase();
+			groupDb.emptyDatabase();
 			return true;
 		}
 		

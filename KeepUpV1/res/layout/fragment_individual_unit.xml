@@ -8,5 +8,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.keepupv1.IndividualUnitActivity$PlaceholderFragment" >
 
-
 </RelativeLayout>
