@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/unit_post_individual"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4pt"
+    android:layout_marginTop="6pt"
+    android:background="#dddddd"
+    android:orientation="vertical"
+    android:padding="5pt" >
+    
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="@string/prefill_username"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="10pt" />
+
+    <TextView
+        android:id="@+id/date_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="@string/example_time"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="4pt" />
+
+    <TextView
+        android:id="@+id/published_user_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/newsfeed_item_content_announcement"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="6pt" />
+
+</LinearLayout>

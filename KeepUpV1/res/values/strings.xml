@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- 	Login Activity	 -->
+    <!-- Login Activity -->
     <string name="login_advice">Please login with your QUT credentials.</string>
     <string name="username">Username:</string>
     <string name="prefill_username"></string>
@@ -11,13 +11,12 @@
     <string name="login_button">Login</string>
     <string name="register">Register</string>
     <string name="forgot_details">Forgot details?</string>
-    
-    <!-- 	Register Activity	 -->
+
+    <!-- Register Activity -->
     <string name="register_email">QUT Email Address</string>
     <string name="register_pw">Password</string>
     <string name="register_pw_confirm">Confirm Password</string>
     <string name="register_prefill_qutemail"></string>
-    
     <string name="notification_count">0</string>
     <string name="welcome">Welcome to KeepUP</string>
     <string name="app_name">keepUP</string>
@@ -89,5 +88,6 @@
     <string name="current_members_added">Currently Added Members</string>
     <string name="add_remove_units">Add/Remove Units</string>
     <string name="student_id">Student ID</string>
+    <string name="title_activity_individual_grp">IndividualGrpActivity</string>
 
 </resources>

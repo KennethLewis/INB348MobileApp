@@ -75,6 +75,17 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 	}
+	
+	public void groupDetails(View v){
+		
+		TextView groupName = (TextView) v.findViewById(R.id.group_name);
+		String name = (String) groupName.getText();
+		//GlobalVariables.USERLOGGEDIN.setUnit(name);
+		Intent intent = new Intent(this, IndividualGrpActivity.class);
+		intent.putExtra("groupName", name);
+		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

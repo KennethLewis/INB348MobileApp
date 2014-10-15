@@ -13,9 +13,8 @@
         android:icon="@drawable/keepup_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.keepupv1.activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,50 +23,57 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HomeActivity"
+            android:name="com.keepupv1.activities.HomeActivity"
             android:label="@string/title_home" >
         </activity>
         <activity
-            android:name=".activities.UnitsActivity"
+            android:name="com.keepupv1.activities.UnitsActivity"
             android:label="@string/title_activity_units_activity"
-            android:parentActivityName=".HomeActivity" >
+            android:parentActivityName=".activities.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.keepupv1.HomeActivity" />
+                android:value="com.keepupv1.activities.HomeActivity" />
         </activity>
         <activity
-            android:name=".activities.GroupActivity"
+            android:name="com.keepupv1.activities.GroupActivity"
             android:label="@string/title_activity_group"
-            android:parentActivityName=".HomeActivity" >
+            android:parentActivityName=".activities.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.keepupv1.HomeActivity" />
+                android:value="com.keepupv1.activities.HomeActivity" />
         </activity>
         <activity
-            android:name=".activities.IndividualUnitActivity"
+            android:name="com.keepupv1.activities.IndividualUnitActivity"
             android:label="@string/title_activity_individual_unit"
-            android:parentActivityName=".UnitsActivity" >
+            android:parentActivityName=".activities.UnitsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.keepupv1.UnitsActivity" />
+                android:value="com.keepupv1.activities.UnitsActivity" />
         </activity>
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name="com.keepupv1.activities.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.keepupv1.MainActivity" />
+                android:value="com.keepupv1.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.CreateGroupActivity"
+            android:name="com.keepupv1..activities.CreateGroupActivity"
             android:label="@string/title_activity_create_group"
-            android:parentActivityName=".GroupActivity" >
+            android:parentActivityName=".activities.GroupActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.keepupv1.Group" />
+                android:value="com.keepupv1.activities.GroupActivity" />
         </activity>
-        
+        <activity
+            android:name="com.keepupv1.activities.IndividualGrpActivity"
+            android:label="@string/title_activity_individual_grp"
+            android:parentActivityName=".activities.GroupActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.keepupv1.activities.GroupActivity" />
+        </activity>
     </application>
 
 </manifest>

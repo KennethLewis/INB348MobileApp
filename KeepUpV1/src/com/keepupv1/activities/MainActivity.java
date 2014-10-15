@@ -6,6 +6,7 @@ import com.keepupv1.R.id;
 import com.keepupv1.R.layout;
 import com.keepupv1.R.menu;
 import com.keepupv1.group.GroupDatabaseController;
+import com.keepupv1.post.PostDatabaseController;
 import com.keepupv1.unit.Unit;
 import com.keepupv1.unit.UnitDatabaseController;
 import com.keepupv1.user.User;
@@ -28,6 +29,7 @@ public class MainActivity extends Activity {
 	private UserDatabaseController userDb;
 	private UnitDatabaseController unitDb;
 	private GroupDatabaseController groupDb;
+	private PostDatabaseController postDb;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,8 @@ public class MainActivity extends Activity {
         }
         userDb = new UserDatabaseController(this);
         unitDb = new UnitDatabaseController(this);
+        groupDb = new GroupDatabaseController(this);
+        postDb = new PostDatabaseController(this);
         addAllTestData();
     }
 
@@ -94,6 +98,7 @@ public class MainActivity extends Activity {
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
 			try{
+				postDb.emptyDatabase();
 				userDb.emptyDatabase();
 				unitDb.emptyDatabase();
 				groupDb.emptyDatabase();
