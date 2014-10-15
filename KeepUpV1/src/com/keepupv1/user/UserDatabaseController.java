@@ -13,7 +13,7 @@ public class UserDatabaseController extends SQLiteOpenHelper {
 
 	// All Static variables
 	// Database Version
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	// Database Name
 	private static final String DATABASE_NAME = "UsersManager.db";
@@ -26,7 +26,7 @@ public class UserDatabaseController extends SQLiteOpenHelper {
 	private static final String KEY_USERNAME = "username";
 	private static final String KEY_EMAIL = "email";
 	private static final String KEY_RIGHTS = "rights";
-	private static final String KEY_UNITCODE = "unitCode";
+	private static final String KEY_PASSWORD = "password";
 
 	public UserDatabaseController(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -41,8 +41,8 @@ public class UserDatabaseController extends SQLiteOpenHelper {
 				+ KEY_USERNAME + " TEXT NOT NULL,"
 				+ KEY_EMAIL + " TEXT," 
 				+ KEY_RIGHTS + " INTEGER," 
-				+ KEY_UNITCODE + " TEXT, "
-				+ "PRIMARY KEY( " + KEY_ID + ", " + KEY_USERNAME + ", " + KEY_UNITCODE + ")" 
+				+ KEY_PASSWORD + " TEXT, "
+				+ "PRIMARY KEY( " + KEY_ID + ", " + KEY_USERNAME + ", " + KEY_PASSWORD + ")" 
 				+ ")";
 		db.execSQL(CREATE_USERS_TABLE);
 	}
@@ -71,7 +71,7 @@ public class UserDatabaseController extends SQLiteOpenHelper {
 		values.put(KEY_USERNAME, user.getUsername()); 
 		values.put(KEY_EMAIL, user.getEmail());
 		values.put(KEY_RIGHTS, user.getRights());
-		values.put(KEY_UNITCODE, user.getUnit());
+		values.put(KEY_PASSWORD, user.getPw());
 
 		// Inserting Row
 		db.insert(TABLE_USERS, null, values);
@@ -83,7 +83,7 @@ public class UserDatabaseController extends SQLiteOpenHelper {
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor cursor = db.query(TABLE_USERS, new String[] { KEY_ID, KEY_USERNAME, KEY_EMAIL, KEY_RIGHTS, KEY_UNITCODE }, 
+		Cursor cursor = db.query(TABLE_USERS, new String[] { KEY_ID, KEY_USERNAME, KEY_EMAIL, KEY_RIGHTS, KEY_PASSWORD }, 
 								KEY_ID + "=?", new String[] { String.valueOf(id) }, 
 								null, null, null, null);
 		
@@ -105,7 +105,7 @@ public class UserDatabaseController extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = db.query(TABLE_USERS, new String[] { KEY_ID,
-				KEY_USERNAME, KEY_EMAIL, KEY_RIGHTS, KEY_UNITCODE }, KEY_ID + "=? AND " + KEY_UNITCODE + "=?",
+				KEY_USERNAME, KEY_EMAIL, KEY_RIGHTS, KEY_PASSWORD }, KEY_ID + "=? AND " + KEY_PASSWORD + "=?",
 				new String[] { String.valueOf(id), unitCode }, null, null, null, null);
 		User user = null;
 		if (cursor != null)
@@ -151,7 +151,7 @@ public class UserDatabaseController extends SQLiteOpenHelper {
 		values.put(KEY_EMAIL, User.getEmail());
 		values.put(KEY_RIGHTS, User.getRights());
 		values.put(KEY_EMAIL, User.getEmail());
-		values.put(KEY_UNITCODE, User.getUnit());
+		values.put(KEY_PASSWORD, User.getUnit());
 
 		// updating row
 		return db.update(TABLE_USERS, values, KEY_ID + " = ?",

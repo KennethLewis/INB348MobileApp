@@ -118,10 +118,10 @@ public class MainActivity extends Activity {
     
     public void addAllTestData(){
          
-        User testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "");
-        User testUser2 = new User(8600571, "Jackson","Jackson@live.com.au", 0, "");
-        User dummyUser1 = new User(123456, "Dummy1", "Dummy1@live.com.au", 0, "");
-        User dummyUser2 = new User (987654, "Dummy2", "Dummy2@live.com.au", 0, "");
+        User testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "test");
+        User testUser2 = new User(8600571, "Jackson","Jackson@live.com.au", 0, "test");
+        User dummyUser1 = new User(123456, "Dummy1", "Dummy1@live.com.au", 0, "test");
+        User dummyUser2 = new User (987654, "Dummy2", "Dummy2@live.com.au", 0, "test");
         if(userDb.getAllUsers().isEmpty()){
 	        userDb.addUser(testUser);
 	        userDb.addUser(testUser2);

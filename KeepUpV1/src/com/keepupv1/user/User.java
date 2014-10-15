@@ -30,22 +30,23 @@ public class User {
 		this.uniId = uniId;
 	}
 	//Constructor (Register)
-	public User (int id, String username, String email, String pw){
+	public User (int id, String username, String email, int rights, String pw){
 		this.id = id;
 		this.username = username;
 		this.email = email;
+		this.rights = rights;
 		this.pw = pw;
 	}
 	
 
 	// Constructors
-	public User(int id, String username, String email, int rights, String unit) {
+	/*public User(int id, String username, String email, int rights, String unit) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.rights = rights;
 		this.unit = unit;
-	}
+	}*/
 	public User(String username, String email, int rights, String unit) {
 		this.username = username;
 		this.email = email;

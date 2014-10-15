@@ -88,5 +88,6 @@
     <string name="group_desc">Group Description</string>
     <string name="current_members_added">Currently Added Members</string>
     <string name="add_remove_units">Add/Remove Units</string>
+    <string name="student_id">Student ID</string>
 
 </resources>

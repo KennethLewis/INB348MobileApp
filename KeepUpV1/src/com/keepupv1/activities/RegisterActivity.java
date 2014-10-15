@@ -17,10 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
 
-	private UserDatabaseController db;
+	private UserDatabaseController usersDb;
 	private User newUser;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,8 @@ public class RegisterActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		db = new UserDatabaseController(this);
+		usersDb = new UserDatabaseController(this);
+		
 	}
 
 	@Override
@@ -44,26 +46,63 @@ public class RegisterActivity extends Activity {
 		
 		//DONT NEED TO ASK USER FOR ALL INFORMATION, A LOT CAN COME OFF DATABASES
 		//AFTER THE USER LINKS THEIR ACC WITH A QUT EMAIL.
+		try {
+			EditText userUniId = (EditText)findViewById(R.id.new_student_no);
+			//EditText userName = (EditText)findViewById(R.id.new_name);
+			EditText userEmail = (EditText)findViewById(R.id.new_email_addy);
+			EditText userPw = (EditText)findViewById(R.id.password);
+			EditText userPwConfirm = (EditText)findViewById(R.id.confirm_password);
+			
+			int id = Integer.parseInt(userUniId.getText().toString());
+			String [] usersName = userEmail.getText().toString().split("@");
+			String name = usersName[0];
+			String email = userEmail.getText().toString();
+			String pw = userPw.getText().toString();
+			String pwConfirm = userPwConfirm.getText().toString();
+			
+			newUser = new User(id, name, email, 1, pw);
+			
+			for (User user : usersDb.getAllUsers()){
+				if(user.getId() == id){
+					Toast.makeText(this, "Error: User already Exists.", Toast.LENGTH_SHORT)
+					.show();
+					throw new Exception("User Already Exists");
+				}
+			}
+			if (newUser.getId() < 999999){
+				Toast.makeText(this, "Error: Invalid Student Number.", Toast.LENGTH_SHORT)
+				.show();
+				throw new Exception("Invaild Student Number");
+			}
+				
+			else if(pw.matches(pwConfirm) != true){
+				Toast.makeText(this, "Error: Passwords dont match.", Toast.LENGTH_SHORT)
+				.show();
+				throw new Exception("Passwords dont match");
+			}
+			else if(pw.length() < 6){
+				Toast.makeText(this, "Error: Password must be at least 6 Chars long."
+						, Toast.LENGTH_LONG).show();
+				throw new Exception("Password length less than 6 characters");
+			}
+			else if (email.contains("qut.edu.au") == false){
+				Toast.makeText(this, "Error: Email address must be a valid QUT email."
+						, Toast.LENGTH_LONG).show();
+				throw new Exception("Not a valid QUT email address");
+			}
+			else {
+				usersDb.addUser(newUser);
+				Intent intent = new Intent(this, MainActivity.class);
+				startActivity(intent);
+			}
+		}
+		catch (Exception e){
+			//Delete this toast after testing.
+			Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT)
+			.show();
+			this.recreate();
+		}
 		
-		//EditText userUniId = (EditText)findViewById(R.id.new_student_no);
-		//EditText userName = (EditText)findViewById(R.id.new_name);
-		EditText userEmail = (EditText)findViewById(R.id.new_email_addy);
-		EditText userPw = (EditText)findViewById(R.id.password);
-		EditText userPwConfirm = (EditText)findViewById(R.id.confirm_password);
-		
-		//int id = Integer.parseInt(userUniId.getText().toString());
-		//String name = userName.getText().toString();
-		int id = 1234567;
-		String username = "User1234567";
-		String email = userEmail.getText().toString();
-		String pw = userPw.getText().toString();
-		String pwConfirm = userPw.getText().toString();
-		
-		newUser = new User(id, username, email, 0, "");
-		db.addUser(newUser);
-		
-		Intent intent = new Intent(this, MainActivity.class);
-    	startActivity(intent);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
