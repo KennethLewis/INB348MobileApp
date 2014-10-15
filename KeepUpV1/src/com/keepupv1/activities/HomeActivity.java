@@ -186,7 +186,7 @@ public class HomeActivity extends Activity implements
 			 */
 			
 			for(int i = 0; i < postDb.getAllPosts().size(); i++)  {
-				View newsTemplate = inflater.inflate(R.layout.unit_post_template, null);
+				View newsTemplate = inflater.inflate(R.layout.news_post_template, null);
 				
 				if(GlobalVariables.USERLOGGEDIN != null) {
 					if(postDb.getAllPosts().get(i) != null) {
@@ -205,12 +205,12 @@ public class HomeActivity extends Activity implements
 			
 			//Setup Unit Name.
 			TextView userName = (TextView) rootView.findViewById(R.id.username);
-			userName.setText(p.getUser());
+			userName.setText(p.getUnit() + " " + "by " + p.getUser());
 			
 			TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
 			dateTime.setText(p.getDate());
 			
-			TextView post = (TextView) rootView.findViewById(R.id.published_user_post);
+			TextView post = (TextView) rootView.findViewById(R.id.published_news);
 			post.setText(p.getContent());
 
 			 //Change background colour based on element id.

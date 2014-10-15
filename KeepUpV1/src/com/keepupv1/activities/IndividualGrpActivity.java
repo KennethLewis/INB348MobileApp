@@ -57,7 +57,7 @@ public class IndividualGrpActivity extends Activity {
 		List<Post> postWithGroup = new ArrayList<Post>();
 		
 		for(Post post: postDb.getAllPosts()) {
-			if(post.getUnit().matches(this.getTitle().toString()))
+			if(post.getUnit().matches("Group: "+this.getTitle().toString()))
 				postWithGroup.add(post);
 		}
 		
@@ -112,7 +112,7 @@ public class IndividualGrpActivity extends Activity {
 		
 		String content = userPost.getText().toString();
 		Post newPost = new Post(GlobalVariables.USERLOGGEDIN.getUsername(), 
-				postTime, content, this.getTitle().toString());
+				postTime, content, "Group: "+this.getTitle().toString());
         
 		postDb.addPost(newPost);
         

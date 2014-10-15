@@ -50,13 +50,13 @@ public final class R {
         public static final int Password=0x7f0b002e;
         public static final int Register=0x7f0b002b;
         public static final int StudentID=0x7f0b002d;
-        public static final int action_example=0x7f0b0049;
-        public static final int action_settings=0x7f0b0048;
+        public static final int action_example=0x7f0b004a;
+        public static final int action_settings=0x7f0b0049;
         public static final int add=0x7f0b0015;
         public static final int announcement_icon_unit=0x7f0b003a;
-        public static final int announcement_last_unit=0x7f0b0047;
+        public static final int announcement_last_unit=0x7f0b0048;
         public static final int announcement_value_unit=0x7f0b003b;
-        public static final int arrow_icon_unit=0x7f0b0046;
+        public static final int arrow_icon_unit=0x7f0b0047;
         public static final int confirm_password=0x7f0b0030;
         public static final int container=0x7f0b0001;
         public static final int createGroup=0x7f0b0017;
@@ -99,6 +99,7 @@ public final class R {
         public static final int postsOnYours_icon_unit=0x7f0b003e;
         public static final int postsOnYours_value_unit=0x7f0b003f;
         public static final int posts_list=0x7f0b000f;
+        public static final int published_news=0x7f0b0043;
         public static final int published_user_post=0x7f0b0035;
         public static final int register=0x7f0b001c;
         public static final int relativeLayout1=0x7f0b0013;
@@ -109,9 +110,9 @@ public final class R {
         public static final int text_to_publish=0x7f0b000b;
         public static final int unit_drawer_layout=0x7f0b0011;
         public static final int unit_post_individual=0x7f0b0033;
-        public static final int unit_template_content=0x7f0b0045;
-        public static final int unit_template_main_layout=0x7f0b0043;
-        public static final int unitcode_code=0x7f0b0044;
+        public static final int unit_template_content=0x7f0b0046;
+        public static final int unit_template_main_layout=0x7f0b0044;
+        public static final int unitcode_code=0x7f0b0045;
         public static final int units_list=0x7f0b0031;
         public static final int units_navigation_drawer=0x7f0b0012;
         public static final int units_toplevel_container=0x7f0b0010;
@@ -144,8 +145,9 @@ public final class R {
         public static final int group_template=0x7f030012;
         public static final int layout_bg=0x7f030013;
         public static final int member_details_template=0x7f030014;
-        public static final int unit_post_template=0x7f030015;
-        public static final int unit_template=0x7f030016;
+        public static final int news_post_template=0x7f030015;
+        public static final int unit_post_template=0x7f030016;
+        public static final int unit_template=0x7f030017;
     }
     public static final class menu {
         public static final int create_group=0x7f0a0000;

@@ -64,7 +64,7 @@ public class IndividualUnitActivity extends Activity {
 		List<Post> postWithUnit = new ArrayList<Post>();
 		
 		for(Post post: db.getAllPosts()) {
-			if(post.getUnit().matches(this.getTitle().toString()))
+			if(post.getUnit().matches("Unit: "+this.getTitle().toString()))
 				postWithUnit.add(post);
 		}
 		
@@ -152,7 +152,7 @@ public class IndividualUnitActivity extends Activity {
 		
 		String content = userPost.getText().toString();
 		Post newPost = new Post(GlobalVariables.USERLOGGEDIN.getUsername(), 
-				postTime, content, GlobalVariables.USERLOGGEDIN.getUnit());
+				postTime, content, "Unit: " + GlobalVariables.USERLOGGEDIN.getUnit());
         
 		db.addPost(newPost);
         

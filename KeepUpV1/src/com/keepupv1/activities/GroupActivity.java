@@ -217,7 +217,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		switch (number) {
 		
 		case 1:
-			mTitle = getString(R.string.groups);
+			mTitle = getString(R.string.news);
 			Intent intentHome = new Intent(this, HomeActivity.class);
 			startActivity(intentHome);
 			break;

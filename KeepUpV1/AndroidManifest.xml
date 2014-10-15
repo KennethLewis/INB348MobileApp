@@ -59,7 +59,7 @@
                 android:value="com.keepupv1.activities.MainActivity" />
         </activity>
         <activity
-            android:name="com.keepupv1..activities.CreateGroupActivity"
+            android:name="com.keepupv1.activities.CreateGroupActivity"
             android:label="@string/title_activity_create_group"
             android:parentActivityName=".activities.GroupActivity" >
             <meta-data
