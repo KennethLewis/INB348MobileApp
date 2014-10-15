@@ -45,23 +45,31 @@ public class MainActivity extends Activity {
 
     public void goToHome(View v) {
     	EditText usernameField = (EditText)findViewById(R.id.username);
+    	EditText userPassword = (EditText)findViewById(R.id.password);
     	//checkUsers = db.getAllUsers();
     	//String userId = usernameField.getText().toString();
     	
     	int userId = -1;
+    	String userPw = null;
     	try {
     	    userId = Integer.parseInt(usernameField.getText().toString());
+    	    userPw = userPassword.getText().toString();
     	} catch(NumberFormatException nfe) {
     	   System.out.println("Could not parse " + nfe);
     	} 
     	
     	//for(User allUsers: checkUsers){
-    		if(userDb.getUser(userId) != null) {
-    			GlobalVariables.USERLOGGEDIN = userDb.getUser(userId);
-    			Intent intent = new Intent(this, HomeActivity.class);
-        		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        	    startActivity(intent);
-    		}
+    	if(userDb.getUser(userId) != null && 
+    			userDb.getUser(userId).getPw().matches(userPw)) {
+    		
+    		GlobalVariables.USERLOGGEDIN = userDb.getUser(userId);
+    		Intent intent = new Intent(this, HomeActivity.class);
+        	//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        	startActivity(intent);
+    	}
+    	else
+    		Toast.makeText(this, "ID or Password Incorrect."
+					, Toast.LENGTH_SHORT).show();
 	}
     
     public void goToRegister(View v) {
@@ -85,10 +93,16 @@ public class MainActivity extends Activity {
 		
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			userDb.emptyDatabase();
-			unitDb.emptyDatabase();
-			groupDb.emptyDatabase();
-			return true;
+			try{
+				userDb.emptyDatabase();
+				unitDb.emptyDatabase();
+				groupDb.emptyDatabase();
+				return true; 
+			}
+			catch (Exception e){
+				Toast.makeText(this, "Error: " + e.toString()
+						, Toast.LENGTH_LONG).show();
+			}
 		}
 		
 		//CLICK HOME BUTTON -JACK

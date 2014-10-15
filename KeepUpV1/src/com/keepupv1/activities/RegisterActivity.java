@@ -48,7 +48,6 @@ public class RegisterActivity extends Activity {
 		//AFTER THE USER LINKS THEIR ACC WITH A QUT EMAIL.
 		try {
 			EditText userUniId = (EditText)findViewById(R.id.new_student_no);
-			//EditText userName = (EditText)findViewById(R.id.new_name);
 			EditText userEmail = (EditText)findViewById(R.id.new_email_addy);
 			EditText userPw = (EditText)findViewById(R.id.password);
 			EditText userPwConfirm = (EditText)findViewById(R.id.confirm_password);
