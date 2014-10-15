@@ -121,6 +121,50 @@ public class HomeActivity extends Activity implements
 		actionBar.setTitle(mTitle);
 	}
 
+	public void moveTo(View v){
+		
+		TextView whereTo = (TextView) v.findViewById(R.id.unit_group_user_title);
+		String goingTo = whereTo.getText().toString();
+		String [] brokenDirection = goingTo.split("by");
+		String finalDestination = brokenDirection[0];
+		
+		if(finalDestination.contains("Unit")){
+			Intent intent = new Intent(this, IndividualUnitActivity.class);
+			String [] unitName = finalDestination.split(":");
+			String trimedName = unitName[1].trim();
+			GlobalVariables.USERLOGGEDIN.setUnit(trimedName);
+			intent.putExtra("unitId", trimedName);
+			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        startActivity(intent);
+		}
+		else if(finalDestination.contains("Group")){
+			Intent intent = new Intent(this, IndividualGrpActivity.class);
+			String [] groupName = finalDestination.split(":");
+			String trimedName = groupName[1].trim();
+			Toast.makeText(this, finalDestination, Toast.LENGTH_SHORT).show();
+			intent.putExtra("groupName", trimedName);
+			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        startActivity(intent);
+		}
+		
+		
+		/*TextView unitId = (TextView) v.findViewById(R.id.unit_group_user_title);
+		String id = (String) unitId.getText();
+		GlobalVariables.USERLOGGEDIN.setUnit(id);
+		Intent intent = new Intent(this, IndividualUnitActivity.class);
+		intent.putExtra("unitId", id);
+		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        
+        
+        TextView groupName = (TextView) v.findViewById(R.id.unit_group_user_title);
+		String name = (String) groupName.getText();
+		//GlobalVariables.USERLOGGEDIN.setUnit(name);
+		Intent intent = new Intent(this, IndividualGrpActivity.class);
+		intent.putExtra("groupName", name);
+		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);*/
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (!mNavigationDrawerFragment.isDrawerOpen()) {
@@ -187,11 +231,11 @@ public class HomeActivity extends Activity implements
 			
 			View rootView = inflater.inflate(R.layout.fragment_home, container,
 					false);
+			
 			List<Unit> unitsToShow = new ArrayList<Unit>();
 			List<Group> groupsToShow = new ArrayList<Group>();
 			List<Post> postsToShow = new ArrayList<Post>();
-			//Below Deals with displaying Groups/Units currently enrolled in by
-			//the user.
+			
 			TextView noOfUnits = (TextView) rootView.findViewById(R.id.news_unit_count);
 			TextView noOfGroups = (TextView) rootView.findViewById(R.id.news_group_count);
 			
@@ -222,21 +266,12 @@ public class HomeActivity extends Activity implements
 			
 			LinearLayout newsList = (LinearLayout) rootView.findViewById(R.id.news_post_list);
 			
-			/**
-			 * TODO
-			 * MAKE IT SO ONLY THE UNIT AND GROUP POSTS WHICH THE USER IS ENROLLED
-			 * IN ARE VISABLE
-			 */
-			
 			for(int i = 0; i < postsToShow.size(); i++)  {
 				View newsTemplate = inflater.inflate(R.layout.news_post_template, null);
 				
 				if(postsToShow.get(i) != null) {
 					newsTemplate = setUpNewsArticle(postsToShow.get(i), i, newsTemplate);
 					newsList.addView(newsTemplate);
-						//news.add(newsTemplate);
-						//Add to view.
-						//((ViewGroup) rootView).addView((View) newsTemplate);
 				}
 			}
 			return rootView;
@@ -245,7 +280,7 @@ public class HomeActivity extends Activity implements
 		private View setUpNewsArticle(Post p, int indexNum, View rootView) {
 			
 			//Setup Unit Name.
-			TextView userName = (TextView) rootView.findViewById(R.id.username);
+			TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
 			userName.setText(p.getUnit() + " " + "by " + p.getUser());
 			
 			TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
