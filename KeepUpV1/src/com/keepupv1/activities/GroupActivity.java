@@ -15,6 +15,7 @@ import com.keepupv1.group.GroupDatabaseController;
 import com.keepupv1.GlobalVariables;
 import com.keepupv1.NavigationDrawerFragment;
 import com.keepupv1.R;
+import com.keepupv1.unit.Unit;
 import com.keepupv1.user.User;
 import android.app.Activity;
 import android.app.ActionBar;
@@ -151,6 +152,18 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			View rootView = inflater.inflate(R.layout.fragment_groups_listing,
 					container, false);
 			
+			TextView noOfGroups = (TextView) rootView.findViewById(R.id.group_count);
+			
+			int groupCounter = 0;
+			for(Group group: groupDb.getAllGroups())
+			{
+				if (group.gatherUsers().contains(GlobalVariables.USERLOGGEDIN.getId()))
+					groupCounter++;
+			}
+			if(groupCounter == 1)
+				noOfGroups.setText(groupCounter + " Group");
+			else
+				noOfGroups.setText(groupCounter + " Groups");
 			
 			List<Integer> studentNos;
 			

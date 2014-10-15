@@ -14,6 +14,7 @@ import com.keepupv1.R.id;
 import com.keepupv1.R.layout;
 import com.keepupv1.R.menu;
 import com.keepupv1.R.string;
+import com.keepupv1.group.Group;
 import com.keepupv1.unit.Unit;
 import com.keepupv1.unit.UnitDatabaseController;
 import com.keepupv1.user.User;
@@ -217,6 +218,19 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_units,
 					container, false);
+			
+			TextView noOfUnits = (TextView) rootView.findViewById(R.id.unit_count);
+			
+			int unitCounter = 0;
+			for(Unit unit: unitDb.getAllUnits())
+			{
+				if (unit.gatherUsersId().contains(GlobalVariables.USERLOGGEDIN.getId()))
+					unitCounter++;
+			}
+			if (unitCounter == 1)
+				noOfUnits.setText(unitCounter + " Unit");
+			else
+				noOfUnits.setText(unitCounter + " Units");
 			
 			List<Integer> studentsIdNo;
 			for(Unit unit: unitDb.getAllUnits()){
