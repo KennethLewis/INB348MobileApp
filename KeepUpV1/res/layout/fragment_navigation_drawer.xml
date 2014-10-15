@@ -8,5 +8,5 @@
     android:divider="#80a4ff"
     android:dividerHeight="1dp"
     android:entries="@array/slider_menu_options"
-    tools:context="com.keepupv1.NavigationDrawerFragment" />
+    tools:context="com.keepup.NavigationDrawerFragment" />
 

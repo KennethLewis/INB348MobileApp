@@ -3,7 +3,7 @@
     android:id="@+id/create_group_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.keepupv1.activities.CreateGroupActivity"
+    tools:context="com.keepup.activities.CreateGroupActivity"
     tools:ignore="MergeRootFrame" >
 
     <LinearLayout

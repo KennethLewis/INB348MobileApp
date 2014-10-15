@@ -4,7 +4,7 @@
     android:id="@+id/unit_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.keepupv1.activities.UnitsActivity" >
+    tools:context="com.keepup.activities.UnitsActivity" >
 
     <!--
          As the main content view, the view below consumes the entire
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/units_navigation_drawer"
-        android:name="com.keepupv1.NavigationDrawerFragment"
+        android:name="com.keepup.NavigationDrawerFragment"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"

@@ -11,42 +11,47 @@
     android:scrollbarAlwaysDrawVerticalTrack="true"
     android:scrollbarStyle="insideOverlay"
     android:scrollbars="vertical"
-    tools:context="com.keepupv1.HomeActivity$PlaceholderFragment" >
+    tools:context="com.keepup.HomeActivity$PlaceholderFragment" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="5pt" >
 
         <TextView
             android:id="@+id/keeping_up_with"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="10.68"
             android:text="@string/keeping_up_with"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/keepup_darkblue_headings" />
-        
-        <TextView
-            android:id="@+id/news_group_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="30"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/keepup_darkblue_headings" />
 
-        <TextView
-            android:id="@+id/news_unit_count"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="30"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/keepup_darkblue_headings" />
+            android:layout_marginLeft="10pt"
+            android:layout_weight="4"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/news_group_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/keepup_darkblue_headings"
+                android:textSize="8pt" />
+
+            <TextView
+                android:id="@+id/news_unit_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/keepup_darkblue_headings"
+                android:textSize="8pt" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout

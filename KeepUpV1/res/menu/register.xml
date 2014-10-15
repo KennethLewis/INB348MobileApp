@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.keepupv1.activities.RegisterActivity" >
+    tools:context="com.keepup.activities.RegisterActivity" >
 
     <item
         android:id="@+id/action_settings"

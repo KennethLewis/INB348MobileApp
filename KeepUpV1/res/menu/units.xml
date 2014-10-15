@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.keepupv1.activities.UnitsActivity" >
+    tools:context="com.keepup.activities.UnitsActivity" >
 
     <item
         android:id="@+id/action_example"
