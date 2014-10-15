@@ -6,8 +6,13 @@ import java.util.List;
 import com.keepupv1.GlobalVariables;
 import com.keepupv1.NavigationDrawerFragment;
 import com.keepupv1.R;
+import com.keepupv1.group.Group;
+import com.keepupv1.group.GroupDatabaseController;
 import com.keepupv1.post.Post;
 import com.keepupv1.post.PostDatabaseController;
+import com.keepupv1.unit.Unit;
+import com.keepupv1.unit.UnitDatabaseController;
+
 import android.app.Activity;
 
 import android.app.ActionBar;
@@ -40,6 +45,8 @@ public class HomeActivity extends Activity implements
 	 */
 	private CharSequence mTitle;
 	private static PostDatabaseController postDb;
+	private static UnitDatabaseController unitDb;
+	private static GroupDatabaseController groupDb;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,8 @@ public class HomeActivity extends Activity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 		
 		postDb = new PostDatabaseController(this);
+		unitDb = new UnitDatabaseController(this);
+		groupDb = new GroupDatabaseController(this);
 		mNavigationDrawerFragment.selectItem(0);
 		
 	}
@@ -175,8 +184,27 @@ public class HomeActivity extends Activity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
 			View rootView = inflater.inflate(R.layout.fragment_home, container,
 					false);
+			TextView noOfUnits = (TextView) rootView.findViewById(R.id.news_unit_count);
+			TextView noOfGroups = (TextView) rootView.findViewById(R.id.news_group_count);
+			
+			int groupCounter = 0;
+			int unitCounter = 0;
+			for(Unit unit: unitDb.getAllUnits())
+			{
+				if (unit.gatherUsersId().contains(GlobalVariables.USERLOGGEDIN.getId()))
+					unitCounter++;
+			}
+			for(Group group: groupDb.getAllGroups())
+			{
+				if (group.gatherUsers().contains(GlobalVariables.USERLOGGEDIN.getId()))
+					groupCounter++;
+			}
+			
+			noOfUnits.setText(unitCounter + " Units");
+			noOfGroups.setText(groupCounter + " Groups");
 			LinearLayout newsList = (LinearLayout) rootView.findViewById(R.id.news_post_list);
 			
 			/**
