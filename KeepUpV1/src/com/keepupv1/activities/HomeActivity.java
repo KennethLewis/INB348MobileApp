@@ -187,24 +187,39 @@ public class HomeActivity extends Activity implements
 			
 			View rootView = inflater.inflate(R.layout.fragment_home, container,
 					false);
+			List<Unit> unitsToShow = new ArrayList<Unit>();
+			List<Group> groupsToShow = new ArrayList<Group>();
+			List<Post> postsToShow = new ArrayList<Post>();
+			//Below Deals with displaying Groups/Units currently enrolled in by
+			//the user.
 			TextView noOfUnits = (TextView) rootView.findViewById(R.id.news_unit_count);
 			TextView noOfGroups = (TextView) rootView.findViewById(R.id.news_group_count);
 			
-			int groupCounter = 0;
-			int unitCounter = 0;
 			for(Unit unit: unitDb.getAllUnits())
 			{
 				if (unit.gatherUsersId().contains(GlobalVariables.USERLOGGEDIN.getId()))
-					unitCounter++;
+					unitsToShow.add(unit);
 			}
 			for(Group group: groupDb.getAllGroups())
 			{
 				if (group.gatherUsers().contains(GlobalVariables.USERLOGGEDIN.getId()))
-					groupCounter++;
+					groupsToShow.add(group);
+			}
+			noOfUnits.setText(unitsToShow.size() + " Units");
+			noOfGroups.setText(groupsToShow.size() + " Groups");
+			
+			for(Post post: postDb.getAllPosts()){
+				for(Unit unit: unitsToShow){
+					if(post.getUnit().contains(unit.getUnitCode()))
+							postsToShow.add(post);
+				}
+				for(Group group: groupsToShow){
+					if(post.getUnit().contains(group.getName()))
+						postsToShow.add(post);
+				}
 			}
 			
-			noOfUnits.setText(unitCounter + " Units");
-			noOfGroups.setText(groupCounter + " Groups");
+			
 			LinearLayout newsList = (LinearLayout) rootView.findViewById(R.id.news_post_list);
 			
 			/**
@@ -213,17 +228,15 @@ public class HomeActivity extends Activity implements
 			 * IN ARE VISABLE
 			 */
 			
-			for(int i = 0; i < postDb.getAllPosts().size(); i++)  {
+			for(int i = 0; i < postsToShow.size(); i++)  {
 				View newsTemplate = inflater.inflate(R.layout.news_post_template, null);
 				
-				if(GlobalVariables.USERLOGGEDIN != null) {
-					if(postDb.getAllPosts().get(i) != null) {
-						newsTemplate = setUpNewsArticle(postDb.getAllPosts().get(i), i, newsTemplate);
-						newsList.addView(newsTemplate);
+				if(postsToShow.get(i) != null) {
+					newsTemplate = setUpNewsArticle(postsToShow.get(i), i, newsTemplate);
+					newsList.addView(newsTemplate);
 						//news.add(newsTemplate);
 						//Add to view.
 						//((ViewGroup) rootView).addView((View) newsTemplate);
-					}
 				}
 			}
 			return rootView;
