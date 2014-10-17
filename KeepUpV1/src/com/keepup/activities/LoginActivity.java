@@ -1,5 +1,6 @@
 package com.keepup.activities;
 
+import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.group.GroupDatabaseController;
 import com.keepup.post.PostDatabaseController;
@@ -11,6 +12,7 @@ import com.keepup.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -58,18 +60,10 @@ public class LoginActivity extends Activity {
     	   System.out.println("Could not parse " + nfe);
     	} 
     	
-    	//for(User allUsers: checkUsers){
-    	if(userDb.getUser(userId) != null && 
-    			userDb.getUser(userId).getPw().matches(userPw)) {
-    		
-    		GlobalVariables.USERLOGGEDIN = userDb.getUser(userId);
-    		Intent intent = new Intent(this, HomeActivity.class);
-        	//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        	startActivity(intent);
-    	}
-    	else
-    		Toast.makeText(this, "ID or Password Incorrect."
-					, Toast.LENGTH_SHORT).show();
+    	Login loginThread = new Login();
+    	loginThread.setId(userId);
+    	loginThread.setPassword(userPw);
+    	loginThread.execute();
 	}
     
     public void goToRegister(View v) {
@@ -154,4 +148,51 @@ public class LoginActivity extends Activity {
 	     	unitDb.addUnit(unit4);
      	}
     }
+    
+    public void loginFail() {
+    	Toast.makeText(this, "Id or Password Incorrect.", Toast.LENGTH_SHORT).show();
+    }
+    public void loginSuccess() {
+        Intent intent = new Intent(this, HomeActivity.class);
+    	//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    	startActivity(intent);
+		Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+    }
+
+	private static User lastFetchedUser;
+    
+    public class Login extends AsyncTask<String, Void, Void> {
+		protected int id;
+		protected String password;
+		
+		public void setId(int id) {
+			this.id = id;
+		}
+		
+		public void setPassword(String pass) {
+			this.password = pass;
+		}
+		
+		@Override
+		protected Void doInBackground(String... params) {
+			if(DatabaseConnector.getLoggedIn(id, password)) {
+				lastFetchedUser = new User();
+				lastFetchedUser.setupUser(DatabaseConnector.getUser(id));
+			} else {
+				lastFetchedUser = null;
+			}
+			return null;
+		}
+		
+		@Override
+        protected void onPostExecute(Void result) {
+			if(lastFetchedUser != null) {
+	            GlobalVariables.USERLOGGEDIN = lastFetchedUser;
+	            loginSuccess();
+			} else {
+				loginFail();
+			}
+            recreate();
+        }
+	}
 }

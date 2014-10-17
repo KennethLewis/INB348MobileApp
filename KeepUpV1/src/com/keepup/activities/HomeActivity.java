@@ -1,20 +1,9 @@
 package com.keepup.activities;
 
-import java.io.IOException;
-import java.net.Proxy;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.PropertyInfo;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpResponseException;
-import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
-
+import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
 import com.keepup.group.Group;
@@ -23,6 +12,7 @@ import com.keepup.post.Post;
 import com.keepup.post.PostDatabaseController;
 import com.keepup.unit.Unit;
 import com.keepup.unit.UnitDatabaseController;
+import com.keepup.user.User;
 import com.keepup.R;
 
 import android.app.Activity;
@@ -39,10 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +52,7 @@ public class HomeActivity extends Activity implements
 	private static PostDatabaseController postDb;
 	private static UnitDatabaseController unitDb;
 	private static GroupDatabaseController groupDb;
+	private static User lastFetchedUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +65,7 @@ public class HomeActivity extends Activity implements
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout));
+				(DrawerLayout) findViewById(R.id.home_layout));
 		
 		postDb = new PostDatabaseController(this);
 		unitDb = new UnitDatabaseController(this);
@@ -195,47 +183,6 @@ public class HomeActivity extends Activity implements
 		}
 		return super.onCreateOptionsMenu(menu);
 	}
-	
-	private final String NAMESPACE = "http://keepup.com/";
-	private final String URL = "http://10.0.2.2:29883/BasicServices.asmx";
-	private final String SOAP_ACTION = "http://keepup.com/CelsiusToFahrenheit";
-	private final String METHOD_NAME = "CelsiusToFahrenheit";
-	private String TAG = "PGGURU";
-
-	public void getFahrenheit(String celsius) {
-		//Create request
-		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-		//Property which holds input parameters
-		PropertyInfo celsiusPI = new PropertyInfo();
-		//Set Name
-		celsiusPI.setName("Celcius");
-		//Set Value2
-		celsiusPI.setValue(celsius);
-		//Set dataType
-		celsiusPI.setType(double.class);
-		//Add the property to request object
-		request.addProperty(celsiusPI);
-		//Create envelope
-		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
-				SoapEnvelope.VER11);
-		envelope.dotNet = true;
-		//Set output SOAP object
-		envelope.setOutputSoapObject(request);
-		//Create HTTP call object
-		HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
-
-		try {
-			//Invole web service
-			androidHttpTransport.call(SOAP_ACTION, envelope);
-			//Get the response
-			SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-			//Assign it to fahren static variable
-			fahren = response.toString();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -247,10 +194,12 @@ public class HomeActivity extends Activity implements
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
 
-			//Create instance for AsyncCallWS
-			AsyncCallWS task = new AsyncCallWS();
+			//Create instance for FindUser
+			FindUser searchThread = new FindUser();
+			searchThread.setId(1234);
 			//Call execute 
-			task.execute();
+			searchThread.execute();
+			
 			return true;
 		}
 		
@@ -263,36 +212,6 @@ public class HomeActivity extends Activity implements
 		}
 		
 		return super.onOptionsItemSelected(item);
-	}
-
-
-	private static String celcius = "200";
-	private static String fahren;
-	
-	private class AsyncCallWS extends AsyncTask<String, Void, Void> {
-		@Override
-		protected Void doInBackground(String... params) {
-			Log.i(TAG, "doInBackground");
-			getFahrenheit(celcius);
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			Log.i(TAG, "onPostExecute");
-			Log.v("KEEPUP", fahren + "° F");
-		}
-
-		@Override
-		protected void onPreExecute() {
-			Log.i(TAG, "onPreExecute");
-		}
-
-		@Override
-		protected void onProgressUpdate(Void... values) {
-			Log.i(TAG, "onProgressUpdate");
-		}
-
 	}
 	
 	/**
@@ -404,4 +323,33 @@ public class HomeActivity extends Activity implements
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 	}
+	
+	
+	
+
+	
+	/* ---------------- THREADED TASKS ----------------- */
+	
+	public class FindUser extends AsyncTask<String, Void, Void> {
+		protected int id;
+		
+		public void setId(int id) {
+			this.id = id;
+		}
+		
+		@Override
+		protected Void doInBackground(String... params) {
+			lastFetchedUser = new User();
+			lastFetchedUser.setupUser(DatabaseConnector.getUser(id));
+			return null;
+		}
+		
+		@Override
+        protected void onPostExecute(Void result) {
+            GlobalVariables.USERLOGGEDIN = lastFetchedUser;
+            
+            recreate();
+        }
+	}
+	
 }

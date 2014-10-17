@@ -4,6 +4,10 @@ package com.keepup.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.keepup.DatabaseConnector;
 import com.keepup.group.Group;
 import com.keepup.unit.Unit;
 
@@ -16,37 +20,52 @@ public class User {
 	private String email;
 	private int rights;
 	private String unit;
-	private String pw;
+	private String password;
 	
 	private List<Unit> allSubjects = new ArrayList<Unit>();
 	private List<Group> allGroups = new ArrayList<Group>();
 	private List<User> usersForGroup = new ArrayList<User>();
 	
-	// Empty constructor
-	public User() { }
-	
-	//Testing Login
-	public User (String uniId){
-		this.uniId = uniId;
-	}
-	//Constructor (Register)
-	public User (int id, String username, String email, int rights, String pw){
-		this.id = id;
-		this.username = username;
-		this.email = email;
-		this.rights = rights;
-		this.pw = pw;
-	}
-	
+	//Constructing a User from an SQL String
+	public void setupUser(String builderString) {
+		String[] segmentedStrings = new String[5];
+		
+		int offset = 0;
+		
+		//Log.v("KEEPUP", builderString);
+		segmentedStrings[0] = builderString.substring(offset, builderString.indexOf("^", offset));
+		offset += segmentedStrings[0].length() + 1;
+		segmentedStrings[1] = builderString.substring(offset, offset + 15);
+		offset += segmentedStrings[1].length();
+		segmentedStrings[2] = builderString.substring(offset, offset + 50);
+		offset += segmentedStrings[2].length();
+		segmentedStrings[3] = builderString.substring(offset, builderString.indexOf("^", offset));
+		offset += segmentedStrings[3].length() + 1;
+		segmentedStrings[4] = builderString.substring(offset, offset + 25);
+		offset += segmentedStrings[4].length();
+		
+		this.id = Integer.parseInt(segmentedStrings[0].replace(" ", ""));
+		this.username = segmentedStrings[1].replace(" ", "");
+		this.email = segmentedStrings[2].replace(" ", "");
+		this.rights = Integer.parseInt(segmentedStrings[3].replace(" ", ""));
+		this.password = segmentedStrings[4].replace(" ", "");
 
-	// Constructors
-	/*public User(int id, String username, String email, int rights, String unit) {
+		Log.v("KEEPUP", String.valueOf(this.getId()));
+		Log.v("KEEPUP", this.getUsername());
+		Log.v("KEEPUP", this.getEmail());
+		Log.v("KEEPUP", this.getPw());
+		Log.v("KEEPUP", String.valueOf(this.getRights()));
+	}
+	public User () { }
+	//Constructor (Register)
+	public User (int id, String username, String email, int rights, String password) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.rights = rights;
-		this.unit = unit;
-	}*/
+		this.password = password;
+	}
+	
 	public User(String username, String email, int rights, String unit) {
 		this.username = username;
 		this.email = email;
@@ -102,11 +121,11 @@ public class User {
 	}
 
 	public String getPw() {
-		return pw;
+		return password;
 	}
 
 	public void setPw(String pw) {
-		this.pw = pw;
+		this.password = pw;
 	}
 
 	public List<Unit> getAllSubjects() {

@@ -46,7 +46,6 @@ public final class R {
     public static final class id {
         public static final int ConfirmPassword=0x7f0b0031;
         public static final int Email=0x7f0b002b;
-        public static final int LinearLayout1=0x7f0b001e;
         public static final int Password=0x7f0b0030;
         public static final int Register=0x7f0b002d;
         public static final int StudentID=0x7f0b002f;
@@ -62,7 +61,6 @@ public final class R {
         public static final int createGroup=0x7f0b0017;
         public static final int create_group_activity=0x7f0b0000;
         public static final int date_time=0x7f0b0037;
-        public static final int drawer_layout=0x7f0b0008;
         public static final int group_count=0x7f0b0016;
         public static final int group_description=0x7f0b001a;
         public static final int group_drawer_layout=0x7f0b0005;
@@ -75,6 +73,8 @@ public final class R {
         public static final int groups_list=0x7f0b001d;
         public static final int groups_top_container=0x7f0b001b;
         public static final int groups_toplevel_container=0x7f0b0006;
+        public static final int home_layout=0x7f0b0008;
+        public static final int home_news_container=0x7f0b001e;
         public static final int home_toplevel_container=0x7f0b0009;
         public static final int keeping_up_with=0x7f0b001f;
         public static final int last_group_post=0x7f0b003c;
