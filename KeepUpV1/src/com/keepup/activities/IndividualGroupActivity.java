@@ -116,7 +116,7 @@ public class IndividualGroupActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.individual_grp, menu);
+		getMenuInflater().inflate(R.menu.global, menu);
 		return true;
 	}
 
@@ -127,6 +127,14 @@ public class IndividualGroupActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			return true;
+		}
+		
+		//CLICK LOGOUT BUTTON
+		if (id == R.id.action_logout) {
+			GlobalVariables.USERLOGGEDIN = null;
+			Intent intent = new Intent(this, LoginActivity.class);
+	        startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

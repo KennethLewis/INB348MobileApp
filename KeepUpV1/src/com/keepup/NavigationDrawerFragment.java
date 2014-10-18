@@ -58,7 +58,7 @@ public class NavigationDrawerFragment extends Fragment {
 	private boolean mUserLearnedDrawer;
 	
 	private int navDrawToView = 0;
-	private String [] navDrawOptions;
+	private String[] navDrawOptions;
 
 	public NavigationDrawerFragment() {
 	}
@@ -97,6 +97,20 @@ public class NavigationDrawerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
+		//Setup Nav items using constant strings
+		navDrawOptions = new String[] {
+			getString(R.string.news),
+			getString(R.string.units),
+			getString(R.string.groups)
+			/*,
+			getString(R.string.time_table),
+			getString(R.string.mail),
+			getString(R.string.blackboard),
+			getString(R.string.qut_virtual),
+			getString(R.string.qut_news),
+			getString(R.string.map)*/
+		};
+		
 		mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer,
 				container, false);
 		mDrawerListView
@@ -110,47 +124,11 @@ public class NavigationDrawerFragment extends Fragment {
 		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
 				.getThemedContext(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, new String[] {
-						getString(R.string.news),
-						getString(R.string.units),
-						getString(R.string.groups),
-						getString(R.string.time_table),
-						getString(R.string.mail),
-						getString(R.string.blackboard),
-						getString(R.string.qut_virtual),
-						getString(R.string.qut_news),
-						getString(R.string.map)}));
+				android.R.id.text1, navDrawOptions));
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
 	}
-
-	public void correctDisplay (String id){
-		
-		if(id.matches("Unit")){
-			navDrawOptions = new String[] {
-					getString(R.string.units),
-					getString(R.string.news),
-					getString(R.string.groups),
-					getString(R.string.time_table),
-					getString(R.string.mail),
-					getString(R.string.blackboard),
-					getString(R.string.qut_virtual),
-					getString(R.string.qut_news),
-					getString(R.string.map), };
-		}
-		else if (id.matches("Group")){
-			navDrawOptions = new String[] {
-					getString(R.string.units),
-					getString(R.string.news),
-					getString(R.string.groups),
-					getString(R.string.time_table),
-					getString(R.string.mail),
-					getString(R.string.blackboard),
-					getString(R.string.qut_virtual),
-					getString(R.string.qut_news),
-					getString(R.string.map)};
-		}
-	}
+	
 	public boolean isDrawerOpen() {
 		return mDrawerLayout != null
 				&& mDrawerLayout.isDrawerOpen(mFragmentContainerView);

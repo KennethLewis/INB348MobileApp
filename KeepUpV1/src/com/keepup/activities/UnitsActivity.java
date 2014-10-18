@@ -20,6 +20,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -148,14 +150,11 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.units_activity, menu);
-		//return true;
 		if (!uNavigationDrawerFragment.isDrawerOpen()) {
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.
-			getMenuInflater().inflate(R.menu.units_activity, menu);
+			getMenuInflater().inflate(R.menu.global, menu);
 			restoreActionBar();
 			return true;
 		}
@@ -175,8 +174,16 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			return true;
 		}
 		
+		//CLICK LOGOUT BUTTON
+		if (id == R.id.action_logout) {
+			GlobalVariables.USERLOGGEDIN = null;
+			Intent intent = new Intent(this, LoginActivity.class);
+	        startActivity(intent);
+			return true;
+		}
+		
 		//CLICK HOME BUTTON -JACK
-		if (id == R.id.action_example) {
+		if (id == R.id.action_home) {
 			Intent intentUnits = new Intent(this, HomeActivity.class);
 			startActivity(intentUnits);
 			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();
@@ -252,7 +259,9 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			
 			//Setup Unit Name.
 			TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
-			unitCode.setText(unitsToDisplay.get(i).getUnitCode() + " - " + unitsToDisplay.get(i).getName());
+			SpannableString content = new SpannableString(unitsToDisplay.get(i).getUnitCode() + " - " + unitsToDisplay.get(i).getName());
+			//content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+			unitCode.setText(content);
 			
 			//TextView unitName = (TextView) rootView.findViewById(R.id.unitname_unit);
 			//unitName.setText(unitsToDisplay.get(i).getName());
@@ -268,12 +277,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			postCount.setText("x " + String.valueOf(intTests[i][1]));
 			TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_unit);
 			postOnYoursCount.setText("x " + String.valueOf(intTests[i][2]));
-
-			 //Change background colour based on element id.
-			 //if(i % 2 == 0)
-				 //rootView.findViewById(R.id.unit_template_content).setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-			 //else
-				 //rootView.findViewById(R.id.unit_template_content).setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
 			 
 			return rootView;
 		}

@@ -101,7 +101,7 @@ public class IndividualUnitActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.individual_unit, menu);
+		getMenuInflater().inflate(R.menu.global, menu);
 		return true;
 	}
 
@@ -114,13 +114,21 @@ public class IndividualUnitActivity extends Activity {
 		
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			db.emptyDatabase();
-			Log.v("Button", "Settings button clicked");
+
+
+			return true;
+		}
+		
+		//CLICK LOGOUT BUTTON
+		if (id == R.id.action_logout) {
+			GlobalVariables.USERLOGGEDIN = null;
+			Intent intent = new Intent(this, LoginActivity.class);
+	        startActivity(intent);
 			return true;
 		}
 		
 		//CLICK HOME BUTTON -JACK
-		if (id == R.id.action_example) {
+		if (id == R.id.action_home) {
 			Intent intentUnits = new Intent(this, HomeActivity.class);
 			startActivity(intentUnits);
 			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();

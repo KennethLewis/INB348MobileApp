@@ -14,6 +14,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +60,11 @@ public class LoginActivity extends Activity {
     	} catch(NumberFormatException nfe) {
     	   System.out.println("Could not parse " + nfe);
     	} 
+
+    	if(userId == -1 || userPw == null)
+    		return;
     	
+    	Log.v("KEEPUP", String.valueOf(userId));
     	Login loginThread = new Login();
     	loginThread.setId(userId);
     	loginThread.setPassword(userPw);
@@ -74,7 +79,7 @@ public class LoginActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.login, menu);
         return true;
     }
 
@@ -101,7 +106,7 @@ public class LoginActivity extends Activity {
 		}
 		
 		//CLICK HOME BUTTON -JACK
-		if (id == R.id.action_example) {
+		if (id == R.id.action_home) {
 			Toast.makeText(this, "Please login first.", Toast.LENGTH_SHORT).show();
 			return true;
 		}
@@ -125,7 +130,7 @@ public class LoginActivity extends Activity {
         }
     }
     
-    public void addAllTestData(){
+    public void addAllTestData() {
          
         User testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "test");
         User testUser2 = new User(8600571, "Jackson1","Jackson1@live.com.au", 0, "test");
@@ -154,7 +159,6 @@ public class LoginActivity extends Activity {
     }
     public void loginSuccess() {
         Intent intent = new Intent(this, HomeActivity.class);
-    	//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     	startActivity(intent);
 		Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
     }
@@ -175,11 +179,10 @@ public class LoginActivity extends Activity {
 		
 		@Override
 		protected Void doInBackground(String... params) {
+			lastFetchedUser = null;
 			if(DatabaseConnector.getLoggedIn(id, password)) {
 				lastFetchedUser = new User();
 				lastFetchedUser.setupUser(DatabaseConnector.getUser(id));
-			} else {
-				lastFetchedUser = null;
 			}
 			return null;
 		}
@@ -189,10 +192,10 @@ public class LoginActivity extends Activity {
 			if(lastFetchedUser != null) {
 	            GlobalVariables.USERLOGGEDIN = lastFetchedUser;
 	            loginSuccess();
+	            //recreate();
 			} else {
 				loginFail();
 			}
-            recreate();
         }
 	}
 }

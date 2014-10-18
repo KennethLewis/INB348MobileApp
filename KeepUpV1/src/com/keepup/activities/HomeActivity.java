@@ -127,7 +127,7 @@ public class HomeActivity extends Activity implements
 		actionBar.setTitle(mTitle);
 	}
 
-	public void moveTo(View v){
+	public void moveTo(View v) {
 		
 		TextView whereTo = (TextView) v.findViewById(R.id.unit_group_user_title);
 		String goingTo = whereTo.getText().toString();
@@ -152,24 +152,6 @@ public class HomeActivity extends Activity implements
 			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        startActivity(intent);
 		}
-		
-		
-		/*TextView unitId = (TextView) v.findViewById(R.id.unit_group_user_title);
-		String id = (String) unitId.getText();
-		GlobalVariables.USERLOGGEDIN.setUnit(id);
-		Intent intent = new Intent(this, IndividualUnitActivity.class);
-		intent.putExtra("unitId", id);
-		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        
-        
-        TextView groupName = (TextView) v.findViewById(R.id.unit_group_user_title);
-		String name = (String) groupName.getText();
-		//GlobalVariables.USERLOGGEDIN.setUnit(name);
-		Intent intent = new Intent(this, IndividualGroupActivity.class);
-		intent.putExtra("groupName", name);
-		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);*/
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -177,7 +159,7 @@ public class HomeActivity extends Activity implements
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.
-			getMenuInflater().inflate(R.menu.home, menu);
+			getMenuInflater().inflate(R.menu.global, menu);
 			restoreActionBar();
 			return true;
 		}
@@ -193,18 +175,22 @@ public class HomeActivity extends Activity implements
 		
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-
-			//Create instance for FindUser
-			FindUser searchThread = new FindUser();
-			searchThread.setId(1234);
-			//Call execute 
-			searchThread.execute();
+			
+			
 			
 			return true;
 		}
 		
+		//CLICK LOGOUT BUTTON
+		if (id == R.id.action_logout) {
+			GlobalVariables.USERLOGGEDIN = null;
+			Intent intent = new Intent(this, LoginActivity.class);
+	        startActivity(intent);
+			return true;
+		}
+		
 		//CLICK HOME BUTTON -JACK
-		if (id == R.id.action_example) {
+		if (id == R.id.action_home) {
 			Intent intentUnits = new Intent(this, HomeActivity.class);
 			startActivity(intentUnits);
 			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();
@@ -330,23 +316,22 @@ public class HomeActivity extends Activity implements
 	
 	/* ---------------- THREADED TASKS ----------------- */
 	
-	public class FindUser extends AsyncTask<String, Void, Void> {
-		protected int id;
-		
-		public void setId(int id) {
-			this.id = id;
-		}
-		
+	public class FindUser extends AsyncTask<Integer, Void, Void> {
+
 		@Override
-		protected Void doInBackground(String... params) {
-			lastFetchedUser = new User();
-			lastFetchedUser.setupUser(DatabaseConnector.getUser(id));
+		protected Void doInBackground(Integer... params) {
+			String buildString = DatabaseConnector.getUser(params[0]);
+			if(buildString.length() > 0) {
+				lastFetchedUser = new User();
+				lastFetchedUser.setupUser(buildString);
+			}
 			return null;
 		}
 		
 		@Override
         protected void onPostExecute(Void result) {
-            GlobalVariables.USERLOGGEDIN = lastFetchedUser;
+			if(lastFetchedUser != null)
+				GlobalVariables.USERLOGGEDIN = lastFetchedUser;
             
             recreate();
         }

@@ -2,11 +2,15 @@ package com.keepup.activities;
 
 import com.keepup.user.User;
 import com.keepup.user.UserDatabaseController;
+import com.keepup.DatabaseConnector;
+import com.keepup.GlobalVariables;
 import com.keepup.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,11 +38,21 @@ public class RegisterActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.register, menu);
+		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
+	
+	public void startUserRegistration(View v) {
+		EditText userUniId = (EditText)findViewById(R.id.new_student_no);
+		int id = Integer.parseInt(userUniId.getText().toString());
+		
+		//Log.v("KEEPUP", String.valueOf(id));
+		
+		FindUser findUserThread = new FindUser();
+		findUserThread.execute(id);
+	}
 
-	public void registerUser(View v){
+	public void registerUser() {
 		
 		//DONT NEED TO ASK USER FOR ALL INFORMATION, A LOT CAN COME OFF DATABASES
 		//AFTER THE USER LINKS THEIR ACC WITH A QUT EMAIL.
@@ -48,47 +62,49 @@ public class RegisterActivity extends Activity {
 			EditText userPw = (EditText)findViewById(R.id.password);
 			EditText userPwConfirm = (EditText)findViewById(R.id.confirm_password);
 			
-			int id = Integer.parseInt(userUniId.getText().toString());
-			String [] usersName = userEmail.getText().toString().split("@");
-			String name = usersName[0];
-			String email = userEmail.getText().toString();
-			String pw = userPw.getText().toString();
-			String pwConfirm = userPwConfirm.getText().toString();
-			
-			newUser = new User(id, name, email, 1, pw);
-			
-			for (User user : usersDb.getAllUsers()){
-				if(user.getId() == id){
-					Toast.makeText(this, "Error: User already Exists.", Toast.LENGTH_SHORT)
-					.show();
-					throw new Exception("User Already Exists");
-				}
+			//Check if all fields are filled in first.
+			if(userUniId.getText().toString().isEmpty() || userEmail.getText().toString().isEmpty()
+			   || userPw.getText().toString().isEmpty() || userPwConfirm.getText().toString().isEmpty()) {
+				Toast.makeText(this, "Please fill in all fields!", Toast.LENGTH_SHORT).show();
+				return;
 			}
-			if (newUser.getId() < 999999){
+			
+			int id = Integer.parseInt(userUniId.getText().toString());
+			String username = userEmail.getText().toString().
+					substring(0, userEmail.getText().toString().indexOf("@") == -1 ? 0
+							   : userEmail.getText().toString().indexOf("@"));
+			String email = userEmail.getText().toString();
+			String password = userPw.getText().toString();
+			String pwConfirm = userPwConfirm.getText().toString();
+
+			if(lastFetchedUser != null) {
+				Toast.makeText(this, "Error: User already Exists.", Toast.LENGTH_SHORT)
+				.show();
+			}
+			else if (id > 999999) {
 				Toast.makeText(this, "Error: Invalid Student Number.", Toast.LENGTH_SHORT)
 				.show();
-				throw new Exception("Invaild Student Number");
 			}
-				
-			else if(pw.matches(pwConfirm) != true){
+			else if(username.length() < 1 || username.length() > 15) {
+				Toast.makeText(this, "Error: Username must be at least 1-15 Chars long."
+						, Toast.LENGTH_LONG).show();
+			}
+			else if(password.matches(pwConfirm) != true) {
 				Toast.makeText(this, "Error: Passwords dont match.", Toast.LENGTH_SHORT)
 				.show();
-				throw new Exception("Passwords dont match");
 			}
-			else if(pw.length() < 6){
-				Toast.makeText(this, "Error: Password must be at least 6 Chars long."
+			else if(password.length() < 6 || password.length() > 25) {
+				Toast.makeText(this, "Error: Password must be at least 6-25 Chars long."
 						, Toast.LENGTH_LONG).show();
-				throw new Exception("Password length less than 6 characters");
 			}
-			else if (email.contains("qut.edu.au") == false){
-				Toast.makeText(this, "Error: Email address must be a valid QUT email."
+			else if(email.contains("qut.edu.au") == false || email.length() > 50) {
+				Toast.makeText(this, "Error: Email address must be a valid QUT email. (and less than 50chars)"
 						, Toast.LENGTH_LONG).show();
-				throw new Exception("Not a valid QUT email address");
 			}
 			else {
-				usersDb.addUser(newUser);
-				Intent intent = new Intent(this, LoginActivity.class);
-				startActivity(intent);
+				//SUCCESS let's create the user.
+				RegisterUser registerThread = new RegisterUser();
+				registerThread.execute(String.valueOf(id), username, email, "0", password);
 			}
 		}
 		catch (Exception e){
@@ -103,7 +119,7 @@ public class RegisterActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
+		// as you specify as parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -126,5 +142,49 @@ public class RegisterActivity extends Activity {
 					container, false);
 			return rootView;
 		}
+	}
+	
+	private void registerSuccess() {
+		Log.v("KEEPUP", "TEST SUCCESS REGISTERED");
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
+	}
+	
+	/* ---------------- THREADED TASKS ----------------- */
+	User lastFetchedUser;
+	public class FindUser extends AsyncTask<Integer, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Integer... params) {
+			String buildString = DatabaseConnector.getUser(params[0]);
+			lastFetchedUser = null;
+			if(buildString != null) {
+				lastFetchedUser = new User();
+				lastFetchedUser.setupUser(buildString);
+			}
+			return null;
+		}
+		
+		protected void onPostExecute(Void result) {
+			registerUser();
+        }
+	}
+	
+	public class RegisterUser extends AsyncTask<String, Void, Boolean> {
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			if(DatabaseConnector.registerUser(Integer.valueOf(params[0]), params[1], params[2], Integer.valueOf(params[3]), params[4])) {
+				Log.v("KEEPUP", "SUCCESS");
+				return true;
+			}
+			Log.v("KEEPUP", "FAIL");
+			return false;
+		}
+		
+		protected void onPostExecute(Boolean result) {
+			if(result)
+				registerSuccess();
+        }
 	}
 }

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Global names -->
+    <string name="app_name">keepUP</string>
+
+    <!-- Action Menu Titles  -->
+    <string name="action_home">Home</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
 
     <!-- Login Activity -->
     <string name="login_advice">Please login with your QUT credentials.</string>
@@ -19,9 +26,6 @@
     <string name="register_prefill_qutemail"></string>
     <string name="notification_count">0</string>
     <string name="welcome">Welcome to KeepUP</string>
-    <string name="app_name">keepUP</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="title_home">News</string>
     <string name="units">Units</string>
     <string name="groups">Groups</string>
@@ -33,7 +37,6 @@
     <string name="map">Map</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Home</string>
     <string name="newsfeed_item_header_post">New Post in INB377 by @jacksonp</string>
     <string name="newsfeed_item_header_announcement">New Announcement by lecturer @richards in INB317</string>
     <string name="newsfeed_item_header_postOnYours">New Post on your question in INB377 by @zackr</string>
@@ -45,7 +48,7 @@
         <item name="units">Units</item>
         <item name="groups">Groups</item>
     </string-array>
-
+    
     <string name="testing_news_area">This is so the news area can be seen</string>
     <string name="news">News</string>
     <string name="title_activity_units">UnitsActivity</string>

@@ -1,103 +1,96 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="right"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.keepup.RegisterActivity$PlaceholderFragment" >
 
+    <TextView
+        android:id="@+id/StudentID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/student_id"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/new_student_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5pt"
+        android:layout_marginLeft="5pt"
+        android:layout_marginRight="10pt"
+        android:layout_marginTop="2pt"
+        android:ems="10"
+        android:inputType="number" />
 
     <TextView
         android:id="@+id/Email"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/new_email_addy"
-        android:layout_centerHorizontal="true"
         android:ems="10"
         android:text="@string/register_email"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-    
-     <Button
+
+    <EditText
+        android:id="@+id/new_email_addy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5pt"
+        android:layout_marginLeft="5pt"
+        android:layout_marginRight="10pt"
+        android:layout_marginTop="2pt"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="@string/register_prefill_qutemail" />
+
+    <TextView
+        android:id="@+id/Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register_pw"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5pt"
+        android:layout_marginLeft="5pt"
+        android:layout_marginRight="10pt"
+        android:layout_marginTop="2pt"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/ConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register_pw_confirm"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5pt"
+        android:layout_marginLeft="5pt"
+        android:layout_marginRight="10pt"
+        android:layout_marginTop="2pt"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <Button
         android:id="@+id/Register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="36dp"
-        android:onClick="registerUser"
+        android:layout_marginBottom="19dp"
+        android:onClick="startUserRegistration"
         android:text="@string/register" />
 
-     <EditText
-         android:id="@+id/new_email_addy"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_above="@+id/Register"
-         android:layout_alignLeft="@+id/Email"
-         android:ems="10"
-         android:inputType="textEmailAddress"
-         android:text="@string/register_prefill_qutemail" >
-
-         <requestFocus />
-     </EditText>
-
-     <EditText
-         android:id="@+id/new_student_no"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignRight="@+id/password"
-         android:layout_below="@+id/StudentID"
-         android:ems="10"
-         android:inputType="number" />
-
-     <TextView
-         android:id="@+id/StudentID"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/Password"
-         android:layout_alignParentTop="true"
-         android:layout_marginTop="40dp"
-         android:text="@string/student_id"
-         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-     <TextView
-         android:id="@+id/Password"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_above="@+id/password"
-         android:layout_alignLeft="@+id/password"
-         android:layout_marginBottom="14dp"
-         android:text="@string/register_pw"
-         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-     <EditText
-         android:id="@+id/password"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_above="@+id/ConfirmPassword"
-         android:layout_alignLeft="@+id/ConfirmPassword"
-         android:layout_marginBottom="38dp"
-         android:ems="10"
-         android:inputType="textPassword" />
-
-     <TextView
-         android:id="@+id/ConfirmPassword"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/Email"
-         android:layout_centerVertical="true"
-         android:text="@string/register_pw_confirm"
-         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-     <EditText
-         android:id="@+id/confirm_password"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/ConfirmPassword"
-         android:layout_below="@+id/ConfirmPassword"
-         android:ems="10"
-         android:inputType="textPassword" />
-
-</RelativeLayout>
+</LinearLayout>

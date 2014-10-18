@@ -38,8 +38,8 @@ public final class DatabaseConnector {
 		
 		fetchData(request);
 		
-		if(stringBuffer == null)
-			return "NoResults";
+		if(stringBuffer.contains("NoResults"))
+			return null;
 		
 		return stringBuffer;
 	}
@@ -70,10 +70,59 @@ public final class DatabaseConnector {
 		fetchData(request);
 		
 		Log.v("KEEPUP", stringBuffer);
-		if(stringBuffer == "false")
-			return false;
+		if(stringBuffer.contains("true"))
+			return true;
 		
-		return true;
+		return false;
+	}
+
+	public static boolean registerUser(int id, String username, String email, int rights, String pass) {
+		URL_SUFFIX = "UserService.asmx";
+		SOAP_ACTION_SUFFIX = "registerUser";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		//Property which holds input parameters
+		PropertyInfo userId = new PropertyInfo();
+		//Set Name
+		userId.setName("userId");
+		userId.setValue(id);
+		userId.setType(int.class);
+		
+		PropertyInfo name = new PropertyInfo();
+		name.setName("username");
+		name.setValue(username);
+		name.setType(String.class);
+		
+		PropertyInfo emailVal = new PropertyInfo();
+		emailVal.setName("email");
+		emailVal.setValue(email);
+		emailVal.setType(String.class);
+		
+		PropertyInfo rightsVal = new PropertyInfo();
+		rightsVal.setName("rights");
+		rightsVal.setValue(rights);
+		rightsVal.setType(int.class);
+		
+		PropertyInfo password = new PropertyInfo();
+		password.setName("pass");
+		password.setValue(pass);
+		password.setType(String.class);
+		
+		//Add the property to request object
+		request.addProperty(userId);
+		request.addProperty(name);
+		request.addProperty(emailVal);
+		request.addProperty(rightsVal);
+		request.addProperty(password);
+		
+		fetchData(request);
+		
+		Log.v("KEEPUP", stringBuffer);
+		if(stringBuffer.contains("true"))
+			return true;
+		
+		return false;
 	}
 
 	//MAIN CONNECTOR AND FETCHER FOR SQL DATA

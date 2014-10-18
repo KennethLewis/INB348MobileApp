@@ -81,14 +81,11 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.group, menu);
-		//return true;
 		if (!mNavigationDrawerFragment.isDrawerOpen()) {
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.
-			getMenuInflater().inflate(R.menu.group, menu);
+			getMenuInflater().inflate(R.menu.global, menu);
 			restoreActionBar();
 			return true;
 		}
@@ -108,8 +105,16 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			return true;
 		}
 		
+		//CLICK LOGOUT BUTTON
+		if (id == R.id.action_logout) {
+			GlobalVariables.USERLOGGEDIN = null;
+			Intent intent = new Intent(this, LoginActivity.class);
+	        startActivity(intent);
+			return true;
+		}
+		
 		//CLICK HOME BUTTON -JACK
-		if (id == R.id.action_example) {
+		if (id == R.id.action_home) {
 			Intent intentUnits = new Intent(this, HomeActivity.class);
 			startActivity(intentUnits);
 			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();

@@ -69,7 +69,8 @@
         android:layout_marginTop="19dp"
         android:text="@string/password"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+    
+	<!-- 
     <CheckBox
         android:id="@+id/remember_me"
         android:layout_width="wrap_content"
@@ -79,7 +80,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="33dp"
         android:text="@string/remember_me" />
-
+	
     <TextView
         android:id="@+id/news_area"
         android:layout_width="wrap_content"
@@ -88,15 +89,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="@string/forgot_details"
-        android:textSize="8pt" />
+        android:textSize="8pt" /> -->
 
     <Button
         android:id="@+id/login_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/remember_me"
-        android:layout_alignBottom="@+id/remember_me"
+        android:layout_alignLeft="@+id/password"
         android:layout_alignRight="@+id/password"
+        android:layout_below="@+id/password"
+        android:layout_marginTop="37dp"
         android:onClick="goToHome"
         android:text="@string/login_button" />
 
@@ -106,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="39dp"
         android:clickable="true"
         android:onClick="goToRegister"
         android:text="@string/register"
