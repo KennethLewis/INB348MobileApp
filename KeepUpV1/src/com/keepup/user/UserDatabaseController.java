@@ -146,22 +146,6 @@ public class UserDatabaseController extends SQLiteOpenHelper {
 		return UserList;
 	}
 
-	// Updating single User
-	public int updateUser(User User) {
-		SQLiteDatabase db = this.getWritableDatabase();
-
-		ContentValues values = new ContentValues();
-		values.put(KEY_USERNAME, User.getUsername());
-		values.put(KEY_EMAIL, User.getEmail());
-		values.put(KEY_RIGHTS, User.getRights());
-		values.put(KEY_EMAIL, User.getEmail());
-		values.put(KEY_PASSWORD, User.getUnit());
-
-		// updating row
-		return db.update(TABLE_USERS, values, KEY_ID + " = ?",
-				new String[] { String.valueOf(User.getId()) });
-	}
-
 	// Deleting single User
 	public void deleteUser(User User) {
 		SQLiteDatabase db = this.getWritableDatabase();

@@ -154,8 +154,10 @@ public class IndividualUnitActivity extends Activity {
 			return;
 		
 		String content = userPost.getText().toString();
+		
+		//@EDIT
 		Post newPost = new Post(GlobalVariables.USERLOGGEDIN.getUsername(), 
-				postTime, content, "Unit: " + GlobalVariables.USERLOGGEDIN.getUnit());
+				postTime, content, "Unit: "); //+ GlobalVariables.USERLOGGEDIN.getUnit());
         
 		db.addPost(newPost);
         

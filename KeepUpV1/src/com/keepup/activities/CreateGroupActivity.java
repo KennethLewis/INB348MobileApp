@@ -45,10 +45,6 @@ public class CreateGroupActivity extends Activity {
 		db = new UserDatabaseController(this);
 		groupDb = new GroupDatabaseController(this);
 		
-		for (User user: GlobalVariables.USERLOGGEDIN.getUsersForGroup()){
-			usersForGrp.add(user);
-		}
-		
 		LinearLayout userList = (LinearLayout) findViewById(R.id.group_members_list);
 		
 			for(int i = 0; i < usersForGrp.size(); i++)  {
@@ -183,24 +179,26 @@ public void showUsers(View v){
 	//Will refresh the users page once unit is selected
 	public void onChangeSelectedUsers(){
 		
-		for(User user : selectedUsers){
-			if(GlobalVariables.USERLOGGEDIN.getUsersForGroup().contains(user) == false)
-				GlobalVariables.USERLOGGEDIN.addUserForGroup(user);
-		}
+		//@EDIT
+//		for(User user : selectedUsers){
+//			if(GlobalVariables.USERLOGGEDIN.getUsersForGroup().contains(user) == false)
+//				GlobalVariables.USERLOGGEDIN.addUserForGroup(user);
+//		}
 		this.recreate();
 	}
 	
-	public void createGroup(View v){
+	public void createGroup(View v) {
 		
 		String groupName;
 		String members ="";
 		String membersId = "";
 		String description;
 		
-		for(User users: GlobalVariables.USERLOGGEDIN.getUsersForGroup()){
-			members += users.getUsername() + ",";
-			membersId += users.getId() + ",";
-		}
+		//@EDIT
+//		for(User users: GlobalVariables.USERLOGGEDIN.getUsersForGroup()){
+//			members += users.getUsername() + ",";
+//			membersId += users.getId() + ",";
+//		}
 		
 		EditText name = (EditText)findViewById(R.id.newGroupName);
 		EditText desc = (EditText)findViewById(R.id.group_description);
@@ -211,7 +209,6 @@ public void showUsers(View v){
 		Group newGroup = new Group (groupName,members,membersId,description);
 		groupDb.addGroup(newGroup);
 		
-		GlobalVariables.USERLOGGEDIN.clearUsersForGroup();
 		Intent intent = new Intent(this, GroupActivity.class);
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

@@ -21,8 +21,6 @@ import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
 
-	private UserDatabaseController usersDb;
-	private User newUser;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,8 +29,6 @@ public class RegisterActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		usersDb = new UserDatabaseController(this);
-		
 	}
 
 	@Override
@@ -132,8 +128,7 @@ public class RegisterActivity extends Activity {
 	 */
 	public static class PlaceholderFragment extends Fragment {
 
-		public PlaceholderFragment() {
-		}
+		public PlaceholderFragment() { }
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
