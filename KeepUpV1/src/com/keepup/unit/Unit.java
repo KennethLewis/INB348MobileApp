@@ -3,131 +3,84 @@ package com.keepup.unit;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 import com.keepup.user.User;
 
 public class Unit {
 
 	//private variables
-	private String unitCode;
+	private int id;
+	private String code;
 	private String name;
-	private User coordinator;
-	private String allUsers;
-	private String allUsersStudentId;
+	private int userId;
 	
-	private List<User> enrolledUsers = new ArrayList<User>();
+	//Constructing a User from an SQL String
+	public void setupUnit(String builderString) {
+		String[] segmentedStrings = new String[4];
+		
+		int offset = 0;
+		
+		//Log.v("KEEPUP", builderString);
+		segmentedStrings[0] = builderString.substring(offset, builderString.indexOf("^", offset));
+		offset += segmentedStrings[0].length() + 1;
+		segmentedStrings[1] = builderString.substring(offset, offset + 6);
+		offset += segmentedStrings[1].length();
+		segmentedStrings[2] = builderString.substring(offset, offset + 100);
+		offset += segmentedStrings[2].length();
+		segmentedStrings[3] = builderString.substring(offset, builderString.indexOf("^", offset));
+		offset += segmentedStrings[3].length() + 1;
+		
+		this.id = Integer.parseInt(segmentedStrings[0].replace(" ", ""));
+		this.code = segmentedStrings[1].replace(" ", "");
+		this.name = segmentedStrings[2].replace(" ", "");
+		this.userId = Integer.parseInt(segmentedStrings[3].replace(" ", ""));
+
+		Log.v("KEEPUP", String.valueOf(this.getId()));
+		Log.v("KEEPUP", this.getCode());
+		Log.v("KEEPUP", this.getName());
+		Log.v("KEEPUP", String.valueOf(this.getUserId()));
+	}
 	
 	// Empty constructor
 	public Unit() { }
-	
-	public Unit (String unitCode, String name, String allUsers, 
-					String allUsersStudentId){
-		this.unitCode = unitCode;
+	public Unit (int id, String code, String name, int userId) {
+		this.id = id;
+		this.code = code;
 		this.name = name;
-		this.allUsers = allUsers;
-		this.allUsersStudentId = allUsersStudentId;
-	}
-	public Unit (String unitCode, String name){
-		this.unitCode = unitCode;
-		this.name = name;
-	}
-	// Constructors
-	public Unit(String unitCode, String name, User coordinator) {
-		this.unitCode = unitCode;
-		this.name = name;
-		this.coordinator = coordinator;
-	}
-	public Unit(String name, User coordinator) {
-		this.name = name;
-		this.coordinator = coordinator;
+		this.userId = userId;
 	}
 
-	//Get and Set Unit's unit code
-	public String getCode() {
-		return this.unitCode;
+	//Get and Set Unit's id
+	public int getId() {
+		return id;
 	}
-	public void setCode(String unitCode) {
-		this.unitCode = unitCode;
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	//Get and Set Unit's code
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	//Get and Set Unit's name
 	public String getName() {
-		return this.name;
+		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	//Get and Set Unit's coordinator
-	public User GetCoordinator() {
-		return this.coordinator;
+	//Get and Set Unit's userId
+	public int getUserId() {
+		return userId;
 	}
-	public void SetCoordinator(User coordinator) {
-		this.coordinator = coordinator;
-	}
-
-	public String getUnitCode() {
-		return unitCode;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
-	public void setUnitCode(String unitCode) {
-		this.unitCode = unitCode;
-	}
-
-	public User getCoordinator() {
-		return coordinator;
-	}
-
-	public void setCoordinator(User coordinator) {
-		this.coordinator = coordinator;
-	}
-
-	public List<User> getEnrolledUsers() {
-		return enrolledUsers;
-	}
-
-	public void setEnrolledUsers(List<User> enrolledUsers) {
-		this.enrolledUsers = enrolledUsers;
-	}
-	
-	public void addUserToUnit (User u){
-		enrolledUsers.add(u);
-	}
-
-	public String getAllUsers() {
-		return allUsers;
-	}
-
-	public void setAllUsers(String allUsers) {
-		this.allUsers = allUsers;
-	}
-
-	public String getAllUsersNames(){
-		for(User user: enrolledUsers)
-			allUsers += user.getUsername() + ",";
-		return allUsers;
-			
-	}
-	public String getAllUsersStudentId() {
-		for(User user: enrolledUsers)
-			allUsersStudentId += user.getId() + ",";
-		return allUsersStudentId;
-	}
-
-	public void setAllUsersStudentId(String allUsersStudentId) {
-		this.allUsersStudentId = allUsersStudentId;
-	}
-	
-	public List<Integer> gatherUsersId(){
-		
-		List<Integer> studentNoAfterParse = new ArrayList<Integer>();
-		String [] delimtedStudentNo;
-		if(allUsersStudentId.isEmpty() == false){
-			delimtedStudentNo = this.allUsersStudentId.split(",");		
-			for(String s: delimtedStudentNo){
-				s = s.replace(",","");
-				studentNoAfterParse.add(Integer.parseInt(s));
-			}
-		}
-		return studentNoAfterParse;
-	}
 }

@@ -99,24 +99,6 @@ public class HomeActivity extends Activity implements
 			Intent intentGroups = new Intent(this, GroupActivity.class);
 			startActivity(intentGroups);
 			break;
-		case 4:
-			mTitle = getString(R.string.time_table);
-			break;
-		case 5:
-			mTitle = getString(R.string.mail);
-			break;
-		case 6:
-			mTitle = getString(R.string.blackboard);
-			break;
-		case 7:
-			mTitle = getString(R.string.qut_virtual);
-			break;
-		case 8:
-			mTitle = getString(R.string.qut_news);
-			break;
-		case 9:
-			mTitle = getString(R.string.map);
-			break;
 		}
 	}
 
@@ -138,7 +120,6 @@ public class HomeActivity extends Activity implements
 			Intent intent = new Intent(this, IndividualUnitActivity.class);
 			String [] unitName = finalDestination.split(":");
 			String trimedName = unitName[1].trim();
-			GlobalVariables.USERLOGGEDIN.setUnit(trimedName);
 			intent.putExtra("unitId", trimedName);
 			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        startActivity(intent);
@@ -238,22 +219,23 @@ public class HomeActivity extends Activity implements
 			TextView noOfUnits = (TextView) rootView.findViewById(R.id.news_unit_count);
 			TextView noOfGroups = (TextView) rootView.findViewById(R.id.news_group_count);
 			
-			for(Unit unit: unitDb.getAllUnits())
-			{
-				if (unit.gatherUsersId().contains(GlobalVariables.USERLOGGEDIN.getId()))
-					unitsToShow.add(unit);
-			}
-			for(Group group: groupDb.getAllGroups())
-			{
-				if (group.gatherUsers().contains(GlobalVariables.USERLOGGEDIN.getId()))
-					groupsToShow.add(group);
-			}
+			//@EDIT
+//			for(Unit unit: unitDb.getAllUnits())
+//			{
+//				if (unit.gatherUsersId().contains(GlobalVariables.USERLOGGEDIN.getId()))
+//					unitsToShow.add(unit);
+//			}
+//			for(Group group: groupDb.getAllGroups())
+//			{
+//				if (group.gatherUsers().contains(GlobalVariables.USERLOGGEDIN.getId()))
+//					groupsToShow.add(group);
+//			}
 			noOfUnits.setText(unitsToShow.size() + " Units");
 			noOfGroups.setText(groupsToShow.size() + " Groups");
 			
 			for(Post post: postDb.getAllPosts()){
 				for(Unit unit: unitsToShow){
-					if(post.getUnit().contains(unit.getUnitCode()))
+					if(post.getUnit().contains(unit.getCode()))
 							postsToShow.add(post);
 				}
 				for(Group group: groupsToShow){

@@ -241,24 +241,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		case 3:
 			mTitle = getString(R.string.groups);
 			break;
-		case 4:
-			mTitle = getString(R.string.time_table);
-			break;
-		case 5:
-			mTitle = getString(R.string.mail);
-			break;
-		case 6:
-			mTitle = getString(R.string.blackboard);
-			break;
-		case 7:
-			mTitle = getString(R.string.qut_virtual);
-			break;
-		case 8:
-			mTitle = getString(R.string.qut_news);
-			break;
-		case 9:
-			mTitle = getString(R.string.map);
-			break;
 		}
 	}
 	public void restoreActionBar() {
