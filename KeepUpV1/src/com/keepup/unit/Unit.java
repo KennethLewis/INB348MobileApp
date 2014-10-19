@@ -1,11 +1,6 @@
 package com.keepup.unit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.util.Log;
-
-import com.keepup.user.User;
 
 public class Unit {
 
@@ -33,13 +28,13 @@ public class Unit {
 		
 		this.id = Integer.parseInt(segmentedStrings[0].replace(" ", ""));
 		this.code = segmentedStrings[1].replace(" ", "");
-		this.name = segmentedStrings[2].replace(" ", "");
+		this.name = segmentedStrings[2];
 		this.userId = Integer.parseInt(segmentedStrings[3].replace(" ", ""));
 
-		Log.v("KEEPUP", String.valueOf(this.getId()));
-		Log.v("KEEPUP", this.getCode());
-		Log.v("KEEPUP", this.getName());
-		Log.v("KEEPUP", String.valueOf(this.getUserId()));
+		//Log.v("KEEPUP", String.valueOf(this.getId()));
+		//Log.v("KEEPUP", this.getCode());
+		//Log.v("KEEPUP", this.getName());
+		//Log.v("KEEPUP", String.valueOf(this.getUserId()));
 	}
 	
 	// Empty constructor

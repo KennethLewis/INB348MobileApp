@@ -29,6 +29,43 @@ public final class DatabaseConnector {
 	static String URL_SUFFIX = "";
 	
 	static String stringBuffer;
+	
+	public static boolean editUnitUnderUser(String code, String name, int id, boolean remove) {
+		URL_SUFFIX = "UnitService.asmx";
+		SOAP_ACTION_SUFFIX = remove ? "removeUserFromUnit" : "addUserToUnit";
+			
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		//Property which holds input parameters
+		PropertyInfo userId = new PropertyInfo();
+		//Set Name
+		userId.setName("userId");
+		userId.setValue(id);
+		userId.setType(int.class);
+		
+		PropertyInfo unitName = new PropertyInfo();
+		unitName.setName("unitName");
+		unitName.setValue(name);
+		unitName.setType(String.class);
+		
+		PropertyInfo unitCode = new PropertyInfo();
+		unitCode.setName("unitCode");
+		unitCode.setValue(code);
+		unitCode.setType(String.class);
+		
+		//Add the property to request object
+		request.addProperty(userId);
+		request.addProperty(unitName);
+		request.addProperty(unitCode);
+		
+		fetchData(request);
+		
+		Log.v("KEEPUP", stringBuffer);
+		if(stringBuffer.contains("true"))
+			return true;
+		
+		return false;
+	}
 
 	public static String getUnit(int id) {
 		URL_SUFFIX = "UnitService.asmx";
@@ -97,6 +134,34 @@ public final class DatabaseConnector {
 		fetchData(request);
 		
 		return Integer.parseInt(stringBuffer);
+	}
+
+	public static String getUnits() {
+		URL_SUFFIX = "UnitService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllUnits";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
+
+	public static String getUnitsDistinct() {
+		URL_SUFFIX = "UnitService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllUnitsDistinct";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
 	}
 	
 	public static int getUnitCount() {

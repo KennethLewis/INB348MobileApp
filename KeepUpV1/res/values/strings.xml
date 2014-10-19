@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Global names -->
     <string name="app_name">keepUP</string>
 
-    <!-- Action Menu Titles  -->
+    <!-- Action Menu Titles -->
     <string name="action_home">Home</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
@@ -48,7 +49,7 @@
         <item name="units">Units</item>
         <item name="groups">Groups</item>
     </string-array>
-    
+
     <string name="testing_news_area">This is so the news area can be seen</string>
     <string name="news">News</string>
     <string name="title_activity_units">UnitsActivity</string>
@@ -92,5 +93,7 @@
     <string name="add_remove_units">Add/Remove Units</string>
     <string name="student_id">Student ID</string>
     <string name="title_activity_individual_grp">IndividualGrpActivity</string>
+    <string name="title_activity_test_units">TestUnitsActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

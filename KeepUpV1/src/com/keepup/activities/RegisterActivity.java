@@ -74,27 +74,27 @@ public class RegisterActivity extends Activity {
 			String pwConfirm = userPwConfirm.getText().toString();
 
 			if(lastFetchedUser != null) {
-				Toast.makeText(this, "Error: User already Exists.", Toast.LENGTH_SHORT)
+				Toast.makeText(this, "Sorry, that user already exists.", Toast.LENGTH_SHORT)
 				.show();
 			}
-			else if (id > 999999) {
-				Toast.makeText(this, "Error: Invalid Student Number.", Toast.LENGTH_SHORT)
+			else if (id > 999999 || id < 0) {
+				Toast.makeText(this, "Invalid student number.", Toast.LENGTH_SHORT)
 				.show();
 			}
-			else if(username.length() < 1 || username.length() > 15) {
-				Toast.makeText(this, "Error: Username must be at least 1-15 Chars long."
+			else if(username.length() < 1 && email.contains("@") || username.length() > 15) {
+				Toast.makeText(this, "Username must be at least 1-15 Chars long."
 						, Toast.LENGTH_LONG).show();
 			}
 			else if(password.matches(pwConfirm) != true) {
-				Toast.makeText(this, "Error: Passwords dont match.", Toast.LENGTH_SHORT)
+				Toast.makeText(this, "Passwords don't match.", Toast.LENGTH_SHORT)
 				.show();
 			}
 			else if(password.length() < 6 || password.length() > 25) {
-				Toast.makeText(this, "Error: Password must be at least 6-25 Chars long."
+				Toast.makeText(this, "Password must be at least 6-25 Chars long."
 						, Toast.LENGTH_LONG).show();
 			}
 			else if(email.contains("qut.edu.au") == false || email.length() > 50) {
-				Toast.makeText(this, "Error: Email address must be a valid QUT email. (and less than 50chars)"
+				Toast.makeText(this, "Email address must be a valid @qut.edu.au email. (and less than 50chars)"
 						, Toast.LENGTH_LONG).show();
 			}
 			else {
