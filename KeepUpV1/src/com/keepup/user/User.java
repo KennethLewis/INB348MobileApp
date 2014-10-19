@@ -15,10 +15,16 @@ public class User {
 
 	//private variables
 	private int id;
+	private String uniId;
 	private String username;
 	private String email;
 	private int rights;
+	private String unit;
 	private String password;
+	
+	private List<Unit> allSubjects = new ArrayList<Unit>();
+	private List<Group> allGroups = new ArrayList<Group>();
+	private List<User> usersForGroup = new ArrayList<User>();
 	
 	//Constructing a User from an SQL String
 	public void setupUser(String builderString) {
@@ -50,15 +56,21 @@ public class User {
 		Log.v("KEEPUP", this.getPw());
 		Log.v("KEEPUP", String.valueOf(this.getRights()));
 	}
-	
-	//Constructors
 	public User () { }
+	//Constructor (Register)
 	public User (int id, String username, String email, int rights, String password) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.rights = rights;
 		this.password = password;
+	}
+	
+	public User(String username, String email, int rights, String unit) {
+		this.username = username;
+		this.email = email;
+		this.rights = rights;
+		this.unit = unit;
 	}
 
 	//Get and Set User's Id
@@ -93,6 +105,21 @@ public class User {
 		return rights;
 	}
 
+	//Get and Set User's Email
+	public String getUnit() {
+		return this.unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public String getUniId() {
+		return uniId;
+	}
+
+	public void setUniId(String uniId) {
+		this.uniId = uniId;
+	}
+
 	public String getPw() {
 		return password;
 	}
@@ -101,4 +128,44 @@ public class User {
 		this.password = pw;
 	}
 
+	public List<Unit> getAllSubjects() {
+		return allSubjects;
+	}
+
+	public void setAllSubjects(List<Unit> allSubjects) {
+		this.allSubjects = allSubjects;
+	}
+	
+	public void addSubject (Unit subject){
+		allSubjects.add(subject);
+	}
+
+	public List<Group> getAllGroups() {
+		return allGroups;
+	}
+
+	public void setAllGroups(List<Group> allGroups) {
+		this.allGroups = allGroups;
+	}
+	
+	public void addGroup(Group g){
+		allGroups.add(g);
+	}
+	
+	public void clearUsersForGroup (){
+		this.usersForGroup = new ArrayList<User>();
+	}
+
+	public List<User> getUsersForGroup() {
+		return usersForGroup;
+	}
+
+	public void setUsersForGroup(List<User> usersForGroup) {
+		this.usersForGroup = usersForGroup;
+	}
+	
+	public void addUserForGroup(User user){
+		usersForGroup.add(user);
+	}
+	
 }

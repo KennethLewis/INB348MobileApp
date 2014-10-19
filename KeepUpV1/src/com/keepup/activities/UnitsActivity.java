@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
 import com.keepup.unit.Unit;
@@ -17,11 +16,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.SpannableString;
@@ -66,95 +62,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		//DATABASE TESTING
 		unitDb = new UnitDatabaseController(this);
 		uNavigationDrawerFragment.selectItem(1);
-		
-		//DisplayUnits displayUnitsThread = new DisplayUnits();
-		//displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 	}
 	
-	ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
-	/* THREADED ACTIVITIES */
-	public class DisplayUnits extends AsyncTask<String, Void, Integer> {
-		
-		@Override
-		protected Integer doInBackground(String... params) {
-			//Find the rootView so we can work with it.
-			View rootView = findViewById(R.id.home_news_container);
-			setContentView(R.layout.fragment_units);
-
-			//Set the # of units we're keeping up with
-			int unitCount = DatabaseConnector.getUnitCountByUser(Integer.parseInt(params[0]));
-			TextView noOfUnits = (TextView) rootView.findViewById(R.id.unit_count);
-			Log.v("KEEPUP", noOfUnits.getText().toString());
-			noOfUnits.setText(unitCount + " Unit" + (unitCount > 1 ? "s" : ""));
-			
-			int startOffset = 0;
-			Log.v("KEEPUP", String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
-			String dbUnits = DatabaseConnector.getUnitsByUser(GlobalVariables.USERLOGGEDIN.getId());
-			for(int i = 0; i < unitCount; i++) {
-				Unit unit = new Unit();
-				
-				int endIndex = nthOccurrence(dbUnits, '^', (i+1)*2);
-
-				String builderString = dbUnits.substring(startOffset, endIndex + 1);
-				
-				Log.v("KEEPUP", String.valueOf(endIndex));
-				Log.v("KEEPUP", String.valueOf(startOffset));
-				Log.v("KEEPUP", builderString);
-				
-				unit.setupUnit(builderString);
-				unitsToDisplay.add(unit);
-				startOffset += endIndex + 1;
-			}
-		
-			LayoutInflater inflater = (LayoutInflater) getSystemService
-				      (Context.LAYOUT_INFLATER_SERVICE);
-	        //ADD UNIT LISTINGS 1 BY 1
-			LinearLayout unitList = (LinearLayout) rootView.findViewById(R.id.units_list);
-			
-			for(int i = 0; i < unitsToDisplay.size(); i++)  {
-				View unitView = inflater.inflate(R.layout.unit_template, null);
-
-				unitView = setupUnitView(unitsToDisplay.get(i), unitView);
-			 
-				//Add to view.
-				unitList.addView(unitView);
-			}
-			
-			return null;
-		}
-		
-		private View setupUnitView(Unit unit, View rootView) {
-			//Setup Unit Name.
-			TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
-			SpannableString content = new SpannableString(unit.getCode() + " - " + unit.getName());
-			//content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-			unitCode.setText(content);
-			
-			String announcementTest = "Last announcement text goes here, blah blah...";
-			//Setup last announcement.
-			TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
-			announcementLast.setText(announcementTest);
-			
-			int notificationCountTest = 0;	//@EDIT
-			//Setup notification counts.
-			TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);
-			announcementCount.setText("x " + String.valueOf(notificationCountTest));
-			TextView postCount = (TextView) rootView.findViewById(R.id.post_value_unit);
-			postCount.setText("x " + String.valueOf(notificationCountTest));
-			TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_unit);
-			postOnYoursCount.setText("x " + String.valueOf(notificationCountTest));
-			 
-			return rootView;
-		}
-		
-		public int nthOccurrence(String str, char c, int n) {
-		    int pos = str.indexOf(c, 0);
-		    n--;
-		    while (n-- > 0 && pos != -1)
-		        pos = str.indexOf(c, pos+1);
-		    return pos;
-		}
-	}
 	
 	//Displays the list of units to enable selection
 	public void showUnits(View v){
@@ -171,7 +80,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	}
 	
 	//Method to show the unit options and enable them to be clicked.
-	protected void showUnitOptions() {
+	protected void showUnitOptions(){
 		
 		boolean[] checkedUnits = new boolean[unitDb.getAllUnits().size()];
 		int count = unitDb.getAllUnits().size();
@@ -211,30 +120,28 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	
 	//Will refresh the users page once unit is selected
 	public void onChangeSelectedUnits(){
-		
-		//@EDIT
-		
 		//ADD UNITS TO PAGE, MAYBE REFRESH?
-//		for(Unit unit: selectedUnits){
-//			if(GlobalVariables.USERLOGGEDIN.getAllSubjects().contains(unit) == false){
-//				GlobalVariables.USERLOGGEDIN.addSubject(unit);
-//				//Add this user to the Unit
-//				Unit unitCopy = unit;
-//				unitCopy.addUserToUnit(GlobalVariables.USERLOGGEDIN);
-//				Unit newUnit = new Unit (unitCopy.getUnitCode(),unitCopy.getName(),
-//								unitCopy.getAllUsersNames(), unitCopy.getAllUsersStudentId());
-//				unitDb.deleteUnit(unit);
-//				unitDb.addUnit(newUnit);
-//			}
-//		}
+		for(Unit unit: selectedUnits){
+			if(GlobalVariables.USERLOGGEDIN.getAllSubjects().contains(unit) == false){
+				GlobalVariables.USERLOGGEDIN.addSubject(unit);
+				//Add this user to the Unit
+				Unit unitCopy = unit;
+				unitCopy.addUserToUnit(GlobalVariables.USERLOGGEDIN);
+				Unit newUnit = new Unit (unitCopy.getUnitCode(),unitCopy.getName(),
+								unitCopy.getAllUsersNames(), unitCopy.getAllUsersStudentId());
+				unitDb.deleteUnit(unit);
+				unitDb.addUnit(newUnit);
+			}
+		}
 		this.recreate();
 	}
 	
 	
-	public void unitDetails(View v) {
+	public void unitDetails(View v){
 		
 		TextView unitId = (TextView) v.findViewById(R.id.unitcode_code);
 		String id = (String) unitId.getText();
+		GlobalVariables.USERLOGGEDIN.setUnit(id);
 		Intent intent = new Intent(this, IndividualUnitActivity.class);
 		intent.putExtra("unitId", id);
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -263,9 +170,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			
-			
-			
 			Log.v("Button", "Settings button clicked");
 			return true;
 		}
@@ -294,6 +198,10 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	public static class PlaceholderFragment extends Fragment {
 
 		private static final String ARG_SECTION_NUMBER = "unit_section_number";
+
+		private int[][] intTests = {{1,2,3}, {4,5,6}, {5,4,3}, {2,1,0}};
+		private String [] stringTests = {"Test announcement Lorem ipsum1"};
+		private List<Unit> unitsToDisplay = new ArrayList<Unit>();
 		
 		public static PlaceholderFragment newInstance(int sectionNumber) {
 			PlaceholderFragment fragment = new PlaceholderFragment();
@@ -302,18 +210,74 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			fragment.setArguments(args);
 			return fragment;
 		}
-		public PlaceholderFragment() { }
+		public PlaceholderFragment() {
+		}
 
-		View rootView2;
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_units,
 					container, false);
-			rootView2 = rootView;
-			DisplayUnits displayUnitsThread = new DisplayUnits();
-			displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 			
+			TextView noOfUnits = (TextView) rootView.findViewById(R.id.unit_count);
+			
+			int unitCounter = 0;
+			for(Unit unit: unitDb.getAllUnits())
+			{
+				if (unit.gatherUsersId().contains(GlobalVariables.USERLOGGEDIN.getId()))
+					unitCounter++;
+			}
+			if (unitCounter == 1)
+				noOfUnits.setText(unitCounter + " Unit");
+			else
+				noOfUnits.setText(unitCounter + " Units");
+			
+			List<Integer> studentsIdNo;
+			for(Unit unit: unitDb.getAllUnits()){
+				studentsIdNo = unit.gatherUsersId();
+				if(studentsIdNo.contains(GlobalVariables.USERLOGGEDIN.getId()))
+					unitsToDisplay.add(unit);
+			}
+	        //ADD UNIT LISTINGS 1 BY 1
+			LinearLayout unitList = (LinearLayout) rootView.findViewById(R.id.units_list);
+			
+			for(int i = 0; i < unitsToDisplay.size(); i++)  {
+				View unitView = inflater.inflate(R.layout.unit_template, null);
+				 
+				User user = GlobalVariables.USERLOGGEDIN;
+				if(user != null) {
+					unitView = setupUnitView(i, unitView);
+				 
+					//Add to view.
+					unitList.addView(unitView);
+				}
+			}
+			return rootView;
+		}
+		
+		private View setupUnitView(int i, View rootView) {
+			
+			//Setup Unit Name.
+			TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
+			SpannableString content = new SpannableString(unitsToDisplay.get(i).getUnitCode() + " - " + unitsToDisplay.get(i).getName());
+			//content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+			unitCode.setText(content);
+			
+			//TextView unitName = (TextView) rootView.findViewById(R.id.unitname_unit);
+			//unitName.setText(unitsToDisplay.get(i).getName());
+			
+			//Setup last announcement.
+			TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
+			announcementLast.setText(stringTests[0]);
+			
+			//Setup notification counts.
+			TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);
+			announcementCount.setText("x " + String.valueOf(intTests[i][0]));
+			TextView postCount = (TextView) rootView.findViewById(R.id.post_value_unit);
+			postCount.setText("x " + String.valueOf(intTests[i][1]));
+			TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_unit);
+			postOnYoursCount.setText("x " + String.valueOf(intTests[i][2]));
+			 
 			return rootView;
 		}
 		public void onAttach(Activity activity) {
@@ -321,100 +285,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			((UnitsActivity) activity).onSectionAttached(getArguments().getInt(
 					ARG_SECTION_NUMBER));
 		}
-		@Override
-	    public void onActivityCreated(Bundle savedInstanceState)
-	    {
-	        super.onActivityCreated(savedInstanceState);
-
-			//DisplayUnits displayUnitsThread = new DisplayUnits();
-			//displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
-	    }
-
-		ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
-		/* THREADED ACTIVITIES */
-		public class DisplayUnits extends AsyncTask<String, Void, Integer> {
-			
-			@Override
-			protected Integer doInBackground(String... params) {
-				//Find the rootView so we can work with it.
-				View rootView = rootView2;
-
-				//Set the # of units we're keeping up with
-				int unitCount = DatabaseConnector.getUnitCountByUser(Integer.parseInt(params[0]));
-				TextView noOfUnits = (TextView) rootView.findViewById(R.id.unit_count);
-
-				noOfUnits.setText(unitCount + " Unit" + (unitCount > 1 ? "s" : ""));
-				
-				int startOffset = 0;
-				Log.v("KEEPUP", String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
-				String dbUnits = DatabaseConnector.getUnitsByUser(GlobalVariables.USERLOGGEDIN.getId());
-				for(int i = 0; i < unitCount; i++) {
-					Unit unit = new Unit();
-					
-					int endIndex = nthOccurrence(dbUnits, '^', (i+1)*2);
-
-					String builderString = dbUnits.substring(startOffset, endIndex + 1);
-					
-					Log.v("KEEPUP", String.valueOf(endIndex));
-					Log.v("KEEPUP", String.valueOf(startOffset));
-					Log.v("KEEPUP", builderString);
-					
-					unit.setupUnit(builderString);
-					unitsToDisplay.add(unit);
-					startOffset += endIndex + 1;
-				}
-//			
-//				LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService
-//					      (Context.LAYOUT_INFLATER_SERVICE);
-//		        //ADD UNIT LISTINGS 1 BY 1
-//				LinearLayout unitList = (LinearLayout) rootView.findViewById(R.id.units_list);
-//				
-//				for(int i = 0; i < unitsToDisplay.size(); i++)  {
-//					View unitView = inflater.inflate(R.layout.unit_template, null);
-//
-//					unitView = setupUnitView(unitsToDisplay.get(i), unitView);
-//				 
-//					//Add to view.
-//					unitList.addView(unitView);
-//				}
-				
-				
-				return null;
-			}
-			
-			private View setupUnitView(Unit unit, View rootView) {
-				//Setup Unit Name.
-				TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
-				SpannableString content = new SpannableString(unit.getCode() + " - " + unit.getName());
-				//content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-				unitCode.setText(content);
-				
-				String announcementTest = "Last announcement text goes here, blah blah...";
-				//Setup last announcement.
-				TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
-				announcementLast.setText(announcementTest);
-				
-				int notificationCountTest = 0;	//@EDIT
-				//Setup notification counts.
-				TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);
-				announcementCount.setText("x " + String.valueOf(notificationCountTest));
-				TextView postCount = (TextView) rootView.findViewById(R.id.post_value_unit);
-				postCount.setText("x " + String.valueOf(notificationCountTest));
-				TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_unit);
-				postOnYoursCount.setText("x " + String.valueOf(notificationCountTest));
-				 
-				return rootView;
-			}
-			
-			public int nthOccurrence(String str, char c, int n) {
-			    int pos = str.indexOf(c, 0);
-			    n--;
-			    while (n-- > 0 && pos != -1)
-			        pos = str.indexOf(c, pos+1);
-			    return pos;
-			}
-		}
-		
 	}
 
 	public void onSectionAttached(int number) {
@@ -433,6 +303,24 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			Intent intentGroups = new Intent(this, GroupActivity.class);
 			startActivity(intentGroups);
 			break;
+		case 4:
+			mTitle = getString(R.string.time_table);
+			break;
+		case 5:
+			mTitle = getString(R.string.mail);
+			break;
+		case 6:
+			mTitle = getString(R.string.blackboard);
+			break;
+		case 7:
+			mTitle = getString(R.string.qut_virtual);
+			break;
+		case 8:
+			mTitle = getString(R.string.qut_news);
+			break;
+		case 9:
+			mTitle = getString(R.string.map);
+			break;
 		}
 	}
 	public void restoreActionBar() {
@@ -441,6 +329,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setTitle(mTitle);
 	}
+
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// TODO Auto-generated method stub
@@ -450,5 +339,4 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 				.replace(R.id.units_toplevel_container,
 						PlaceholderFragment.newInstance(position + 1)).commit();
 	}
-	
 }

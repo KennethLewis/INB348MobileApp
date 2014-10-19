@@ -131,7 +131,7 @@ public class LoginActivity extends Activity {
     }
     
     public void addAllTestData() {
-        //@EDIT
+         
         User testUser = new User(5279615, "Ken","kenneth@live.com.au", 0, "test");
         User testUser2 = new User(8600571, "Jackson1","Jackson1@live.com.au", 0, "test");
         User dummyUser1 = new User(123456, "Jackson2", "Jackson2@live.com.au", 0, "test");
@@ -142,10 +142,10 @@ public class LoginActivity extends Activity {
 	        userDb.addUser(dummyUser1);
 	        userDb.addUser(dummyUser2);
         } 
-        Unit unit1 = new Unit (0, "INB100", "Introduction to IT", 8600571);
-     	Unit unit2 = new Unit (1, "INB123", "Programming 101", 8600571);
-     	Unit unit3 = new Unit (2, "INB348", "Mobile App Dev", 123);
-     	Unit unit4 = new Unit (3, "INB270", "Advanced Programming", 123);
+        Unit unit1 = new Unit ("INB100", "Introduction to IT", "","");
+     	Unit unit2 = new Unit ("INB123", "Programming 101", "","");
+     	Unit unit3 = new Unit ("INB348", "Mobile App Dev", "","");
+     	Unit unit4 = new Unit ("INB270", "Advanced Programming", "","");
      	if (unitDb.getAllUnits().isEmpty()){
 	     	unitDb.addUnit(unit1);
 	     	unitDb.addUnit(unit2);

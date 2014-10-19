@@ -61,8 +61,10 @@ public class UnitDatabaseController extends SQLiteOpenHelper {
 			SQLiteDatabase db = this.getWritableDatabase();
 
 			ContentValues values = new ContentValues();
-			values.put(KEY_UNIT_CODE, unit.getCode());
+			values.put(KEY_UNIT_CODE, unit.getUnitCode());
 			values.put(KEY_UNIT_NAME, unit.getName());
+			values.put(KEY_UNIT_MEMBERS, unit.getAllUsers());
+			values.put(KEY_UNIT_MEMBERS_STUDENTNO, unit.getAllUsersStudentId());
 			
 			// Inserting Row
 			db.insert(TABLE_UNITS, null, values);
@@ -81,8 +83,8 @@ public class UnitDatabaseController extends SQLiteOpenHelper {
 			Unit unit = null;
 			if (cursor != null)
 				if(cursor.moveToFirst())
-					//unit = new Unit(cursor.getString(1), cursor.getString(2), 
-					//		cursor.getString(3), cursor.getString(4));
+					unit = new Unit(cursor.getString(1), cursor.getString(2), 
+							cursor.getString(3), cursor.getString(4));
 		    
 			db.close();
 			// return User
@@ -120,10 +122,10 @@ public class UnitDatabaseController extends SQLiteOpenHelper {
 			// looping through all rows and adding to list
 			if (cursor.moveToFirst()) {
 				do {
-					//Unit unit = new Unit(cursor.getString(1),cursor.getString(2),
-					//		cursor.getString(3), cursor.getString(4));
+					Unit unit = new Unit(cursor.getString(1),cursor.getString(2),
+							cursor.getString(3), cursor.getString(4));
 					// Adding User to list
-					//allUnits.add(unit);
+					allUnits.add(unit);
 				} while (cursor.moveToNext());
 			}
 
@@ -135,8 +137,8 @@ public class UnitDatabaseController extends SQLiteOpenHelper {
 		// Deleting single User
 		public void deleteUnit(Unit unit) {
 			SQLiteDatabase db = this.getWritableDatabase();
-			//db.delete(TABLE_UNITS, KEY_UNIT_CODE + " = ?",
-			//		new String[] { String.valueOf(unit.getUnitCode()) });
+			db.delete(TABLE_UNITS, KEY_UNIT_CODE + " = ?",
+					new String[] { String.valueOf(unit.getUnitCode()) });
 			db.close();
 		}
 
