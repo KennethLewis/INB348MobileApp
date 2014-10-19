@@ -77,7 +77,7 @@ public class RegisterActivity extends Activity {
 				Toast.makeText(this, "Error: User already Exists.", Toast.LENGTH_SHORT)
 				.show();
 			}
-			else if (id > 999999) {
+			else if (id < 999999) {
 				Toast.makeText(this, "Error: Invalid Student Number.", Toast.LENGTH_SHORT)
 				.show();
 			}
