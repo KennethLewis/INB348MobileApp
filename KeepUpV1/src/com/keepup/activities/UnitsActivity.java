@@ -21,6 +21,7 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -41,77 +42,25 @@ public class UnitsActivity extends Activity implements
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.units_layout));
 		mNavigationDrawerFragment.selectItem(1);
+		mTitle = getTitle();
 		
 		DisplayUnits displayUnitsThread = new DisplayUnits();
-		displayUnitsThread.execute("8600571");//String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
-	}
-	
-	@Override
-	public void onNavigationDrawerItemSelected(int position) {
-		switch (position) {
-		case 0:
-			mTitle = getString(R.string.news);
-			break;
-		case 1:
-			mTitle = getString(R.string.units);
-			Intent intentUnits = new Intent(this, UnitsActivity.class);
-			startActivity(intentUnits);
-			break;
-		case 2:
-			mTitle = getString(R.string.groups); 
-			Intent intentGroups = new Intent(this, GroupActivity.class);
-			startActivity(intentGroups);
-			break;
-		}
+		displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 	}
 
-	public void restoreActionBar() {
-		ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setTitle(mTitle);
-	}
-
-	public void moveTo(View v) {
-		TextView whereTo = (TextView) v.findViewById(R.id.unit_group_user_title);
-		String goingTo = whereTo.getText().toString();
-		String [] brokenDirection = goingTo.split("by");
-		String finalDestination = brokenDirection[0];
-		
-		if(finalDestination.contains("Unit")){
-			Intent intent = new Intent(this, IndividualUnitActivity.class);
-			String [] unitName = finalDestination.split(":");
-			String trimedName = unitName[1].trim();
-			intent.putExtra("unitId", trimedName);
-			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	        startActivity(intent);
-		}
-		else if(finalDestination.contains("Group")){
-			Intent intent = new Intent(this, IndividualGroupActivity.class);
-			String [] groupName = finalDestination.split(":");
-			String trimedName = groupName[1].trim();
-			Toast.makeText(this, finalDestination, Toast.LENGTH_SHORT).show();
-			intent.putExtra("groupName", trimedName);
-			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	        startActivity(intent);
-		}
-	}
-	
+	//NAVIGATION AND ACTION BAR
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (!mNavigationDrawerFragment.isDrawerOpen()) {
 			getMenuInflater().inflate(R.menu.global, menu);
-			//restoreActionBar();
 			return true;
 		}
 		return super.onCreateOptionsMenu(menu);
 	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -141,6 +90,24 @@ public class UnitsActivity extends Activity implements
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+	@Override
+	public void onNavigationDrawerItemSelected(int position) {
+		switch (position) {
+		case 0:
+			mTitle = getString(R.string.news);
+			Intent intentUnits = new Intent(this, HomeActivity.class);
+			startActivity(intentUnits);
+			break;
+		case 1:
+			mTitle = getString(R.string.units);
+			break;
+		case 2:
+			mTitle = getString(R.string.groups); 
+			Intent intentGroups = new Intent(this, GroupActivity.class);
+			startActivity(intentGroups);
+			break;
+		}
 	}
 	
 	public void clickedUnitName(View v) {
@@ -347,4 +314,5 @@ public class UnitsActivity extends Activity implements
 	        pos = str.indexOf(c, pos + 1);
 	    return pos;
 	}
+	
 }
