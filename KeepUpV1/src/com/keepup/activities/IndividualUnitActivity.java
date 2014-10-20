@@ -1,121 +1,78 @@
 package com.keepup.activities;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
-import com.keepup.group.GroupDatabaseController;
-import com.keepup.post.Post;
-import com.keepup.post.PostDatabaseController;
+import com.keepup.NavigationDrawerFragment;
 import com.keepup.R;
+import com.keepup.activities.UnitsActivity.AddUnitToUser;
+import com.keepup.activities.UnitsActivity.RemoveUnitFromUser;
+import com.keepup.post.Post;
+import com.keepup.unit.Unit;
+import com.keepup.user.User;
+
 import android.app.Activity;
-import android.app.Fragment;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.format.Time;
+import android.support.v4.widget.DrawerLayout;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class IndividualUnitActivity extends Activity {
+public class IndividualUnitActivity extends Activity implements
+	NavigationDrawerFragment.NavigationDrawerCallbacks {
 	
-	//Global database connection
-	PostDatabaseController db;
-	GroupDatabaseController groupDb;
+	private NavigationDrawerFragment mNavigationDrawerFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.activity_individual_unit);
 		
-		//Add fragment (small view that you make and import)
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
-		
-		//Retrieve title name from where we've clicked from's data.
+		//Grab information from what Unit we're going into.
 		Intent intent = getIntent();
-		Bundle extras = intent.getExtras();
-		if(extras!= null) {
-			String activityName = (String) extras.get("unitId");
-			this.setTitle(activityName);
-		}
+		currentUnitId = intent.getIntExtra(UnitsActivity.UNIT_ID, -1);
 		
-		//DATABASE TESTING
-		db = new PostDatabaseController(this);
-		groupDb = new GroupDatabaseController(this);
+		//Navigation Drawer
+		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
+				.findFragmentById(R.id.navigation_drawer);
+		// Set up the drawer.
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+				(DrawerLayout) findViewById(R.id.individual_unit_layout));
 		
-        // Inserting
-        Log.d("Post", "Inserting ..");
-		List<Post> postWithUnit = new ArrayList<Post>();
-		
-		for(Post post: db.getAllPosts()) {
-			if(post.getUnit().matches("Unit: "+this.getTitle().toString()))
-				postWithUnit.add(post);
-		}
-		
-		LinearLayout postList = (LinearLayout) findViewById(R.id.posts_list);
-		for(int i = 0; i < postWithUnit.size(); i++)  {
-			View rootView = getLayoutInflater().inflate(R.layout.unit_post_template, null);
-			if(GlobalVariables.USERLOGGEDIN != null) {
-				if(postWithUnit.get(i) != null) {
-					rootView = setupUnitView(postWithUnit.get(i), i, rootView);
-				 
-					//Add to view.
-					postList.addView(rootView);
-				}
-			}
-		}
-		
+		UpdatePostData updatePostDataThread = new UpdatePostData();
+		updatePostDataThread.execute("8600571");//String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 	}
-	
-	private View setupUnitView(Post p, int indexNum, View rootView) {
-		
-		//Setup Unit Name.
-		TextView userName = (TextView) rootView.findViewById(R.id.username);
-		userName.setText(p.getUser());
-		
-		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
-		dateTime.setText(p.getDate());
-		
-		TextView post = (TextView) rootView.findViewById(R.id.published_user_post);
-		post.setText(p.getContent());
 
-		 //Change background colour based on element id.
-		 if(indexNum % 2 == 0)
-			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-		 else
-			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
-		 
-		return rootView;
-	}
+	//NAVIGATION AND ACTION BAR
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.global, menu);
-		return true;
+		if (!mNavigationDrawerFragment.isDrawerOpen()) {
+			getMenuInflater().inflate(R.menu.global, menu);
+			return true;
+		}
+		return super.onCreateOptionsMenu(menu);
 	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-
-
+			
+			
+			
 			return true;
 		}
 		
@@ -132,54 +89,125 @@ public class IndividualUnitActivity extends Activity {
 			Intent intentUnits = new Intent(this, HomeActivity.class);
 			startActivity(intentUnits);
 			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();
-			Log.v("Button", "Home button clicked");
 			return true;
 		}
 		
 		return super.onOptionsItemSelected(item);
 	}
+	@Override
+	public void onNavigationDrawerItemSelected(int position) {
+		switch (position) {
+		case 0:
+			Intent intentHome = new Intent(this, HomeActivity.class);
+			startActivity(intentHome);
+			break;
+		case 1:
+			Intent intentUnits = new Intent(this, UnitsActivity.class);
+			startActivity(intentUnits);
+			break;
+		case 2:
+			Intent intentGroups = new Intent(this, GroupActivity.class);
+			startActivity(intentGroups);
+			break;
+		}
+	}
 	
 	public void publishUserPost(View v) {
+		Log.v("KEEPUP", "Clicked to submit a post to Unit: ");
+	}
+	
+	//Method to show the unit options and enable them to be clicked.
+	protected void updatePostViews() {
+		LayoutInflater inflater = (LayoutInflater) getBaseContext().
+				getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        //ADD UNIT LISTINGS 1 BY 1
+		LinearLayout unitList = (LinearLayout) findViewById(R.id.posts_list);
 		
-		//Hit send it puts the com.keepup.post into the db with deets
-		//reload on create with has a list of the current posts
-		EditText userPost = (EditText)findViewById(R.id.text_to_publish);
+		for(int i = 0; i < unitPosts.size(); i++)  {
+			View unitView = inflater.inflate(R.layout.unit_post_template, null);
 
-		Time dateTime = new Time(Time.getCurrentTimezone());
-		dateTime.setToNow();
-		String postTime = dateTime.monthDay + "/" + dateTime.month + "/"
-					+ dateTime.year + " at " + dateTime.hour + ":" +
-					dateTime.minute;
-		if(GlobalVariables.USERLOGGEDIN == null)
-			return;
+			Log.v("KEEPUP", String.valueOf(unitPosts.get(i) == null));
+			unitView = setupPostView(unitPosts.get(i), i, unitView);
+		 
+			//Add to view.
+			unitList.addView(unitView);
+		}
+    }
+	
+	private View setupPostView(Post post, int indexNum, View rootView) {
+		//Setup post's user
+		TextView userName = (TextView) rootView.findViewById(R.id.username);
+		userName.setText(postOwners[indexNum].getUsername());
 		
-		String content = userPost.getText().toString();
+		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
+		dateTime.setText(post.getTime());
 		
-		//@EDIT
-		Post newPost = new Post(GlobalVariables.USERLOGGEDIN.getUsername(), 
-				postTime, content, "Unit: "); //+ GlobalVariables.USERLOGGEDIN.getUnit());
-        
-		db.addPost(newPost);
-        
-        recreate();
-		
+		TextView postText = (TextView) rootView.findViewById(R.id.published_user_post);
+		postText.setText(post.getContent());
+
+		 //Change background colour based on element id.
+		 if(indexNum % 2 == 0)
+			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+		 else
+			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+		 
+		return rootView;
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
+	/* THREADED ACTIVITIES */
+	int currentUnitId = 0;
+	int postCount = 0;
+	ArrayList<Post> unitPosts = new ArrayList<Post>();
+	User[] postOwners;
+	public class UpdatePostData extends AsyncTask<String, Void, Integer> {
+		
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_individual_unit,
-					container, false);
-			return rootView;
+		protected Integer doInBackground(String... params) {
+			//Set the # of units we're keeping up with
+			postCount = DatabaseConnector.getPostCountInUnit(currentUnitId);
+			
+			postOwners = new User[postCount];
+			
+			int startOffset = 0;
+			String getPostsString = DatabaseConnector.getPostsInUnit(currentUnitId);
+			for(int i = 0; i < postCount; i++) {
+				Post post = new Post();
+
+				int endIndex = nthOccurrence(getPostsString, '^', (i+1)*5) + 1 + 512;
+
+				String builderString = getPostsString.substring(startOffset, endIndex);
+				
+				//Log.v("KEEPUP", String.valueOf(endIndex));
+				//Log.v("KEEPUP", String.valueOf(startOffset));
+				//Log.v("KEEPUP", builderString);
+				
+				post.setupPost(builderString);
+				
+				//Fetch and create a User object for the posts.
+				User postOwner = new User();
+				postOwner.setupUser(DatabaseConnector.getUser(post.getUserId()));
+				postOwners[i] = postOwner;
+				
+				unitPosts.add(post);
+				startOffset = endIndex;
+			}
+			return postCount;
 		}
+
+		protected void onPostExecute(Integer result) {
+			if(postCount > 0)
+				updatePostViews();
+        }
+	}
+
+	//Helper method, understands Strings from MySQL web service results.
+	//essentially splits up user ids of variable length.
+	public int nthOccurrence(String str, char c, int n) {
+	    int pos = str.indexOf(c, 0);
+	    n--;
+	    while (n-- > 0 && pos != -1)
+	        pos = str.indexOf(c, pos + 1);
+	    return pos;
 	}
 	
 }

@@ -8,7 +8,6 @@ import com.keepup.NavigationDrawerFragment;
 import com.keepup.R;
 import com.keepup.unit.Unit;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -21,7 +20,6 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -32,7 +30,6 @@ public class UnitsActivity extends Activity implements
 	NavigationDrawerFragment.NavigationDrawerCallbacks {
 	
 	private NavigationDrawerFragment mNavigationDrawerFragment;
-	private CharSequence mTitle;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +39,13 @@ public class UnitsActivity extends Activity implements
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.units_layout));
 		mNavigationDrawerFragment.selectItem(1);
 		
 		DisplayUnits displayUnitsThread = new DisplayUnits();
-		displayUnitsThread.execute("8600571");//String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
+		displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 	}
 
 	//NAVIGATION AND ACTION BAR
@@ -95,22 +91,35 @@ public class UnitsActivity extends Activity implements
 	public void onNavigationDrawerItemSelected(int position) {
 		switch (position) {
 		case 0:
-			mTitle = getString(R.string.news);
-			Intent intentUnits = new Intent(this, HomeActivity.class);
-			startActivity(intentUnits);
+			Intent intentHome = new Intent(this, HomeActivity.class);
+			startActivity(intentHome);
 			break;
 		case 1:
-			mTitle = getString(R.string.units);
 			break;
 		case 2:
-			mTitle = getString(R.string.groups); 
 			Intent intentGroups = new Intent(this, GroupActivity.class);
 			startActivity(intentGroups);
 			break;
 		}
 	}
 	
+	public final static String UNIT_ID = "com.keepup.UNIT_ID";
 	public void clickedUnitName(View v) {
+		Log.v("text",((TextView) v).getText().toString().substring(0, 6) + ((TextView) v).getText().toString().substring(0, 6));
+		Log.v("text", String.valueOf(unitsToDisplay.size()));
+		Unit clickedUnit = null;
+		for(Unit u : unitsToDisplay)
+	        if(u.getCode().equals(((TextView) v).getText().toString().substring(0, 6)))
+	        	clickedUnit = u;
+		
+		if(clickedUnit == null)
+			return;
+		
+		//Send information and then go to other Activity.
+		Intent intent = new Intent(this, IndividualUnitActivity.class);
+	    intent.putExtra(UNIT_ID, clickedUnit.getId());
+	    startActivity(intent);
+
 		Log.v("KEEPUP", "Clicked on a Unit from Unit Listing");
 	}
 	
@@ -169,6 +178,7 @@ public class UnitsActivity extends Activity implements
 	/* THREADED ACTIVITIES */
 	int totalUnitCount = 0;
 	Unit[] distinctUnits;
+	String[] unitCodes;
 	ArrayList<Unit> unitsInWindow = new ArrayList<Unit>();
 	public class PopupAllUnits extends AsyncTask<String, Void, Integer> {
 		
@@ -211,10 +221,10 @@ public class UnitsActivity extends Activity implements
 			showUnitOptions();
         }
 	}
-	
+
+	int unitCount = 0;
+	ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
 	public class DisplayUnits extends AsyncTask<String, Void, Integer> {
-		int unitCount = 0;
-		ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
 		
 		@Override
 		protected Integer doInBackground(String... params) {

@@ -2,7 +2,6 @@ package com.keepup.activities;
 
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
-import com.keepup.post.Post;
 import com.keepup.R;
 
 import android.app.Activity;
@@ -146,78 +145,30 @@ public class HomeActivity extends Activity implements
 		return super.onOptionsItemSelected(item);
 	}
 	
-//	/**
-//	 * A placeholder fragment containing a simple view.
-//	 */
-//	public static class PlaceholderFragment extends Fragment {
-//		/**
-//		 * The fragment argument representing the section number for this
-//		 * fragment.
-//		 */
-//		private static final String ARG_SECTION_NUMBER = "section_number";
-//		private List<Post> postsForUser = new ArrayList<Post>();
-//		/**
-//		 * Returns a new instance of this fragment for the given section number.
-//		 */
-//		public static PlaceholderFragment newInstance(int sectionNumber) {
-//			PlaceholderFragment fragment = new PlaceholderFragment();
-//			Bundle args = new Bundle();
-//			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-//			fragment.setArguments(args);
-//			return fragment;
-//		}
-//
-//		public PlaceholderFragment() {
-//		}
-//
-//		@Override
-//		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//				Bundle savedInstanceState) {
-//			
-//			View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-//			
-//			TextView noOfUnits = (TextView) rootView.findViewById(R.id.news_unit_count);
-//			TextView noOfGroups = (TextView) rootView.findViewById(R.id.news_group_count);
-//			
-//			//@EDIT
-//			noOfUnits.setText("0 Units");
-//			noOfGroups.setText("0 Groups");
-//			
-//			return rootView;
-//		}
-//
-//		@Override
-//		public void onAttach(Activity activity) {
-//			super.onAttach(activity);
-//			((HomeActivity) activity).onSectionAttached(getArguments().getInt(
-//					ARG_SECTION_NUMBER));
-//		}
-//	}
-	
 	public void goToHome(View v) {
 		Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
 	}
 	
-	private View setUpNewsArticle(Post p, int indexNum, View rootView) {
-		//Setup Unit Name.
-		TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
-		userName.setText(p.getUnit() + " " + "by " + p.getUser());
-		
-		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
-		dateTime.setText(p.getDate());
-		
-		TextView post = (TextView) rootView.findViewById(R.id.published_news);
-		post.setText(p.getContent());
-
-		 //Change background colour based on element id.
-		 if(indexNum % 2 == 0)
-			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-		 else
-			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
-		 
-		return rootView;
-	}
+//	private View setUpNewsArticle(Post p, int indexNum, View rootView) {
+//		//Setup Unit Name.
+//		TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
+//		userName.setText(p.getUnit() + " " + "by " + p.getUser());
+//		
+//		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
+//		dateTime.setText(p.getDate());
+//		
+//		TextView post = (TextView) rootView.findViewById(R.id.published_news);
+//		post.setText(p.getContent());
+//
+//		 //Change background colour based on element id.
+//		 if(indexNum % 2 == 0)
+//			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+//		 else
+//			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+//		 
+//		return rootView;
+//	}
 
 	
 	/* ---------------- THREADED TASKS ----------------- */

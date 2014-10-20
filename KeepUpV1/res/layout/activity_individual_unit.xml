@@ -1,46 +1,64 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/individual_unit_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.keepup.activities.IndividualUnitActivity"
-    tools:ignore="MergeRootFrame" >
-
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="match_parent"
+    tools:context="com.keepup.activities.IndividualUnitActivity" >
+	
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:id="@+id/container"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    tools:context="com.keepup.activities.IndividualUnitActivity"
+	    tools:ignore="MergeRootFrame" >
+	
+	    <ScrollView
+	        android:id="@+id/scrollView1"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_above="@+id/text_to_publish"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginBottom="10dp">
+	
+	        <LinearLayout
+	            android:id="@+id/posts_list"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="1pt"
+	            android:orientation="vertical" >
+	        </LinearLayout>
+	    </ScrollView>
+	
+	    <EditText
+	        android:id="@+id/text_to_publish"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_above="@+id/messageSend"
+	        android:layout_alignParentLeft="true"
+	        android:ems="10"
+	        android:minLines="2" android:inputType="text"/>
+	
+	    <Button
+	        android:id="@+id/messageSend"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:onClick="publishUserPost"
+	        android:text="@string/send" />
+	
+	</RelativeLayout>
+	
+	<fragment
+        android:id="@+id/navigation_drawer"
+        android:name="com.keepup.NavigationDrawerFragment"
+        android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
-        android:layout_above="@+id/text_to_publish"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="10dp">
+        android:layout_gravity="start"
+        tools:layout="@layout/fragment_navigation_drawer" />
 
-        <LinearLayout
-            android:id="@+id/posts_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="1pt"
-            android:orientation="vertical" >
-        </LinearLayout>
-    </ScrollView>
-
-    <EditText
-        android:id="@+id/text_to_publish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/messageSend"
-        android:layout_alignParentLeft="true"
-        android:ems="10"
-        android:minLines="2" android:inputType="text"/>
-
-    <Button
-        android:id="@+id/messageSend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:onClick="publishUserPost"
-        android:text="@string/send" />
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

@@ -1,8 +1,127 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/units_toplevel_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.keepup.activities.LoginActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame" >
 
+	<RelativeLayout 
+	    style="@style/AppBaseTheme"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:paddingBottom="@dimen/activity_vertical_margin"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+	    android:paddingRight="@dimen/activity_horizontal_margin"
+	    android:paddingTop="@dimen/activity_vertical_margin"
+	    tools:context="com.keepup.MainActivity$PlaceholderFragment" >
+	
+	    <TextView
+	        android:id="@+id/news_heading"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_centerHorizontal="true"
+	        android:ems="10"
+	        android:focusable="false"
+	        android:focusableInTouchMode="false"
+	        android:gravity="center_vertical|center"
+	        android:longClickable="false"
+	        android:selectAllOnFocus="false"
+	        android:text="@string/app_name"
+	        android:textColor="@color/keepup_darkblue_headings"
+	        android:textSize="14pt" />
+	
+	    <EditText
+	        android:id="@+id/password"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/username"
+	        android:layout_below="@+id/username"
+	        android:layout_marginTop="44dp"
+	        android:ems="10"
+	        android:inputType="textPassword" >
+	
+	        <requestFocus />
+	    </EditText>
+	
+	    <EditText
+	        android:id="@+id/username"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/news_heading"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="40dp"
+	        android:ems="10"
+	        android:inputType="number"
+	        android:text="@string/prefill_username" />
+	
+	    <TextView
+	        android:id="@+id/username_caption"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/username"
+	        android:layout_below="@+id/news_heading"
+	        android:layout_marginTop="17dp"
+	        android:text="@string/username"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/password_caption"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/password"
+	        android:layout_below="@+id/username"
+	        android:layout_marginTop="19dp"
+	        android:text="@string/password"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+		<!-- 
+	    <CheckBox
+	        android:id="@+id/remember_me"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/news_heading"
+	        android:layout_below="@+id/password"
+	        android:layout_marginLeft="20dp"
+	        android:layout_marginTop="33dp"
+	        android:text="@string/remember_me" />
+		
+	    <TextView
+	        android:id="@+id/news_area"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/register"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="16dp"
+	        android:text="@string/forgot_details"
+	        android:textSize="8pt" /> -->
+	
+	    <Button
+	        android:id="@+id/login_button"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/password"
+	        android:layout_alignRight="@+id/password"
+	        android:layout_below="@+id/password"
+	        android:layout_marginTop="37dp"
+	        android:onClick="goToHome"
+	        android:text="@string/login_button" />
+	
+	    <TextView
+	        android:id="@+id/register"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/login_button"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="39dp"
+	        android:clickable="true"
+	        android:onClick="goToRegister"
+	        android:text="@string/register"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textSize="8pt" />
+	
+	</RelativeLayout>
+	
+</FrameLayout>

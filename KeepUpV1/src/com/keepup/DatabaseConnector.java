@@ -29,6 +29,75 @@ public final class DatabaseConnector {
 	static String URL_SUFFIX = "";
 	
 	static String stringBuffer;
+
+	/* POSTS */
+	public static int getPostCountInUnit(int unitIdNum) {
+		URL_SUFFIX = "PostService.asmx";
+		SOAP_ACTION_SUFFIX = "getPostCountInUnit";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		PropertyInfo unitId = new PropertyInfo();
+		unitId.setName("unitId");
+		unitId.setValue(unitIdNum);
+		unitId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(unitId);
+		
+		fetchData(request);
+		
+		return Integer.parseInt(stringBuffer);
+	}
+	public static String getPostsInUnit(int unitIdNum) {
+		URL_SUFFIX = "PostService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllPostsInUnit";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		PropertyInfo unitId = new PropertyInfo();
+		unitId.setName("unitId");
+		unitId.setValue(unitIdNum);
+		unitId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(unitId);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
+	public static String getPostsByUserInUnit(int userIdNum, int unitIdNum) {
+		URL_SUFFIX = "PostService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllPostsByUserInUnit";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		PropertyInfo userId = new PropertyInfo();
+		userId.setName("userId");
+		userId.setValue(userIdNum);
+		userId.setType(int.class);
+		PropertyInfo unitId = new PropertyInfo();
+		unitId.setName("unitId");
+		unitId.setValue(unitIdNum);
+		unitId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(userId);
+		request.addProperty(unitId);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
+	
+	/* END POSTS */
 	
 	public static boolean editUnitUnderUser(String code, String name, int id, boolean remove) {
 		URL_SUFFIX = "UnitService.asmx";
@@ -128,7 +197,7 @@ public final class DatabaseConnector {
 		userId.setValue(id);
 		userId.setType(int.class);
 		
-		//Add the property to request object
+		//Add the property to request objects
 		request.addProperty(userId);
 		
 		fetchData(request);

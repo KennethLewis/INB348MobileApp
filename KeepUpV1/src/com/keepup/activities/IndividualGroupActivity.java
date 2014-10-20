@@ -6,7 +6,6 @@ import java.util.List;
 import com.keepup.GlobalVariables;
 import com.keepup.group.GroupDatabaseController;
 import com.keepup.post.Post;
-import com.keepup.post.PostDatabaseController;
 import com.keepup.R;
 import android.app.Activity;
 import android.app.Fragment;
@@ -25,8 +24,6 @@ import android.widget.TextView;
 
 public class IndividualGroupActivity extends Activity {
 
-	PostDatabaseController postDb;
-	GroupDatabaseController groupDb;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,72 +40,69 @@ public class IndividualGroupActivity extends Activity {
 			this.setTitle(activityName);
 		}
 		
-		postDb = new PostDatabaseController(this);
-		groupDb = new GroupDatabaseController(this);
-		
         // Inserting
         Log.d("Post", "Inserting ..");
 		List<Post> postWithGroup = new ArrayList<Post>();
 		
-		for(Post post: postDb.getAllPosts()) {
-			if(post.getUnit().matches("Group: "+this.getTitle().toString()))
-				postWithGroup.add(post);
-		}
-		
-		LinearLayout postList = (LinearLayout) findViewById(R.id.group_posts_list);
-		for(int i = 0; i < postWithGroup.size(); i++)  {
-			View rootView = getLayoutInflater().inflate(R.layout.group_post_template, null);
-			if(GlobalVariables.USERLOGGEDIN != null) {
-				if(postWithGroup.get(i) != null) {
-					rootView = setupUnitView(postWithGroup.get(i), i, rootView);
-				 
-					//Add to view.
-					postList.addView(rootView);
-				}
-			}
-		}
+//		for(Post post: postDb.getAllPosts()) {
+//			if(post.getUnit().matches("Group: "+this.getTitle().toString()))
+//				postWithGroup.add(post);
+//		}
+//		
+//		LinearLayout postList = (LinearLayout) findViewById(R.id.group_posts_list);
+//		for(int i = 0; i < postWithGroup.size(); i++)  {
+//			View rootView = getLayoutInflater().inflate(R.layout.group_post_template, null);
+//			if(GlobalVariables.USERLOGGEDIN != null) {
+//				if(postWithGroup.get(i) != null) {
+//					rootView = setupUnitView(postWithGroup.get(i), i, rootView);
+//				 
+//					//Add to view.
+//					postList.addView(rootView);
+//				}
+//			}
+//		}
 	}
 
 	private View setupUnitView(Post p, int indexNum, View rootView) {
 		
-		//Setup Unit Name.
-		TextView userName = (TextView) rootView.findViewById(R.id.username);
-		userName.setText(p.getUser());
-		
-		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
-		dateTime.setText(p.getDate());
-		
-		TextView post = (TextView) rootView.findViewById(R.id.published_user_post);
-		post.setText(p.getContent());
-
-		 //Change background colour based on element id.
-		 if(indexNum % 2 == 0)
-			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-		 else
-			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+//		//Setup Unit Name.
+//		TextView userName = (TextView) rootView.findViewById(R.id.username);
+//		userName.setText(p.getUser());
+//		
+//		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
+//		dateTime.setText(p.getDate());
+//		
+//		TextView post = (TextView) rootView.findViewById(R.id.published_user_post);
+//		post.setText(p.getContent());
+//
+//		 //Change background colour based on element id.
+//		 if(indexNum % 2 == 0)
+//			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+//		 else
+//			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
 		 
 		return rootView;
 	}
 	
 	public void publishUserPost(View v) {
 		
-		//Hit send it puts the com.keepup.post into the db with deets
-		//reload on create with has a list of the current posts
-		EditText userPost = (EditText)findViewById(R.id.post_to_publish_to_grp);
-
-		Time dateTime = new Time(Time.getCurrentTimezone());
-		dateTime.setToNow();
-		String postTime = dateTime.monthDay + "/" + dateTime.month + "/"
-					+ dateTime.year + " at " + dateTime.hour + ":" +
-					dateTime.minute;
-		if(GlobalVariables.USERLOGGEDIN == null)
-			return;
-		
-		String content = userPost.getText().toString();
-		Post newPost = new Post(GlobalVariables.USERLOGGEDIN.getUsername(), 
-				postTime, content, "Group: "+this.getTitle().toString());
-        
-		postDb.addPost(newPost);
+//		//Hit send it puts the com.keepup.post into the db with deets
+//		//reload on create with has a list of the current posts
+//		EditText userPost = (EditText)findViewById(R.id.post_to_publish_to_grp);
+//
+//		Time dateTime = new Time(Time.getCurrentTimezone());
+//		dateTime.setToNow();
+//		String postTime = dateTime.monthDay + "/" + dateTime.month + "/"
+//					+ dateTime.year + " at " + dateTime.hour + ":" +
+//					dateTime.minute;
+//		if(GlobalVariables.USERLOGGEDIN == null)
+//			return;
+//		
+//		String content = userPost.getText().toString();
+//		Post newPost = new Post(GlobalVariables.USERLOGGEDIN.getUsername(), 
+//				postTime, content, "Group: "+this.getTitle().toString());
+//        
+//		postDb.addPost(newPost);
         
         recreate();
 		

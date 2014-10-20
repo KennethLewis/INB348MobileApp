@@ -10,7 +10,7 @@ public class Unit {
 	private String name;
 	private int userId;
 	
-	//Constructing a User from an SQL String
+	//Constructing a Unit from an SQL String
 	public void setupUnit(String builderString) {
 		String[] segmentedStrings = new String[4];
 		
