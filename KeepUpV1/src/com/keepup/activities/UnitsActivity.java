@@ -42,14 +42,14 @@ public class UnitsActivity extends Activity implements
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
+		mTitle = getTitle();
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.units_layout));
 		mNavigationDrawerFragment.selectItem(1);
-		mTitle = getTitle();
 		
 		DisplayUnits displayUnitsThread = new DisplayUnits();
-		displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
+		displayUnitsThread.execute("8600571");//String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 	}
 
 	//NAVIGATION AND ACTION BAR
