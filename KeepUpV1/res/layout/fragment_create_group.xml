@@ -30,7 +30,7 @@
         android:layout_alignRight="@+id/relativeLayout1"
         android:clickable="true"
         android:onClick="showUsers"
-        android:text="Add" />
+        android:text="@string/add" />
 
     <Button
         android:id="@+id/createGroup"
@@ -65,7 +65,7 @@
         android:layout_alignLeft="@+id/group_description"
         android:layout_below="@+id/relativeLayout2"
         android:ems="10"
-        android:text="@string/create_group" />
+        android:text="@string/create_group" android:inputType="text"/>
 
     <TextView
         android:id="@+id/group_count"
@@ -84,6 +84,7 @@
         android:layout_below="@+id/newGroupName"
         android:layout_centerHorizontal="true"
         android:ems="10"
-        android:text="@string/group_desc" />
+        android:text="@string/group_desc" 
+        android:inputType="text" />
 
 </RelativeLayout>

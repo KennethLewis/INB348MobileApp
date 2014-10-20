@@ -10,24 +10,22 @@
     <string name="action_logout">Logout</string>
 
     <!-- Login Activity -->
-    <string name="login_advice">Please login with your QUT credentials.</string>
     <string name="username">Username:</string>
     <string name="prefill_username"></string>
     <string name="password">Password:</string>
-    <string name="prefill_password"></string>
-    <string name="remember_me">Remember Me</string>
     <string name="login_button">Login</string>
     <string name="register">Register</string>
-    <string name="forgot_details">Forgot details?</string>
 
     <!-- Register Activity -->
     <string name="register_email">QUT Email Address</string>
+    <string name="student_id">Student ID</string>
     <string name="register_pw">Password</string>
     <string name="register_pw_confirm">Confirm Password</string>
     <string name="register_prefill_qutemail"></string>
     <string name="notification_count">0</string>
-    <string name="welcome">Welcome to KeepUP</string>
-    <string name="title_home">News</string>
+    
+    <!-- Navigation Slider options -->
+    <string name="news">News</string>
     <string name="units">Units</string>
     <string name="groups">Groups</string>
     <string name="time_table">Time Table</string>
@@ -38,50 +36,27 @@
     <string name="map">Map</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="newsfeed_item_header_post">New Post in INB377 by @jacksonp</string>
-    <string name="newsfeed_item_header_announcement">New Announcement by lecturer @richards in INB317</string>
-    <string name="newsfeed_item_header_postOnYours">New Post on your question in INB377 by @zackr</string>
-    <string name="newsfeed_item_content_post">"Can anyone help me with some of my questions? I.."</string>
+    
+    <string name="unit_1_heading">INB270 - Programming</string>
     <string name="newsfeed_item_content_announcement">"Lecture for Thursday 4pm has been cancelled, for.."</string>
-    <string name="newsfeed_item_content_postOnYours">"You aren't implementing the call correctly. You should.."</string>
+
+    <string name="keeping_up_with">Keeping up with:</string>
+    <string name="unit_count">0 units</string>
+    <string name="group_count">0 groups</string>
 
     <string-array name="slider_menu_options">
         <item name="units">Units</item>
         <item name="groups">Groups</item>
     </string-array>
 
-    <string name="testing_news_area">This is so the news area can be seen</string>
-    <string name="news">News</string>
-    <string name="title_activity_units">UnitsActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="title_activity_units_activity">UnitsActivity</string>
-    <string name="keeping_up_with">Keeping up with:</string>
-    <string name="unit_count">0 units</string>
-    <string name="group_count">0 groups</string>
-    <string name="search_units">Search units..</string>
-    <string name="unit_1_heading">INB270 - Programming</string>
-    <string name="unit_2_heading">INB270 - Programming</string>
-    <string name="unit_3_heading">INB270 - Programming</string>
-    <string name="unit_4_heading">INB270 - Programming</string>
-    <string name="title_activity_group">Group</string>
-    <string name="group1_inb348">Assignment 1 Group</string>
-
-    <string-array name="groups_joined"></string-array>
-
     <string name="newAnnouncementsNOTIFY">New Announcements Notify Icon</string>
     <string name="newPostsNOTIFY">New Posts Notify Icon</string>
     <string name="newPostsToYoursNOTIFY">New Posts On Your Questions Notify Icon</string>
-    <string name="table1_row1_alert">Lecture 4pm Thursday Cancelle..</string>
-    <string name="title_activity_unit_test">UnitTest</string>
     <string name="title_activity_individual_unit">IndividualUnitActivity</string>
     <string name="example_time">Thursday 12:01pm</string>
-    <string name="user_published_post" />
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_create_group">CreateGroupActivity</string>
     <string name="create_group">Create Group</string>
-    <string name="group_name">Group Name</string>
     <string name="add_group_members">Add Group Members</string>
     <string name="member_name">Member Name</string>
     <string name="member_id">QUT Student No</string>
@@ -91,9 +66,8 @@
     <string name="group_desc">Group Description</string>
     <string name="current_members_added">Currently Added Members</string>
     <string name="add_remove_units">Add/Remove Units</string>
-    <string name="student_id">Student ID</string>
     <string name="title_activity_individual_grp">IndividualGrpActivity</string>
-    <string name="title_activity_test_units">TestUnitsActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="send">Send</string>
+    <string name="add">Add</string>
 
 </resources>

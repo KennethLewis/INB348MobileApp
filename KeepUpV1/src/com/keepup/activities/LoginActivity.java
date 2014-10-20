@@ -192,7 +192,6 @@ public class LoginActivity extends Activity {
 			if(lastFetchedUser != null) {
 	            GlobalVariables.USERLOGGEDIN = lastFetchedUser;
 	            loginSuccess();
-	            //recreate();
 			} else {
 				loginFail();
 			}

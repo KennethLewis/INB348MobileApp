@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:clickable="true"
-        android:onClick="unitDetails"
+        android:onClick="clickedUnitName"
         android:text="@string/unit_1_heading"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <LinearLayout
         android:id="@+id/unit_template_content"
@@ -27,25 +27,16 @@
         android:background="@layout/layout_bg"
         android:orientation="vertical" >
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/announcement_last_unit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4pt" >
-
-            <ImageView
-                android:id="@+id/arrow_icon_unit"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:src="@drawable/arrow_icon" />
-
-            <TextView
-                android:id="@+id/announcement_last_unit"
-                android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:text="@string/newsfeed_item_content_announcement"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="6pt" />
-        </LinearLayout>
+            android:layout_height="34dp"
+            android:layout_margin="4pt"
+            android:drawableLeft="@drawable/arrow_icon"
+            android:text="@string/newsfeed_item_content_announcement"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="6pt" >
+        </TextView>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -65,7 +56,7 @@
                 android:layout_width="36dp"
                 android:layout_height="30dp"
                 android:layout_margin="2pt"
-                android:text="x1"
+                android:text="@string/notification_count"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="8pt" />
 
@@ -82,7 +73,7 @@
                 android:layout_width="34dp"
                 android:layout_height="30dp"
                 android:layout_margin="2pt"
-                android:text="x3"
+                android:text="@string/notification_count"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="8pt" />
 
@@ -99,14 +90,11 @@
                 android:layout_width="42dp"
                 android:layout_height="30dp"
                 android:layout_margin="2pt"
-                android:text="x1"
+                android:text="@string/notification_count"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="8pt" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
-            </LinearLayout>
+            
         </LinearLayout>
     </LinearLayout>
 

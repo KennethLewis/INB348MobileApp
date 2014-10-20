@@ -41,6 +41,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:onClick="publishUserPost"
-        android:text="Send" />
+        android:text="@string/send" />
 
 </RelativeLayout>

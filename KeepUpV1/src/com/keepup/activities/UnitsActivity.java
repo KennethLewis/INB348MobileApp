@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
+import com.keepup.NavigationDrawerFragment;
 import com.keepup.R;
-import com.keepup.R.id;
-import com.keepup.R.layout;
 import com.keepup.unit.Unit;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,23 +27,91 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UnitsActivity extends Activity {
-
+public class UnitsActivity extends Activity implements
+	NavigationDrawerFragment.NavigationDrawerCallbacks {
+	
+	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private CharSequence mTitle;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_test_units);
+		setContentView(R.layout.activity_units);
+		
+		//Navigation Drawer
+		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
+				.findFragmentById(R.id.navigation_drawer);
+		mTitle = getTitle();
+		// Set up the drawer.
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+				(DrawerLayout) findViewById(R.id.units_layout));
+		mNavigationDrawerFragment.selectItem(1);
 		
 		DisplayUnits displayUnitsThread = new DisplayUnits();
-		displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
+		displayUnitsThread.execute("8600571");//String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
+	}
+	
+	@Override
+	public void onNavigationDrawerItemSelected(int position) {
+		switch (position) {
+		case 0:
+			mTitle = getString(R.string.news);
+			break;
+		case 1:
+			mTitle = getString(R.string.units);
+			Intent intentUnits = new Intent(this, UnitsActivity.class);
+			startActivity(intentUnits);
+			break;
+		case 2:
+			mTitle = getString(R.string.groups); 
+			Intent intentGroups = new Intent(this, GroupActivity.class);
+			startActivity(intentGroups);
+			break;
+		}
 	}
 
+	public void restoreActionBar() {
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setTitle(mTitle);
+	}
+
+	public void moveTo(View v) {
+		TextView whereTo = (TextView) v.findViewById(R.id.unit_group_user_title);
+		String goingTo = whereTo.getText().toString();
+		String [] brokenDirection = goingTo.split("by");
+		String finalDestination = brokenDirection[0];
+		
+		if(finalDestination.contains("Unit")){
+			Intent intent = new Intent(this, IndividualUnitActivity.class);
+			String [] unitName = finalDestination.split(":");
+			String trimedName = unitName[1].trim();
+			intent.putExtra("unitId", trimedName);
+			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        startActivity(intent);
+		}
+		else if(finalDestination.contains("Group")){
+			Intent intent = new Intent(this, IndividualGroupActivity.class);
+			String [] groupName = finalDestination.split(":");
+			String trimedName = groupName[1].trim();
+			Toast.makeText(this, finalDestination, Toast.LENGTH_SHORT).show();
+			intent.putExtra("groupName", trimedName);
+			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        startActivity(intent);
+		}
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.global, menu);
-		return true;
+		if (!mNavigationDrawerFragment.isDrawerOpen()) {
+			getMenuInflater().inflate(R.menu.global, menu);
+			//restoreActionBar();
+			return true;
+		}
+		return super.onCreateOptionsMenu(menu);
 	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -72,6 +141,10 @@ public class UnitsActivity extends Activity {
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void clickedUnitName(View v) {
+		Log.v("KEEPUP", "Clicked on a Unit from Unit Listing");
 	}
 	
 	//HANDLE ALL ADD/REMOVE AND USER UNIT ALTERATIONS

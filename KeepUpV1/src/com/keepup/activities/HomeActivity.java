@@ -1,39 +1,21 @@
 package com.keepup.activities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
-import com.keepup.group.Group;
-import com.keepup.group.GroupDatabaseController;
 import com.keepup.post.Post;
-import com.keepup.post.PostDatabaseController;
-import com.keepup.unit.Unit;
-import com.keepup.unit.UnitDatabaseController;
-import com.keepup.user.User;
 import com.keepup.R;
 
 import android.app.Activity;
 
 import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 public class HomeActivity extends Activity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -49,52 +31,41 @@ public class HomeActivity extends Activity implements
 	 * {@link #restoreActionBar()}.
 	 */
 	private CharSequence mTitle;
-	private static PostDatabaseController postDb;
-	private static UnitDatabaseController unitDb;
-	private static GroupDatabaseController groupDb;
-	private static User lastFetchedUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
+		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
-
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.home_layout));
-		
-		postDb = new PostDatabaseController(this);
-		unitDb = new UnitDatabaseController(this);
-		groupDb = new GroupDatabaseController(this);
 		mNavigationDrawerFragment.selectItem(0);
 		
+		TextView noOfUnits = (TextView) findViewById(R.id.news_unit_count);
+		TextView noOfGroups = (TextView) findViewById(R.id.news_group_count);
+		
+		//@EDIT
+		noOfUnits.setText("0 Units");
+		noOfGroups.setText("0 Groups");
 	}
 	
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.home_toplevel_container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
-	}
-
-	public void onSectionAttached(int number) {
-		switch (number) {
-		case 1:
+		switch (position) {
+		case 0:
 			mTitle = getString(R.string.news);
 			break;
-		case 2:
+		case 1:
 			mTitle = getString(R.string.units);
 			Intent intentUnits = new Intent(this, UnitsActivity.class);
 			startActivity(intentUnits);
 			break;
-		case 3:
+		case 2:
 			mTitle = getString(R.string.groups); 
 			Intent intentGroups = new Intent(this, GroupActivity.class);
 			startActivity(intentGroups);
@@ -110,7 +81,6 @@ public class HomeActivity extends Activity implements
 	}
 
 	public void moveTo(View v) {
-		
 		TextView whereTo = (TextView) v.findViewById(R.id.unit_group_user_title);
 		String goingTo = whereTo.getText().toString();
 		String [] brokenDirection = goingTo.split("by");
@@ -134,14 +104,12 @@ public class HomeActivity extends Activity implements
 	        startActivity(intent);
 		}
 	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (!mNavigationDrawerFragment.isDrawerOpen()) {
-			// Only show items in the action bar relevant to this screen
-			// if the drawer is not showing. Otherwise, let the drawer
-			// decide what to show in the action bar.
 			getMenuInflater().inflate(R.menu.global, menu);
-			restoreActionBar();
+			//restoreActionBar();
 			return true;
 		}
 		return super.onCreateOptionsMenu(menu);
@@ -149,9 +117,6 @@ public class HomeActivity extends Activity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		
 		//CLICK SETTINGS BUTTON IN ACTION BAR
@@ -181,142 +146,82 @@ public class HomeActivity extends Activity implements
 		return super.onOptionsItemSelected(item);
 	}
 	
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		private static final String ARG_SECTION_NUMBER = "section_number";
-		private List<Post> postsForUser = new ArrayList<Post>();
-		/**
-		 * Returns a new instance of this fragment for the given section number.
-		 */
-		public static PlaceholderFragment newInstance(int sectionNumber) {
-			PlaceholderFragment fragment = new PlaceholderFragment();
-			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-			fragment.setArguments(args);
-			return fragment;
-		}
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			
-			View rootView = inflater.inflate(R.layout.fragment_home, container,
-					false);
-			
-			List<Unit> unitsToShow = new ArrayList<Unit>();
-			List<Group> groupsToShow = new ArrayList<Group>();
-			List<Post> postsToShow = new ArrayList<Post>();
-			
-			TextView noOfUnits = (TextView) rootView.findViewById(R.id.news_unit_count);
-			TextView noOfGroups = (TextView) rootView.findViewById(R.id.news_group_count);
-			
-			//@EDIT
-//			for(Unit unit: unitDb.getAllUnits())
-//			{
-//				if (unit.gatherUsersId().contains(GlobalVariables.USERLOGGEDIN.getId()))
-//					unitsToShow.add(unit);
-//			}
-//			for(Group group: groupDb.getAllGroups())
-//			{
-//				if (group.gatherUsers().contains(GlobalVariables.USERLOGGEDIN.getId()))
-//					groupsToShow.add(group);
-//			}
-			noOfUnits.setText(unitsToShow.size() + " Units");
-			noOfGroups.setText(groupsToShow.size() + " Groups");
-			
-			for(Post post: postDb.getAllPosts()){
-				for(Unit unit: unitsToShow){
-					if(post.getUnit().contains(unit.getCode()))
-							postsToShow.add(post);
-				}
-				for(Group group: groupsToShow){
-					if(post.getUnit().contains(group.getName()))
-						postsToShow.add(post);
-				}
-			}
-			
-			
-			LinearLayout newsList = (LinearLayout) rootView.findViewById(R.id.news_post_list);
-			
-			for(int i = 0; i < postsToShow.size(); i++)  {
-				View newsTemplate = inflater.inflate(R.layout.news_post_template, null);
-				
-				if(postsToShow.get(i) != null) {
-					newsTemplate = setUpNewsArticle(postsToShow.get(i), i, newsTemplate);
-					newsList.addView(newsTemplate);
-				}
-			}
-			return rootView;
-		}
-
-		private View setUpNewsArticle(Post p, int indexNum, View rootView) {
-			
-			//Setup Unit Name.
-			TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
-			userName.setText(p.getUnit() + " " + "by " + p.getUser());
-			
-			TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
-			dateTime.setText(p.getDate());
-			
-			TextView post = (TextView) rootView.findViewById(R.id.published_news);
-			post.setText(p.getContent());
-
-			 //Change background colour based on element id.
-			 if(indexNum % 2 == 0)
-				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-			 else
-				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
-			 
-			return rootView;
-		}
-		@Override
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-			((HomeActivity) activity).onSectionAttached(getArguments().getInt(
-					ARG_SECTION_NUMBER));
-		}
-	}
+//	/**
+//	 * A placeholder fragment containing a simple view.
+//	 */
+//	public static class PlaceholderFragment extends Fragment {
+//		/**
+//		 * The fragment argument representing the section number for this
+//		 * fragment.
+//		 */
+//		private static final String ARG_SECTION_NUMBER = "section_number";
+//		private List<Post> postsForUser = new ArrayList<Post>();
+//		/**
+//		 * Returns a new instance of this fragment for the given section number.
+//		 */
+//		public static PlaceholderFragment newInstance(int sectionNumber) {
+//			PlaceholderFragment fragment = new PlaceholderFragment();
+//			Bundle args = new Bundle();
+//			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+//			fragment.setArguments(args);
+//			return fragment;
+//		}
+//
+//		public PlaceholderFragment() {
+//		}
+//
+//		@Override
+//		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//				Bundle savedInstanceState) {
+//			
+//			View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+//			
+//			TextView noOfUnits = (TextView) rootView.findViewById(R.id.news_unit_count);
+//			TextView noOfGroups = (TextView) rootView.findViewById(R.id.news_group_count);
+//			
+//			//@EDIT
+//			noOfUnits.setText("0 Units");
+//			noOfGroups.setText("0 Groups");
+//			
+//			return rootView;
+//		}
+//
+//		@Override
+//		public void onAttach(Activity activity) {
+//			super.onAttach(activity);
+//			((HomeActivity) activity).onSectionAttached(getArguments().getInt(
+//					ARG_SECTION_NUMBER));
+//		}
+//	}
 	
 	public void goToHome(View v) {
 		Intent intent = new Intent(this, HomeActivity.class);
-		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 	}
 	
-	
-	
+	private View setUpNewsArticle(Post p, int indexNum, View rootView) {
+		//Setup Unit Name.
+		TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
+		userName.setText(p.getUnit() + " " + "by " + p.getUser());
+		
+		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
+		dateTime.setText(p.getDate());
+		
+		TextView post = (TextView) rootView.findViewById(R.id.published_news);
+		post.setText(p.getContent());
+
+		 //Change background colour based on element id.
+		 if(indexNum % 2 == 0)
+			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+		 else
+			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+		 
+		return rootView;
+	}
 
 	
 	/* ---------------- THREADED TASKS ----------------- */
 	
-	public class FindUser extends AsyncTask<Integer, Void, Void> {
-
-		@Override
-		protected Void doInBackground(Integer... params) {
-			String buildString = DatabaseConnector.getUser(params[0]);
-			if(buildString.length() > 0) {
-				lastFetchedUser = new User();
-				lastFetchedUser.setupUser(buildString);
-			}
-			return null;
-		}
-		
-		@Override
-        protected void onPostExecute(Void result) {
-			if(lastFetchedUser != null)
-				GlobalVariables.USERLOGGEDIN = lastFetchedUser;
-            
-            recreate();
-        }
-	}
+	
 	
 }
