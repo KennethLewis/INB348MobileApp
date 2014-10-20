@@ -7,6 +7,9 @@ import com.keepup.post.Post;
 
 public class Group {
 
+	private int groupId;
+	private int unitIt;
+	
 	private String name;
 	private String groupMembers;
 	private String groupDescription;
@@ -21,7 +24,39 @@ public class Group {
 		this.groupDescription = groupDescription;
 		this.groupPosts = new ArrayList<Post>();
 	}
+	public Group (){}
+	public Group (int groupId, int unitId, String groupName, String groupDescription){
+		this.groupId = groupId;
+		this.unitIt = unitId;
+		this.name = groupName;
+		this.groupDescription = groupDescription;
+	}
+	//Constructing a User from an SQL String
+		public void setupGroup(String builderString) {
+			String[] segmentedStrings = new String[4];
+			
+			int offset = 0;
+			
+			//Log.v("KEEPUP", builderString);
+			segmentedStrings[0] = builderString.substring(offset, builderString.indexOf("^", offset));
+			offset += segmentedStrings[0].length() + 1;
+			segmentedStrings[1] = builderString.substring(offset, offset + 6);
+			offset += segmentedStrings[1].length();
+			segmentedStrings[2] = builderString.substring(offset, offset + 100);
+			offset += segmentedStrings[2].length();
+			segmentedStrings[3] = builderString.substring(offset, builderString.indexOf("^", offset));
+			offset += segmentedStrings[3].length() + 1;
+			
+			this.groupId = Integer.parseInt(segmentedStrings[0].replace(" ", ""));
+			this.unitIt = Integer.parseInt(segmentedStrings[1].replace(" ", ""));
+			this.name = segmentedStrings[2];
+			this.groupDescription = segmentedStrings[3];
 
+			//Log.v("KEEPUP", String.valueOf(this.getId()));
+			//Log.v("KEEPUP", this.getCode());
+			//Log.v("KEEPUP", this.getName());
+			//Log.v("KEEPUP", String.valueOf(this.getUserId()));
+		}
 	public String getName() {
 		return name;
 	}

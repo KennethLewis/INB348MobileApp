@@ -114,6 +114,35 @@ public final class DatabaseConnector {
 		
 		return stringBuffer;
 	}
+	
+	/**
+	 * IF PROBLEMS LOOK HERE. 
+	 * @param id
+	 * @return
+	 */
+	public static String getGroupsByUser(int id) {
+		URL_SUFFIX = "GroupService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllGroupsByUser";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		//Property which holds input parameters
+		PropertyInfo userId = new PropertyInfo();
+		//Set Name
+		userId.setName("userId");
+		userId.setValue(id);
+		userId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(userId);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
 
 	public static int getUnitCountByUser(int id) {
 		URL_SUFFIX = "UnitService.asmx";
@@ -135,10 +164,52 @@ public final class DatabaseConnector {
 		
 		return Integer.parseInt(stringBuffer);
 	}
-
+/**
+ * IF PROBLEMS LOOK HERE. 
+ * @param id
+ * @return
+ */
+	public static int getGroupCountByUser(int id) {
+		URL_SUFFIX = "GroupService.asmx";
+		SOAP_ACTION_SUFFIX = "getGroupCountByUser";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		//Property which holds input parameters
+		PropertyInfo userId = new PropertyInfo();
+		//Set Name
+		userId.setName("userId");
+		userId.setValue(id);
+		userId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(userId);
+		
+		fetchData(request);
+		
+		return Integer.parseInt(stringBuffer);
+	}
 	public static String getUnits() {
 		URL_SUFFIX = "UnitService.asmx";
 		SOAP_ACTION_SUFFIX = "getAllUnits";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
+	/**
+	 * IF PROBLEMS LOOK HERE. 
+	 * @param id
+	 * @return
+	 */
+	public static String getGroups() {
+		URL_SUFFIX = "GroupService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllGroups";
 		
 		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
 		
@@ -164,9 +235,44 @@ public final class DatabaseConnector {
 		return stringBuffer;
 	}
 	
+	/**
+	 * IF PROBLEMS LOOK HERE. 
+	 * @param id
+	 * @return
+	 */
+	public static String getGroupsDistinct() {
+		URL_SUFFIX = "GroupService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllGroupsDistinct";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
+	
 	public static int getUnitCount() {
 		URL_SUFFIX = "UnitService.asmx";
 		SOAP_ACTION_SUFFIX = "getUnitCount";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		fetchData(request);
+		
+		return Integer.parseInt(stringBuffer);
+	}
+	
+	/**
+	 * IF PROBLEMS LOOK HERE. 
+	 * @param id
+	 * @return
+	 */
+	public static int getGroupCount() {
+		URL_SUFFIX = "GroupService.asmx";
+		SOAP_ACTION_SUFFIX = "getGroupCount";
 		
 		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
 		
