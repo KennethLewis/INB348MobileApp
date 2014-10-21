@@ -220,9 +220,9 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 
 				String builderString = dbGroups.substring(startOffset, endIndex);
 				
-				//Log.v("KEEPUP", String.valueOf(endIndex));
-				//Log.v("KEEPUP", String.valueOf(startOffset));
-				//Log.v("KEEPUP", builderString);
+				Log.v("KEEPUP", String.valueOf(endIndex));
+				Log.v("KEEPUP", String.valueOf(startOffset));
+				Log.v("KEEPUP", builderString);
 				
 				group.setupGroup(builderString);
 				groupsToDisplay.add(group);
