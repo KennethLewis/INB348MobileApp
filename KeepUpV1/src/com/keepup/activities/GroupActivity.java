@@ -112,13 +112,13 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 
 	public void groupDetails(View v){
 		Log.v("KEEPUP", "Clicked on a Group from Group Listing");
-		/*TextView groupName = (TextView) v.findViewById(R.id.group_name);
+		TextView groupName = (TextView) v.findViewById(R.id.group_name);
 		String name = (String) groupName.getText();
 		//GlobalVariables.USERLOGGEDIN.setUnit(name);
 		Intent intent = new Intent(this, IndividualGroupActivity.class);
 		intent.putExtra("groupName", name);
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);*/
+        startActivity(intent);
 	}
 	public void createGroup (View v) {
 		Intent intent = new Intent(this, CreateGroupActivity.class);

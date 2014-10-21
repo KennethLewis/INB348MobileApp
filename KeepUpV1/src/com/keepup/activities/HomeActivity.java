@@ -1,18 +1,30 @@
 package com.keepup.activities;
 
+import java.util.ArrayList;
+
+import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
 import com.keepup.R;
+import com.keepup.activities.IndividualUnitActivity.UpdatePostData;
+import com.keepup.activities.UnitsActivity.DisplayUnits;
+import com.keepup.post.Post;
+import com.keepup.unit.Unit;
+import com.keepup.user.User;
 
 import android.app.Activity;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +57,13 @@ public class HomeActivity extends Activity implements
 				(DrawerLayout) findViewById(R.id.home_layout));
 		mNavigationDrawerFragment.selectItem(0);
 		
+		DisplayUnits displayUnitsThread = new DisplayUnits();
+		displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
+		
+		
 		TextView noOfUnits = (TextView) findViewById(R.id.news_unit_count);
 		TextView noOfGroups = (TextView) findViewById(R.id.news_group_count);
+		
 		
 		//@EDIT
 		noOfUnits.setText("0 Units");
@@ -150,29 +167,107 @@ public class HomeActivity extends Activity implements
         startActivity(intent);
 	}
 	
-//	private View setUpNewsArticle(Post p, int indexNum, View rootView) {
-//		//Setup Unit Name.
-//		TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
-//		userName.setText(p.getUnit() + " " + "by " + p.getUser());
-//		
-//		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
-//		dateTime.setText(p.getDate());
-//		
-//		TextView post = (TextView) rootView.findViewById(R.id.published_news);
-//		post.setText(p.getContent());
-//
-//		 //Change background colour based on element id.
-//		 if(indexNum % 2 == 0)
-//			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-//		 else
-//			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
-//		 
-//		return rootView;
-//	}
 
 	
 	/* ---------------- THREADED TASKS ----------------- */
 	
+	int currentUnitId = 0;
+	int postCount = 0;
+	ArrayList<Post> unitPosts = new ArrayList<Post>();
 	
-	
+	int unitCount = 0;
+	ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
+	public class DisplayUnits extends AsyncTask<String, Void, Integer> {
+		@Override
+		protected Integer doInBackground(String... params) {
+			//Set the # of units we're keeping up with
+			unitCount = DatabaseConnector.getUnitCountByUser(Integer.parseInt(params[0]));
+			
+			int startOffset = 0;
+			String dbUnits = DatabaseConnector.getUnitsByUser(Integer.parseInt(params[0]));
+			for(int i = 0; i < unitCount; i++) {
+				Unit unit = new Unit();
+				
+				int endIndex = nthOccurrence(dbUnits, '^', (i+1)*2) + 1;
+
+				String builderString = dbUnits.substring(startOffset, endIndex);
+				
+				unit.setupUnit(builderString);
+				unitsToDisplay.add(unit);
+
+				startOffset = endIndex;
+			}
+			
+			for(int i = 0; i < unitsToDisplay.size(); i ++){
+				postCount = DatabaseConnector.getPostCountInUnit(unitsToDisplay.get(i).getId());
+				
+				int beginOffset = 0;
+				String getPostsString = DatabaseConnector.getPostsInUnit(unitsToDisplay.get(i).getId(), GlobalVariables.USERLOGGEDIN.getId());
+				for(int c = 0; c < postCount; c++) {
+					Post post = new Post();
+
+					int endIndex = nthOccurrence(getPostsString, '^', (c+1)*5) + 1 + 512;
+
+					String builderString = getPostsString.substring(beginOffset, endIndex);
+					
+					post.setupPost(builderString);
+					
+					unitPosts.add(post);
+					//GlobalVariables.POSTS.add(post); //Add post to complete list for news display
+					beginOffset = endIndex;
+					}
+				}
+			return null;
+		}
+		protected void onPostExecute(Integer result) {
+			if(postCount > 0)
+				updateNewsView();
+			//if(requiresRefresh)
+				//recreate();
+        }
+		protected void updateNewsView() {
+			LayoutInflater inflater = (LayoutInflater) getBaseContext().
+					getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+	        //ADD UNIT LISTINGS 1 BY 1
+			LinearLayout unitNewsList = (LinearLayout) findViewById(R.id.news_post_list);
+			//unitNewsList.removeAllViews();
+			
+			for(int i = 0; i < unitPosts.size(); i++)  {
+				View unitView = inflater.inflate(R.layout.news_post_template, null);
+
+				unitView = setUpNewsArticle(unitPosts.get(i), i, unitView);
+			 
+				//Add to view.
+				unitNewsList.addView(unitView);
+			}
+	    }
+			
+		private View setUpNewsArticle(Post p, int indexNum, View rootView) {
+			//Setup Unit Name.
+			TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
+			userName.setText(p.getUnitId() + " " + "by " + p.getUserId());
+			
+			TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
+			dateTime.setText(p.getTime());
+			
+			TextView post = (TextView) rootView.findViewById(R.id.published_news);
+			post.setText(p.getContent());
+
+			 //Change background colour based on element id.
+			 if(indexNum % 2 == 0)
+				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+			 else
+				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+			 
+			return rootView;
+		}
+		
+		public int nthOccurrence(String str, char c, int n) {
+		    int pos = str.indexOf(c, 0);
+		    n--;
+		    while (n-- > 0 && pos != -1)
+		        pos = str.indexOf(c, pos + 1);
+		    return pos;
+		}
+	}
 }

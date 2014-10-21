@@ -192,6 +192,7 @@ public class IndividualUnitActivity extends Activity implements
 				postOwners[i] = postOwner;
 				
 				unitPosts.add(post);
+				GlobalVariables.POSTS.add(post); //Add post to complete list for news display
 				startOffset = endIndex;
 			}
 			return postCount;
