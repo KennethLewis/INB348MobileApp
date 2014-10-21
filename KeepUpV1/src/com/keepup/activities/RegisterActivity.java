@@ -1,9 +1,7 @@
 package com.keepup.activities;
 
 import com.keepup.user.User;
-import com.keepup.user.UserDatabaseController;
 import com.keepup.DatabaseConnector;
-import com.keepup.GlobalVariables;
 import com.keepup.R;
 import android.app.Activity;
 import android.app.Fragment;

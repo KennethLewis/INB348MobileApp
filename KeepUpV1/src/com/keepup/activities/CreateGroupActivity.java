@@ -6,9 +6,7 @@ import java.util.List;
 
 import com.keepup.GlobalVariables;
 import com.keepup.group.Group;
-import com.keepup.group.GroupDatabaseController;
 import com.keepup.user.User;
-import com.keepup.user.UserDatabaseController;
 import com.keepup.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,8 +28,8 @@ public class CreateGroupActivity extends Activity {
 
 	private List<User> selectedUsers = new ArrayList<User>();
 	List<User> usersForGrp = new ArrayList<User>();
-	private UserDatabaseController db;
-	private GroupDatabaseController groupDb;
+	//private UserDatabaseController db;
+	//private GroupDatabaseController groupDb;
 	ListView userList;
 	
 	@Override
@@ -42,8 +40,8 @@ public class CreateGroupActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.create_group_activity, new PlaceholderFragment()).commit();
 		}
-		db = new UserDatabaseController(this);
-		groupDb = new GroupDatabaseController(this);
+		//db = new UserDatabaseController(this);
+		//groupDb = new GroupDatabaseController(this);
 		
 		LinearLayout userList = (LinearLayout) findViewById(R.id.group_members_list);
 		
@@ -138,41 +136,41 @@ public void showUsers(View v){
 	}
 	
 	//Method to show the unit options and enable them to be clicked.
-	protected void showUsersOptions(){
+	protected void showUsersOptions() {
 		
-		boolean[] checkedUsers = new boolean[db.getAllUsers().size()];
-		int count = db.getAllUsers().size();
-		
-		for(int i = 0; i < count; i++)
-			checkedUsers[i] = selectedUsers.contains(db.getAllUsers().get(i));
-		
-		DialogInterface.OnMultiChoiceClickListener 
-			unitsDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					// TODO Auto-generated method stub
-					if(isChecked)
-						selectedUsers.add(db.getAllUsers().get(which));
-					else
-						selectedUsers.remove(db.getAllUsers().get(which));
-					
-					onChangeSelectedUsers();
-				}
-			};
-			
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Select Users");
-			
-			CharSequence [] userNames = new CharSequence[db.getAllUsers().size()];
-			for(int i =0; i < db.getAllUsers().size(); i++)
-				userNames[i] = db.getAllUsers().get(i).getUsername();
-			
-			builder.setMultiChoiceItems(userNames, checkedUsers, unitsDialogListener);
-			
-			
-			AlertDialog dialog = builder.create();
-			dialog.show();
+//		boolean[] checkedUsers = new boolean[db.getAllUsers().size()];
+//		int count = db.getAllUsers().size();
+//		
+//		for(int i = 0; i < count; i++)
+//			checkedUsers[i] = selectedUsers.contains(db.getAllUsers().get(i));
+//		
+//		DialogInterface.OnMultiChoiceClickListener 
+//			unitsDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
+//				
+//				@Override
+//				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+//					// TODO Auto-generated method stub
+//					if(isChecked)
+//						selectedUsers.add(db.getAllUsers().get(which));
+//					else
+//						selectedUsers.remove(db.getAllUsers().get(which));
+//					
+//					onChangeSelectedUsers();
+//				}
+//			};
+//			
+//			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//			builder.setTitle("Select Users");
+//			
+//			CharSequence [] userNames = new CharSequence[db.getAllUsers().size()];
+//			for(int i =0; i < db.getAllUsers().size(); i++)
+//				userNames[i] = db.getAllUsers().get(i).getUsername();
+//			
+//			builder.setMultiChoiceItems(userNames, checkedUsers, unitsDialogListener);
+//			
+//			
+//			AlertDialog dialog = builder.create();
+//			dialog.show();
 					
 	}
 	
@@ -207,7 +205,7 @@ public void showUsers(View v){
 		description = desc.getText().toString();
 		
 		Group newGroup = new Group (groupName,members,membersId,description);
-		groupDb.addGroup(newGroup);
+		//groupDb.addGroup(newGroup);
 		
 		Intent intent = new Intent(this, GroupActivity.class);
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

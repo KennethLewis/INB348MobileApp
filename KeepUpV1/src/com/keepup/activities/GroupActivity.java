@@ -1,26 +1,13 @@
 package com.keepup.activities;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
-import com.keepup.activities.UnitsActivity.AddUnitToUser;
-import com.keepup.activities.UnitsActivity.PopupAllUnits;
-import com.keepup.activities.UnitsActivity.RemoveUnitFromUser;
 import com.keepup.group.Group;
-import com.keepup.group.GroupDatabaseController;
-import com.keepup.unit.Unit;
-import com.keepup.user.User;
 import com.keepup.R;
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,16 +18,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class GroupActivity extends Activity implements
 NavigationDrawerFragment.NavigationDrawerCallbacks{
-
-	//UserDatabaseController db;
-	private static GroupDatabaseController groupDb;
 	
 	private CharSequence mTitle;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -137,9 +120,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);*/
 	}
-	public void createGroup (View v){
+	public void createGroup (View v) {
 		Intent intent = new Intent(this, CreateGroupActivity.class);
-		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 	}
 	
@@ -158,6 +140,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			}
 		}
 	}
+	
 	/* THREADED ACTIVITIES */
 	int totalGroupCount = 0;
 	Group[] distinctGroups;
@@ -170,7 +153,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			totalGroupCount = DatabaseConnector.getGroupCount();
 			
 			int offset = 0;
-			String allAvailableGroups = DatabaseConnector.getGroupsDistinct();
+			String allAvailableGroups = DatabaseConnector.getGroups();
 			distinctGroups = new Group[allAvailableGroups.length() / (6 + 100)];
 			for(int i = 1; i <= allAvailableGroups.length() / (6 + 100); i++) {
 				Group newGroup = new Group(-1,-1, allAvailableGroups.substring(offset, 6 + offset),
@@ -364,13 +347,14 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		
 		
 	}
+	
 	//Helper method, understands Strings from MySQL web service results.
-		//essentially splits up user ids of variable length.
-		public int nthOccurrence(String str, char c, int n) {
-		    int pos = str.indexOf(c, 0);
-		    n--;
-		    while (n-- > 0 && pos != -1)
-		        pos = str.indexOf(c, pos + 1);
-		    return pos;
-		}
+	//essentially splits up user ids of variable length.
+	public int nthOccurrence(String str, char c, int n) {
+	    int pos = str.indexOf(c, 0);
+	    n--;
+	    while (n-- > 0 && pos != -1)
+	        pos = str.indexOf(c, pos + 1);
+	    return pos;
+	}
 }

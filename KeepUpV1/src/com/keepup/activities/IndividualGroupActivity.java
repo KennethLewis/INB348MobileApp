@@ -4,23 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.keepup.GlobalVariables;
-import com.keepup.group.GroupDatabaseController;
 import com.keepup.post.Post;
 import com.keepup.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class IndividualGroupActivity extends Activity {
 
