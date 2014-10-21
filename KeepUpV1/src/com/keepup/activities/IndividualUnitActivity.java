@@ -52,7 +52,7 @@ public class IndividualUnitActivity extends Activity implements
 				(DrawerLayout) findViewById(R.id.individual_unit_layout));
 		
 		UpdatePostData updatePostDataThread = new UpdatePostData();
-		updatePostDataThread.execute("8600571");//String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
+		updatePostDataThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 	}
 
 	//NAVIGATION AND ACTION BAR
@@ -113,6 +113,8 @@ public class IndividualUnitActivity extends Activity implements
 	}
 	
 	public void publishUserPost(View v) {
+		PublishPost publishPostThread = new PublishPost();
+		publishPostThread.execute(((TextView) findViewById(R.id.text_to_publish)).getText().toString());
 		Log.v("KEEPUP", "Clicked to submit a post to Unit: ");
 	}
 	
@@ -122,11 +124,11 @@ public class IndividualUnitActivity extends Activity implements
 				getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         //ADD UNIT LISTINGS 1 BY 1
 		LinearLayout unitList = (LinearLayout) findViewById(R.id.posts_list);
+		unitList.removeAllViews();
 		
 		for(int i = 0; i < unitPosts.size(); i++)  {
 			View unitView = inflater.inflate(R.layout.unit_post_template, null);
 
-			Log.v("KEEPUP", String.valueOf(unitPosts.get(i) == null));
 			unitView = setupPostView(unitPosts.get(i), i, unitView);
 		 
 			//Add to view.
@@ -166,10 +168,11 @@ public class IndividualUnitActivity extends Activity implements
 			//Set the # of units we're keeping up with
 			postCount = DatabaseConnector.getPostCountInUnit(currentUnitId);
 			
+			unitPosts.clear();
 			postOwners = new User[postCount];
 			
 			int startOffset = 0;
-			String getPostsString = DatabaseConnector.getPostsInUnit(currentUnitId);
+			String getPostsString = DatabaseConnector.getPostsInUnit(currentUnitId, GlobalVariables.USERLOGGEDIN.getId());
 			for(int i = 0; i < postCount; i++) {
 				Post post = new Post();
 
@@ -183,7 +186,7 @@ public class IndividualUnitActivity extends Activity implements
 				
 				post.setupPost(builderString);
 				
-				//Fetch and create a User object for the posts.
+				//Fetch and create a User object for the posts
 				User postOwner = new User();
 				postOwner.setupUser(DatabaseConnector.getUser(post.getUserId()));
 				postOwners[i] = postOwner;
@@ -197,11 +200,34 @@ public class IndividualUnitActivity extends Activity implements
 		protected void onPostExecute(Integer result) {
 			if(postCount > 0)
 				updatePostViews();
+			//if(requiresRefresh)
+				//recreate();
+        }
+	}
+
+	boolean requiresRefresh = false;
+	public class PublishPost extends AsyncTask<String, Void, Boolean> {
+		@Override
+		protected Boolean doInBackground(String... params) {
+			//Let's post to the database online.
+			if(DatabaseConnector.addPostToUnit(GlobalVariables.USERLOGGEDIN.getId(), currentUnitId, 0, params[0])) {
+				requiresRefresh = true;
+				return true;
+			}
+			return false;
+		}
+
+		protected void onPostExecute(Boolean result) {
+			if(result) {
+				((TextView) findViewById(R.id.text_to_publish)).setText("");
+				UpdatePostData updatePostDataThread = new UpdatePostData();
+				updatePostDataThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
+			}
         }
 	}
 
 	//Helper method, understands Strings from MySQL web service results.
-	//essentially splits up user ids of variable length.
+	//essentially splits up user ids of variable length
 	public int nthOccurrence(String str, char c, int n) {
 	    int pos = str.indexOf(c, 0);
 	    n--;

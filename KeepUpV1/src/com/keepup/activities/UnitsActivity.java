@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -223,13 +224,19 @@ public class UnitsActivity extends Activity implements
 	}
 
 	int unitCount = 0;
+	int[] lecturerPostsUnread;
+	int[] postsUnread;
+	int[] unitMemberCount;
 	ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
 	public class DisplayUnits extends AsyncTask<String, Void, Integer> {
-		
 		@Override
 		protected Integer doInBackground(String... params) {
 			//Set the # of units we're keeping up with
 			unitCount = DatabaseConnector.getUnitCountByUser(Integer.parseInt(params[0]));
+			
+			lecturerPostsUnread = new int[unitCount];
+			postsUnread = new int[unitCount];
+			unitMemberCount = new int[unitCount];
 			
 			int startOffset = 0;
 			String dbUnits = DatabaseConnector.getUnitsByUser(Integer.parseInt(params[0]));
@@ -246,6 +253,14 @@ public class UnitsActivity extends Activity implements
 				
 				unit.setupUnit(builderString);
 				unitsToDisplay.add(unit);
+
+				//Get unread post information
+				lecturerPostsUnread[i] = DatabaseConnector.getUnreadLecturePostCountInUnitForUser(
+						unit.getId(), Integer.parseInt(params[0]));
+				postsUnread[i] = DatabaseConnector.getUnreadPostCountInUnitByUser(
+						unit.getId(), Integer.parseInt(params[0]));
+				unitMemberCount[i] = DatabaseConnector.getUnitMemberCount(unit.getId());
+				
 				startOffset = endIndex;
 			}
 			return null;
@@ -263,18 +278,18 @@ public class UnitsActivity extends Activity implements
 			for(int i = 0; i < unitsToDisplay.size(); i++)  {
 				View unitView = inflater.inflate(R.layout.unit_template, null);
 
-				unitView = setupUnitView(unitsToDisplay.get(i), unitView);
+				unitView = setupUnitView(unitsToDisplay.get(i), i, unitView);
 			 
 				//Add to view.
 				unitList.addView(unitView);
 			}
         }
 		
-		private View setupUnitView(Unit unit, View rootView) {
+		private View setupUnitView(Unit unit, int indexNum, View rootView) {
 			//Setup Unit Name.
 			TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
 			SpannableString content = new SpannableString(unit.getCode() + " - " + unit.getName());
-			//content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+			content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 			unitCode.setText(content);
 			
 			String announcementTest = "Last announcement text goes here, blah blah...";
@@ -282,14 +297,13 @@ public class UnitsActivity extends Activity implements
 			TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
 			announcementLast.setText(announcementTest);
 			
-			int notificationCountTest = 0;	//@EDIT
 			//Setup notification counts.
 			TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);
-			announcementCount.setText("x " + String.valueOf(notificationCountTest));
+			announcementCount.setText("x " + lecturerPostsUnread[indexNum]);
 			TextView postCount = (TextView) rootView.findViewById(R.id.post_value_unit);
-			postCount.setText("x " + String.valueOf(notificationCountTest));
+			postCount.setText("x " + postsUnread[indexNum]);
 			TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_unit);
-			postOnYoursCount.setText("x " + String.valueOf(notificationCountTest));
+			postOnYoursCount.setText("x " + unitMemberCount[indexNum]);
 			 
 			return rootView;
 		}

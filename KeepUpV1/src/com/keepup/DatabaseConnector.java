@@ -31,6 +31,88 @@ public final class DatabaseConnector {
 	static String stringBuffer;
 
 	/* POSTS */
+	public static int getUnreadLecturePostCountInUnitForUser(int unitIdNum, int userIdNum) {
+		URL_SUFFIX = "PostService.asmx";
+		SOAP_ACTION_SUFFIX = "getUnreadLecturePostCountInUnitForUser";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		PropertyInfo unitId = new PropertyInfo();
+		unitId.setName("unitId");
+		unitId.setValue(unitIdNum);
+		unitId.setType(int.class);
+		PropertyInfo userId = new PropertyInfo();
+		userId.setName("userId");
+		userId.setValue(userIdNum);
+		userId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(unitId);
+		request.addProperty(userId);
+		
+		fetchData(request);
+		
+		return Integer.parseInt(stringBuffer);
+	}
+	public static int getUnreadPostCountInUnitByUser(int unitIdNum, int userIdNum) {
+		URL_SUFFIX = "PostService.asmx";
+		SOAP_ACTION_SUFFIX = "getUnreadPostCountInUnitForUser";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		PropertyInfo unitId = new PropertyInfo();
+		unitId.setName("unitId");
+		unitId.setValue(unitIdNum);
+		unitId.setType(int.class);
+		PropertyInfo userId = new PropertyInfo();
+		userId.setName("userId");
+		userId.setValue(userIdNum);
+		userId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(unitId);
+		request.addProperty(userId);
+		
+		fetchData(request);
+		
+		return Integer.parseInt(stringBuffer);
+	}
+	public static boolean addPostToUnit(int userIdNum, int unitIdNum, int groupIdNum, String contentString) {
+		URL_SUFFIX = "UnitService.asmx";
+		SOAP_ACTION_SUFFIX = "postToUnit";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+
+		PropertyInfo userId = new PropertyInfo();
+		userId.setName("userId");
+		userId.setValue(userIdNum);
+		userId.setType(int.class);
+		PropertyInfo unitId = new PropertyInfo();
+		unitId.setName("unitId");
+		unitId.setValue(unitIdNum);
+		unitId.setType(int.class);
+		PropertyInfo groupId = new PropertyInfo();
+		groupId.setName("groupId");
+		groupId.setValue(groupIdNum);
+		groupId.setType(int.class);
+		PropertyInfo content = new PropertyInfo();
+		content.setName("content");
+		content.setValue(contentString);
+		content.setType(String.class);
+		
+		//Add the property to request object
+		request.addProperty(userId);
+		request.addProperty(unitId);
+		request.addProperty(groupId);
+		request.addProperty(content);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("true"))
+			return true;
+		
+		return false;
+	}
 	public static int getPostCountInUnit(int unitIdNum) {
 		URL_SUFFIX = "PostService.asmx";
 		SOAP_ACTION_SUFFIX = "getPostCountInUnit";
@@ -49,7 +131,7 @@ public final class DatabaseConnector {
 		
 		return Integer.parseInt(stringBuffer);
 	}
-	public static String getPostsInUnit(int unitIdNum) {
+	public static String getPostsInUnit(int unitIdNum, int userIdNum) {
 		URL_SUFFIX = "PostService.asmx";
 		SOAP_ACTION_SUFFIX = "getAllPostsInUnit";
 		
@@ -59,9 +141,14 @@ public final class DatabaseConnector {
 		unitId.setName("unitId");
 		unitId.setValue(unitIdNum);
 		unitId.setType(int.class);
+		PropertyInfo userId = new PropertyInfo();
+		userId.setName("userId");
+		userId.setValue(userIdNum);
+		userId.setType(int.class);
 		
 		//Add the property to request object
 		request.addProperty(unitId);
+		request.addProperty(userId);
 		
 		fetchData(request);
 		
@@ -100,6 +187,24 @@ public final class DatabaseConnector {
 	/* END POSTS */
 	
 	/* UNITS */
+	public static int getUnitMemberCount(int unitIdNum) {
+		URL_SUFFIX = "UnitService.asmx";
+		SOAP_ACTION_SUFFIX = "getUnitMemberCount";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		PropertyInfo unitId = new PropertyInfo();
+		unitId.setName("unitId");
+		unitId.setValue(unitIdNum);
+		unitId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(unitId);
+		
+		fetchData(request);
+		
+		return Integer.parseInt(stringBuffer);
+	}
 	public static boolean editUnitUnderUser(String code, String name, int id, boolean remove) {
 		URL_SUFFIX = "UnitService.asmx";
 		SOAP_ACTION_SUFFIX = remove ? "removeUserFromUnit" : "addUserToUnit";
