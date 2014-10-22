@@ -1,10 +1,13 @@
 package com.keepup.activities;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
 import com.keepup.group.Group;
+import com.keepup.group.GroupDatabaseController;
 import com.keepup.R;
 import android.app.Activity;
 import android.content.Context;
@@ -27,6 +30,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	
 	private CharSequence mTitle;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private GroupDatabaseController groupDb; 
 	@Override
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 				(DrawerLayout) findViewById(R.id.group_drawer_layout));
 		
 		mNavigationDrawerFragment.selectItem(3);
-		
+		groupDb = new GroupDatabaseController(this);
 		DisplayGroups displayGroupsThread = new DisplayGroups();
 		displayGroupsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 		//displayGroupsThread.execute("8600572");
@@ -67,7 +71,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			
+			groupDb.emptyDatabase();
 			return true;
 		}
 		
@@ -126,92 +130,26 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
         startActivity(intent);
 	}
 	
-	/*public void clickAddRemoveGroups(View v) {
-		PopupAllGroups popupAllGroupsThread = new PopupAllGroups();
-		popupAllGroupsThread.execute();
-	}*/
 	
-	protected void showGroupOptions() {
-		//Remove those that aren't valid to our user.
-		for(int i = 0; i < groupsInWindow.size(); i++) {
-			if(groupsInWindow.get(i).gatherUsers().contains
-					(GlobalVariables.USERLOGGEDIN.getId()) == false) {
-				groupsInWindow.remove(i);
-				i--;
-			}
-		}
-	}
 	
 	/* THREADED ACTIVITIES */
-	int totalGroupCount = 0;
-	Group[] distinctGroups;
-	ArrayList<Group> groupsInWindow = new ArrayList<Group>();
-	public class PopupAllGroups extends AsyncTask<String, Void, Integer> {
-		
-		@Override
-		protected Integer doInBackground(String... params) {
-			//Set the # of units we're keeping up with
-			totalGroupCount = DatabaseConnector.getGroupCount();
-			
-			int offset = 0;
-			String allAvailableGroups = DatabaseConnector.getGroups();
-			distinctGroups = new Group[allAvailableGroups.length() / (6 + 100)];
-			for(int i = 1; i <= allAvailableGroups.length() / (6 + 100); i++) {
-				Group newGroup = new Group(-1,-1, allAvailableGroups.substring(offset, 6 + offset),
-											allAvailableGroups.substring(6 + offset, 106 + offset));
-				distinctGroups[i-1] = newGroup;
-				offset = i*(6 + 100);
-			}
-			
-			int startOffset = 0;
-			String dbGroups = DatabaseConnector.getGroups();
-			for(int i = 0; i < totalGroupCount; i++) {
-				Group group = new Group();
-
-				int endIndex = nthOccurrence(dbGroups, '^', (i+1)*2) + 1;
-
-				String builderString = dbGroups.substring(startOffset, endIndex);
-				
-				//Log.v("KEEPUP", String.valueOf(endIndex));
-				//Log.v("KEEPUP", String.valueOf(startOffset));
-				//Log.v("KEEPUP", builderString);
-				
-				group.setupGroup(builderString);
-				groupsInWindow.add(group);
-				startOffset = endIndex;
-			}
-			return null;
-		}
-
-		protected void onPostExecute(Integer result) {
-			showGroupOptions();
-        }
-	}
+	
 	public class DisplayGroups extends AsyncTask<String, Void, Integer>{
 		int groupCount = 0;
 		ArrayList<Group> groupsToDisplay = new ArrayList<Group>();
 		
 		protected Integer doInBackground(String... params) {
 			//Set the # of units we're keeping up with
-			groupCount = DatabaseConnector.getGroupCountByUser(Integer.parseInt(params[0]));
 			
-			int startOffset = 0;
-			String dbGroups = DatabaseConnector.getGroupsByUser(Integer.parseInt(params[0]));
-			for(int i = 0; i < groupCount; i++) {
-				Group group = new Group();
-				
-				int endIndex = nthOccurrence(dbGroups, '^', (i+1)*2) + 1;
-
-				String builderString = dbGroups.substring(startOffset, endIndex);
-				
-				Log.v("KEEPUP", String.valueOf(endIndex));
-				Log.v("KEEPUP", String.valueOf(startOffset));
-				Log.v("KEEPUP", builderString);
-				
-				group.setupGroup(builderString);
-				groupsToDisplay.add(group);
-				startOffset = endIndex;
+			
+			List<Integer> studentNos;
+			
+			for(Group group: groupDb.getAllGroups()){
+				studentNos = group.gatherUsers();
+				if(studentNos.contains(GlobalVariables.USERLOGGEDIN.getId()))
+					groupsToDisplay.add(group);
 			}
+			groupCount = groupsToDisplay.size();
 			return null;
 		}
 		protected void onPostExecute(Integer result){
@@ -226,22 +164,20 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			for(int i = 0; i < groupsToDisplay.size(); i++)  {
 				View groupView = inflater.inflate(R.layout.group_template, null);
 				 
-					groupView = setUpGroupView(groupsToDisplay.get(i), groupView);
+					groupView = setUpGroupView(groupsToDisplay.get(i), i, groupView);
 				 
 					//Add to view.
 					groupList.addView(groupView);
 			}
 		}
-		private View setUpGroupView(Group group, View rootView) {
+		private View setUpGroupView(Group group, int i, View rootView) {
 			
 			//Setup Unit Name.
 			TextView groupName = (TextView) rootView.findViewById(R.id.group_name);
-			SpannableString content = new SpannableString(group.getName() + " - " + 
-					group.getGroupDescription());
-			groupName.setText(content);
+			groupName.setText(groupsToDisplay.get(i).getName());
 			
-			/*TextView groupMembers = (TextView) rootView.findViewById(R.id.group_members);
-			groupMembers.setText("Members: " + allGroups.get(i).getGroupMembers());
+			TextView groupMembers = (TextView) rootView.findViewById(R.id.group_members);
+			groupMembers.setText("Members: " + groupsToDisplay.get(i).getGroupMembers());
 			
 			//Setup last announcement.
 			TextView groupPost = (TextView) rootView.findViewById(R.id.last_group_post);
@@ -303,13 +239,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			else
 				noOfGroups.setText(groupCounter + " Groups");
 			
-			List<Integer> studentNos;
 			
-			for(Group groups: groupDb.getAllGroups()){
-				studentNos = groups.gatherUsers();
-				if(studentNos.contains(GlobalVariables.USERLOGGEDIN.getId()))
-					allGroups.add(groups);
-			}
 			
 			
 			
