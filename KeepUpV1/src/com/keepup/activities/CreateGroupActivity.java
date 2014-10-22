@@ -159,7 +159,7 @@ public class CreateGroupActivity extends Activity {
 	int totalUserCount = 0; 
 	String[] unitCodes;
 	ArrayList<User> usersToDisplay = new ArrayList<User>();
-	List<User> usersForGrp = GlobalVariables.USERLOGGEDIN.getUsersForGroup();
+	List<User> usersForGrp = GlobalVariables.USERSFORGROUP;
 	public class PopupAllUsers extends AsyncTask<String, Void, Integer> {
 		
 			
@@ -210,7 +210,7 @@ public class CreateGroupActivity extends Activity {
 			User user = new User();
 			user.setId(params[0].getId());
 			user.setUsername(params[0].getUsername());
-			GlobalVariables.USERLOGGEDIN.addUserToGroup(user);
+			GlobalVariables.USERSFORGROUP.add(user);
 			return null;
 		}
 		protected void onPostExecute(Void result) {
@@ -222,7 +222,11 @@ public class CreateGroupActivity extends Activity {
 		protected Void doInBackground(User... params) {
 			User user = new User();
 			user.setId(params[0].getId());
-			GlobalVariables.USERLOGGEDIN.removeUserFromGroup(user.getId());
+			for (User u: GlobalVariables.USERSFORGROUP){
+				if (u.getId() == user.getId())
+					GlobalVariables.USERSFORGROUP.remove(u);
+			}
+			
 			return null;
 		}
 		protected void onPostExecute(Void result) {
