@@ -4,16 +4,28 @@ package com.keepup.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
+import com.keepup.activities.UnitsActivity.AddUnitToUser;
+import com.keepup.activities.UnitsActivity.DisplayUnits;
+import com.keepup.activities.UnitsActivity.PopupAllUnits;
+import com.keepup.activities.UnitsActivity.RemoveUnitFromUser;
 import com.keepup.group.Group;
+import com.keepup.unit.Unit;
 import com.keepup.user.User;
+import com.keepup.group.GroupDatabaseController;
 import com.keepup.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,9 +39,9 @@ import android.widget.TextView;
 public class CreateGroupActivity extends Activity {
 
 	private List<User> selectedUsers = new ArrayList<User>();
-	List<User> usersForGrp = new ArrayList<User>();
+	
 	//private UserDatabaseController db;
-	//private GroupDatabaseController groupDb;
+	private GroupDatabaseController groupDb;
 	ListView userList;
 	
 	@Override
@@ -40,30 +52,22 @@ public class CreateGroupActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.create_group_activity, new PlaceholderFragment()).commit();
 		}
-		//db = new UserDatabaseController(this);
-		//groupDb = new GroupDatabaseController(this);
-		
-		LinearLayout userList = (LinearLayout) findViewById(R.id.group_members_list);
-		
-			for(int i = 0; i < usersForGrp.size(); i++)  {
-				View rootView = getLayoutInflater().inflate(R.layout.member_details_template, null);
-				 
-				User user = usersForGrp.get(i);
-				if(user != null) {
-					rootView = setupUnitView(i, rootView);
-				 
-					//Add to view.
-					userList.addView(rootView);
-				}
-			}
-		}
-	
+		groupDb = new GroupDatabaseController(this);
+		LayoutInflater inflater = (LayoutInflater) getBaseContext().
+				getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 
-	private View setupUnitView(int i, View rootView) {
+		LinearLayout userList = (LinearLayout) findViewById(R.id.users_to_add);
+		for(int i = 0; i < usersForGrp.size(); i++)  {
+			View unitView = inflater.inflate(R.layout.member_details_template, null);
+			unitView = setupUnitView(usersForGrp.get(i), i, unitView);
+			userList.addView(unitView);
+		}
+	}
+	
+	private View setupUnitView(User user, int i, View rootView) {
 		
-		//Setup Unit Name.
 		TextView name = (TextView) rootView.findViewById(R.id.members_name);
-		name.setText(usersForGrp.get(i).getUsername());
+		name.setText(user.getUsername());
 		
 		TextView id = (TextView) rootView.findViewById(R.id.members_id);
 		id.setText(String.valueOf(usersForGrp.get(i).getId()));
@@ -78,113 +82,8 @@ public class CreateGroupActivity extends Activity {
 			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
 		 
 		return rootView;
+		 
 	}
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.global, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		//CLICK LOGOUT BUTTON
-		if (id == R.id.action_logout) {
-			GlobalVariables.USERLOGGEDIN = null;
-			Intent intent = new Intent(this, LoginActivity.class);
-	        startActivity(intent);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_create_group,
-					container, false);
-			return rootView;
-		}
-	}
-	
-public void showUsers(View v){
-		
-		switch (v.getId()){
-		
-		case R.id.add:
-			showUsersOptions();
-			break;
-			
-		default:
-		break;
-		}
-	}
-	
-	//Method to show the unit options and enable them to be clicked.
-	protected void showUsersOptions() {
-		
-//		boolean[] checkedUsers = new boolean[db.getAllUsers().size()];
-//		int count = db.getAllUsers().size();
-//		
-//		for(int i = 0; i < count; i++)
-//			checkedUsers[i] = selectedUsers.contains(db.getAllUsers().get(i));
-//		
-//		DialogInterface.OnMultiChoiceClickListener 
-//			unitsDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
-//				
-//				@Override
-//				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-//					// TODO Auto-generated method stub
-//					if(isChecked)
-//						selectedUsers.add(db.getAllUsers().get(which));
-//					else
-//						selectedUsers.remove(db.getAllUsers().get(which));
-//					
-//					onChangeSelectedUsers();
-//				}
-//			};
-//			
-//			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//			builder.setTitle("Select Users");
-//			
-//			CharSequence [] userNames = new CharSequence[db.getAllUsers().size()];
-//			for(int i =0; i < db.getAllUsers().size(); i++)
-//				userNames[i] = db.getAllUsers().get(i).getUsername();
-//			
-//			builder.setMultiChoiceItems(userNames, checkedUsers, unitsDialogListener);
-//			
-//			
-//			AlertDialog dialog = builder.create();
-//			dialog.show();
-					
-	}
-	
-	//Will refresh the users page once unit is selected
-	public void onChangeSelectedUsers(){
-		
-		//@EDIT
-//		for(User user : selectedUsers){
-//			if(GlobalVariables.USERLOGGEDIN.getUsersForGroup().contains(user) == false)
-//				GlobalVariables.USERLOGGEDIN.addUserForGroup(user);
-//		}
-		this.recreate();
-	}
-	
 	public void createGroup(View v) {
 		
 		String groupName;
@@ -192,11 +91,10 @@ public void showUsers(View v){
 		String membersId = "";
 		String description;
 		
-		//@EDIT
-//		for(User users: GlobalVariables.USERLOGGEDIN.getUsersForGroup()){
-//			members += users.getUsername() + ",";
-//			membersId += users.getId() + ",";
-//		}
+		for(User users: usersForGrp){
+			members += users.getUsername() + ",";
+			membersId += users.getId() + ",";
+		}
 		
 		EditText name = (EditText)findViewById(R.id.newGroupName);
 		EditText desc = (EditText)findViewById(R.id.group_description);
@@ -205,10 +103,148 @@ public void showUsers(View v){
 		description = desc.getText().toString();
 		
 		Group newGroup = new Group (groupName,members,membersId,description);
-		//groupDb.addGroup(newGroup);
+		groupDb.addGroup(newGroup);
 		
 		Intent intent = new Intent(this, GroupActivity.class);
 		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 	}
+
+	//HANDLE ALL ADD/REMOVE AND USER UNIT ALTERATIONS
+	public void clickAddRemoveUsers(View v) {
+		PopupAllUsers popupAllUnitsThread = new PopupAllUsers();
+		popupAllUnitsThread.execute();
+	}
+	
+	//Method to show the users options and enable them to be clicked.
+	protected void showUserOptions() {
+		
+		boolean[] checkedUser = new boolean[usersToDisplay.size()];
+		for(int i = 0; i < usersToDisplay.size(); i++) {
+			for(User u : usersForGrp)
+		        if(u.getId() == usersToDisplay.get(i).getId())
+					checkedUser[i] = true;
+		}
+		
+		DialogInterface.OnMultiChoiceClickListener usersDialogListener = 
+				new DialogInterface.OnMultiChoiceClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+				if(isChecked) {
+					AddUserToGroup addUserToGroup = new AddUserToGroup();
+					addUserToGroup.execute(usersToDisplay.get(which));
+					
+				} else {
+					RemoveUserFromGroup removeUserFromGroup = new RemoveUserFromGroup();
+					removeUserFromGroup.execute(usersToDisplay.get(which));
+					Log.v("KEEPUP", "REMOVE");
+				}
+			}
+		};
+			
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Add/remove Users");
+		
+		CharSequence[] userNames = new CharSequence[usersToDisplay.size()];
+		for(int i = 0; i < usersToDisplay.size(); i++)
+			userNames[i] = usersToDisplay.get(i).getUsername();
+		
+		builder.setMultiChoiceItems(userNames, checkedUser, usersDialogListener);
+		AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+
+	/* THREADED ACTIVITIES */
+	
+	int totalUserCount = 0; 
+	String[] unitCodes;
+	ArrayList<User> usersToDisplay = new ArrayList<User>();
+	List<User> usersForGrp = GlobalVariables.USERLOGGEDIN.getUsersForGroup();
+	public class PopupAllUsers extends AsyncTask<String, Void, Integer> {
+		
+			
+		@Override
+		protected Integer doInBackground(String... params) {
+			
+			totalUserCount = DatabaseConnector.getUserCount();
+			String builderString = DatabaseConnector.getAllUsers();
+			int offset = 0;
+			for(int i = 0; i < totalUserCount; i++) {
+				
+				User user = new User();
+				/*
+				 * Had to remodel this method from users, could prob
+				 * put in as a Users Class method like the other one but ill
+				 * leave it here for now.
+				 */
+				String[] segmentedStrings = new String[5];
+				
+				segmentedStrings[0] = builderString.substring(offset, builderString.indexOf("^", offset));
+				offset += segmentedStrings[0].length() + 1;
+				segmentedStrings[1] = builderString.substring(offset, offset + 15);
+				offset += segmentedStrings[1].length();
+				segmentedStrings[2] = builderString.substring(offset, offset + 50);
+				offset += segmentedStrings[2].length();
+				segmentedStrings[3] = builderString.substring(offset, builderString.indexOf("^", offset));
+				offset += segmentedStrings[3].length() + 1;
+				segmentedStrings[4] = builderString.substring(offset, offset + 25);
+				offset += segmentedStrings[4].length();
+				
+				user.setId(Integer.parseInt(segmentedStrings[0].replace(" ", "")));
+				user.setUsername(segmentedStrings[1].replace(" ", ""));
+				user.setEmail(segmentedStrings[2].replace(" ", ""));
+				usersToDisplay.add(user);
+			}
+			return null;
+		}
+
+		protected void onPostExecute(Integer result) {
+			
+			showUserOptions();
+        }
+	}
+
+	public class AddUserToGroup extends AsyncTask<User, Void, Void> {
+		@Override
+		protected Void doInBackground(User... params) {
+			User user = new User();
+			user.setId(params[0].getId());
+			user.setUsername(params[0].getUsername());
+			GlobalVariables.USERLOGGEDIN.addUserToGroup(user);
+			return null;
+		}
+		protected void onPostExecute(Void result) {
+			recreate();
+        }
+	}
+	public class RemoveUserFromGroup extends AsyncTask<User, Void, Void> {
+		@Override
+		protected Void doInBackground(User... params) {
+			User user = new User();
+			user.setId(params[0].getId());
+			GlobalVariables.USERLOGGEDIN.removeUserFromGroup(user.getId());
+			return null;
+		}
+		protected void onPostExecute(Void result) {
+			recreate();
+        }
+	}
+
+	//Helper method, understands Strings from MySQL web service results.
+	//essentially splits up user ids of variable length.
+	public int nthOccurrence(String str, char c, int n) {
+	    int pos = str.indexOf(c, 0);
+	    n--;
+	    while (n-- > 0 && pos != -1)
+	        pos = str.indexOf(c, pos + 1);
+	    return pos;
+	}
+	
+	public static class PlaceholderFragment extends Fragment {
+
+		public PlaceholderFragment() {
+		}
+
+	}
+	
 }

@@ -467,7 +467,31 @@ public final class DatabaseConnector {
 		
 		return stringBuffer;
 	}
+	public static String getAllUsers() {
+		URL_SUFFIX = "UserService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllUsers";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
 
+	public static int getUserCount() {
+		URL_SUFFIX = "UserService.asmx";
+		SOAP_ACTION_SUFFIX = "getUserCount";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		fetchData(request);
+		
+		return Integer.parseInt(stringBuffer);
+	}
+	
 	public static boolean getLoggedIn(int id, String pass) {
 		URL_SUFFIX = "UserService.asmx";
 		SOAP_ACTION_SUFFIX = "loginUser";

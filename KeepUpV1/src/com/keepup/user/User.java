@@ -19,6 +19,7 @@ public class User {
 	private String email;
 	private int rights;
 	private String password;
+	private ArrayList<User> usersForGroup = new ArrayList<User>();
 	
 	//Constructing a User from an SQL String
 	public void setupUser(String builderString) {
@@ -101,4 +102,22 @@ public class User {
 		this.password = pw;
 	}
 
+	public void addUserToGroup (User u){
+		usersForGroup.add(u);
+	}
+	
+	public List<User> getUsersForGroup (){
+		return this.usersForGroup;
+	}
+	
+	public void removeUserFromGroup (int id){
+		for(User u: usersForGroup){
+			if(u.getId() == id)
+				usersForGroup.remove(u);
+		}
+	}
+	
+	public void clearUsersForGroup(){
+		usersForGroup.clear();
+	}
 }

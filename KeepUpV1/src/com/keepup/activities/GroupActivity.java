@@ -43,7 +43,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		mNavigationDrawerFragment.selectItem(3);
 		
 		DisplayGroups displayGroupsThread = new DisplayGroups();
-		displayGroupsThread.execute("8600572");
+		displayGroupsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
+		//displayGroupsThread.execute("8600572");
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
