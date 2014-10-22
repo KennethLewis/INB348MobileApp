@@ -7,7 +7,7 @@ import com.keepup.user.User;
 
 import android.content.ContentValues;
 import android.content.Context;
-/import android.database.Cursor;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -61,13 +61,13 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(KEY_DATE, post.getDate()); 
+		//values.put(KEY_DATE, post.getDate()); 
 		values.put(KEY_CONTENT, post.getContent());
 		
-		values.put(KEY_USER_ID, post.getUser());
+		values.put(KEY_USER_ID, post.getUserId());
 		
-		if(post.getUnit() != null)
-			values.put(KEY_UNITCODE, post.getUnit());
+		if(post.getUnitId() !=  0)
+			values.put(KEY_UNITCODE, post.getUnitId());
 		
 		// Inserting Row
 		db.insert(TABLE_POSTS, null, values);
@@ -85,8 +85,8 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 		Post post = null;
 		if (cursor != null)
 			if(cursor.moveToFirst())
-				post = new Post(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), 
-						cursor.getString(3), cursor.getString(4));
+			//	post = new Post(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), 
+			//			cursor.getString(3), cursor.getString(4));
 	    
 		db.close();
 		// return User
@@ -104,8 +104,8 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 		Post post = null;
 		if (cursor != null)
 			if(cursor.moveToFirst())
-				post = new Post(Integer.parseInt(cursor.getString(0)), cursor.getString(1), 
-						cursor.getString(2), cursor.getString(3), cursor.getString(4));
+				//post = new Post(Integer.parseInt(cursor.getString(0)), cursor.getString(1), 
+				//		cursor.getString(2), cursor.getString(3), cursor.getString(4));
 		
 		db.close();
 		// return User
@@ -125,10 +125,10 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()) {
 			do {
 				Post post = new Post();
-				post.setUser(cursor.getString(1));
-				post.setDate(cursor.getString(2));
+				//post.setUser(cursor.getString(1));
+				//post.setDate(cursor.getString(2));
 				post.setContent(cursor.getString(3));
-				post.setUnit(cursor.getString(4));
+				//post.setUnit(cursor.getString(4));
 				// Adding User to list
 				userPosts.add(post);
 			} while (cursor.moveToNext());
