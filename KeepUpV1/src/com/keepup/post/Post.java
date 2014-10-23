@@ -56,6 +56,7 @@ public class Post {
 		this.content = content;
 	}
 	
+	
 	public int getId() {
 		return id;
 	}
@@ -98,4 +99,26 @@ public class Post {
 		this.content = content;
 	}
 	
+
+	/*
+	 * Post constructor to allow creation of posts for local db only.
+	 * To assist with posting to groups. Delete once external db takes
+	 * groups and group posts.  Other methods below also only relate to
+	 * internal db. Delete when possible.
+	 */
+	
+	private String groupName;
+	public Post (String groupName, int userId, String time, String content){
+		
+		this.groupName = groupName;
+		this.userId = userId;
+		this.time = time;
+		this.content = content;
+	}
+	public String getGroupName(){
+		return groupName;
+	}
+	public void setGroupName (String groupName){
+		this.groupName = groupName;
+	}
 }

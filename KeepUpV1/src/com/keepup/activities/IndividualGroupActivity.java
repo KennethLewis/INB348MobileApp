@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.keepup.GlobalVariables;
-import com.keepup.post.*;
+import com.keepup.post.Post;
 import com.keepup.post.PostDatabaseController;
 import com.keepup.R;
 import android.app.Activity;
@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 public class IndividualGroupActivity extends Activity {
 
-	PostDatabaseController postDb;
+	private PostDatabaseController postDb;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,13 +41,17 @@ public class IndividualGroupActivity extends Activity {
 			this.setTitle(activityName);
 		}
 		postDb = new PostDatabaseController(this);
+        // Inserting
+        Log.d("Post", "Inserting ..");
+		List<Post> postWithGroup = new ArrayList<Post>();
+		
 		
 		LinearLayout postList = (LinearLayout) findViewById(R.id.group_posts_list);
-		for(int i = 0; i < .size(); i++)  {
+		for(int i = 0; i < postDb.getAllPosts().size(); i++)  {
 			View rootView = getLayoutInflater().inflate(R.layout.group_post_template, null);
 			if(GlobalVariables.USERLOGGEDIN != null) {
-				if(postWithGroup.get(i) != null) {
-					rootView = setupUnitView(postWithGroup.get(i), i, rootView);
+				if(postDb.getAllPosts() != null) {
+					rootView = setupUnitView(postDb.getAllPosts().get(i), i, rootView);
 				 
 					//Add to view.
 					postList.addView(rootView);
@@ -60,10 +64,10 @@ public class IndividualGroupActivity extends Activity {
 		
 		//Setup Unit Name.
 		TextView userName = (TextView) rootView.findViewById(R.id.username);
-		userName.setText(p.getUser());
+		userName.setText("Sample User");
 		
 		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
-		dateTime.setText(p.getDate());
+		dateTime.setText(p.getTime());
 		
 		TextView post = (TextView) rootView.findViewById(R.id.published_user_post);
 		post.setText(p.getContent());
@@ -92,8 +96,9 @@ public class IndividualGroupActivity extends Activity {
 			return;
 		
 		String content = userPost.getText().toString();
-		Post newPost = new Post(GlobalVariables.USERLOGGEDIN.getUsername(), 
-				postTime, content, "Group: "+this.getTitle().toString());
+		Post newPost = new Post(this.getTitle().toString(),
+				GlobalVariables.USERLOGGEDIN.getId(), postTime, content);
+				
         
 		postDb.addPost(newPost);
         

@@ -61,13 +61,13 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		//values.put(KEY_DATE, post.getDate()); 
+		values.put(KEY_DATE, post.getTime()); 
 		values.put(KEY_CONTENT, post.getContent());
 		
 		values.put(KEY_USER_ID, post.getUserId());
 		
 		if(post.getUnitId() !=  0)
-			values.put(KEY_UNITCODE, post.getUnitId());
+			values.put(KEY_UNITCODE, post.getGroupName());
 		
 		// Inserting Row
 		db.insert(TABLE_POSTS, null, values);
@@ -75,7 +75,7 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 	}
 
 	// Getting single User
-	public Post getPost(int id) {
+	/*public Post getPost(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = db.query(TABLE_POSTS, new String[] { KEY_ID,
@@ -85,16 +85,18 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 		Post post = null;
 		if (cursor != null)
 			if(cursor.moveToFirst())
-			//	post = new Post(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), 
-			//			cursor.getString(3), cursor.getString(4));
+				post = new Post(Integer.parseInt(cursor.getString(0)), 
+						Integer.parseInt(cursor.getString(1)), cursor.getString(2), 
+						cursor.getString(3), Integer.parseInt(cursor.getString(4)));
 	    
 		db.close();
 		// return User
 		return post;
 	}
+	*/
 
 	// Getting single User
-	public Post getPostWithUnit(String unitCode) {
+	/*public Post getPostWithUnit(String unitCode) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = db.query(TABLE_POSTS, new String[] { KEY_ID,
@@ -104,13 +106,14 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 		Post post = null;
 		if (cursor != null)
 			if(cursor.moveToFirst())
-				//post = new Post(Integer.parseInt(cursor.getString(0)), cursor.getString(1), 
-				//		cursor.getString(2), cursor.getString(3), cursor.getString(4));
+				post = new Post(Integer.parseInt(cursor.getString(0)), 
+						Integer.parseInt(cursor.getString(1)), cursor.getString(2), 
+						cursor.getString(3), Integer.parseInt(cursor.getString(4)));
 		
 		db.close();
 		// return User
 		return post;
-	}
+	}*/
 	
 	// Getting All Users
 	public List<Post> getAllPosts() {
@@ -125,10 +128,11 @@ public class PostDatabaseController extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()) {
 			do {
 				Post post = new Post();
-				//post.setUser(cursor.getString(1));
-				//post.setDate(cursor.getString(2));
+				
+				post.setUserId(Integer.parseInt(cursor.getString(1)));
+				post.setTime(cursor.getString(2));
 				post.setContent(cursor.getString(3));
-				//post.setUnit(cursor.getString(4));
+				post.setGroupName(cursor.getString(4));
 				// Adding User to list
 				userPosts.add(post);
 			} while (cursor.moveToNext());
