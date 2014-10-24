@@ -3,12 +3,14 @@ package com.keepup.group;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 import com.keepup.post.Post;
 
 public class Group {
 
 	private int groupId;
-	private int unitIt;
+	private int unitId;
 	
 	private String name;
 	private String groupMembers;
@@ -27,7 +29,7 @@ public class Group {
 	public Group (){}
 	public Group (int groupId, int unitId, String groupName, String groupDescription){
 		this.groupId = groupId;
-		this.unitIt = unitId;
+		this.unitId = unitId;
 		this.name = groupName;
 		this.groupDescription = groupDescription;
 	}
@@ -36,24 +38,26 @@ public class Group {
 			String[] segmentedStrings = new String[4];
 			
 			int offset = 0;
-			
-			//Log.v("KEEPUP", builderString);
+			Log.v("KEEPUP", builderString);
+			Log.v("Length", String.valueOf(builderString.length()));
 			segmentedStrings[0] = builderString.substring(offset, builderString.indexOf("^", offset));
+			Log.v("SegmentedString 0", segmentedStrings[0]);
 			offset += segmentedStrings[0].length() + 1;
-			segmentedStrings[1] = builderString.substring(offset, offset + 6);
-			offset += segmentedStrings[1].length();
-			segmentedStrings[2] = builderString.substring(offset, offset + 100);
+			segmentedStrings[1] = builderString.substring(offset, builderString.indexOf("^", offset));
+			Log.v("SegmentedString 1", segmentedStrings[1]);
+			offset += segmentedStrings[1].length() + 1;
+			segmentedStrings[2] = builderString.substring(offset, offset + 45);
 			offset += segmentedStrings[2].length();
-			segmentedStrings[3] = builderString.substring(offset, builderString.indexOf("^", offset));
-			offset += segmentedStrings[3].length() + 1;
+			//segmentedStrings[3] = builderString.substring(offset, offset + 100);
+			//offset += segmentedStrings[3].length();
 			
 			this.groupId = Integer.parseInt(segmentedStrings[0].replace(" ", ""));
-			this.unitIt = Integer.parseInt(segmentedStrings[1].replace(" ", ""));
+			this.unitId = Integer.parseInt(segmentedStrings[1].replace(" ", ""));
 			this.name = segmentedStrings[2];
 			this.groupDescription = segmentedStrings[3];
 
-			//Log.v("KEEPUP", String.valueOf(this.getId()));
-			//Log.v("KEEPUP", this.getCode());
+			
+			
 			//Log.v("KEEPUP", this.getName());
 			//Log.v("KEEPUP", String.valueOf(this.getUserId()));
 		}

@@ -244,8 +244,11 @@ public class HomeActivity extends Activity implements
 			
 		private View setUpNewsArticle(Post p, int indexNum, View rootView) {
 			//Setup Unit Name.
+			User user = new User ();
+			//String name = DatabaseConnector.getUser(p.getUserId());
+			//user.setupUser(name);
 			TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
-			userName.setText(p.getUnitId() + " " + "by " + p.getUserId());
+			userName.setText(p.getUnitId() + " " + "by " + "Some Student");
 			
 			TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
 			dateTime.setText(p.getTime());

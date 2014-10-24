@@ -45,7 +45,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 				(DrawerLayout) findViewById(R.id.group_drawer_layout));
 		
 		mNavigationDrawerFragment.selectItem(3);
-		groupDb = new GroupDatabaseController(this);
+		//groupDb = new GroupDatabaseController(this);
 		DisplayGroups displayGroupsThread = new DisplayGroups();
 		displayGroupsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 		//displayGroupsThread.execute("8600572");
@@ -53,9 +53,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (!mNavigationDrawerFragment.isDrawerOpen()) {
-			// Only show items in the action bar relevant to this screen
-			// if the drawer is not showing. Otherwise, let the drawer
-			// decide what to show in the action bar.
 			getMenuInflater().inflate(R.menu.global, menu);
 			//restoreActionBar();
 			return true;
@@ -119,11 +116,14 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		Log.v("KEEPUP", "Clicked on a Group from Group Listing");
 		TextView groupName = (TextView) v.findViewById(R.id.group_name);
 		String name = (String) groupName.getText();
-		//GlobalVariables.USERLOGGEDIN.setUnit(name);
-		Intent intent = new Intent(this, IndividualGroupActivity.class);
-		intent.putExtra("groupName", name);
-		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+		
+		Group clickedGroup = null;
+		for(Group g : groupsToDisplay)
+			Log.v("GROUP NAME:", g.getName());
+		
+		//Intent intent = new Intent(this, IndividualGroupActivity.class);
+		//intent.putExtra("groupName", name);
+        //startActivity(intent);
 	}
 	public void createGroup (View v) {
 		Intent intent = new Intent(this, CreateGroupActivity.class);
@@ -133,24 +133,41 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	
 	
 	/* THREADED ACTIVITIES */
-	
+	int groupCount = 0;
+	ArrayList<Group> groupsToDisplay = new ArrayList<Group>();
 	public class DisplayGroups extends AsyncTask<String, Void, Integer>{
-		int groupCount = 0;
-		ArrayList<Group> groupsToDisplay = new ArrayList<Group>();
+		
 		
 		protected Integer doInBackground(String... params) {
 			//Set the # of units we're keeping up with
-			
-			
-			List<Integer> studentNos;
-			
-			for(Group group: groupDb.getAllGroups()){
-				studentNos = group.gatherUsers();
-				if(studentNos.contains(GlobalVariables.USERLOGGEDIN.getId()))
+			String dbGroups = DatabaseConnector.getGroupsByUser
+					(GlobalVariables.USERLOGGEDIN.getId());
+			groupCount = DatabaseConnector.getGroupCountByUser(GlobalVariables.USERLOGGEDIN.getId());
+			/*
+			 * Have to check if the builder string was null.
+			 * If a user wasnt part of any groups the string 
+			 * would be null and thus throw errors with the 
+			 * nthOccurrence method.
+			 */
+			if(dbGroups != null || groupCount > 0){
+				
+				
+				int startOffset = 0;
+				
+				
+				for(int i = 0; i < groupCount; i++){
+					Group group = new Group();
+					Log.v("GROUP NAME",dbGroups);
+					//int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
+					//String builderString = dbGroups.substring(startOffset, endIndex);
+					group.setupGroup(dbGroups);
 					groupsToDisplay.add(group);
+					
+					//startOffset = endIndex;
+				}
 			}
-			groupCount = groupsToDisplay.size();
 			return null;
+			
 		}
 		protected void onPostExecute(Integer result){
 			
@@ -199,83 +216,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			 
 			return rootView;
 		}
-	/**
-	 * TODO
-	 * IF COPIED FROM UNITS ALL THIS NOT REQ
-	 * SAVING FOR NOW JUST INCASE.
-	 */
-	/*public static class PlaceholderFragment extends Fragment {
-
-		private static final String ARG_GROUP_NUMBER = "group_section_number";
-		List<Group> allGroups = new ArrayList<Group>();
-		
-		public static PlaceholderFragment newInstance(int sectionNumber) {
-			PlaceholderFragment fragment = new PlaceholderFragment();
-			Bundle args = new Bundle();
-			args.putInt(ARG_GROUP_NUMBER, sectionNumber);
-			fragment.setArguments(args);
-			return fragment;
-		}
-		
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_groups_listing,
-					container, false);
-			
-			
-			
-			int groupCounter = 0;
-			for(Group group: groupDb.getAllGroups())
-			{
-				if (group.gatherUsers().contains(GlobalVariables.USERLOGGEDIN.getId()))
-					groupCounter++;
-			}
-			if(groupCounter == 1)
-				noOfGroups.setText(groupCounter + " Group");
-			else
-				noOfGroups.setText(groupCounter + " Groups");
-			
-			
-			
-			
-			
-			
-			
-			return rootView;
-		}
-		
-		
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-			((GroupActivity) activity).onSectionAttached(getArguments().getInt(
-					ARG_GROUP_NUMBER));
-		}
-	}*/
-
-	
-	/*public void restoreActionBar() {
-		ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setTitle(mTitle);
-	}*/
-
-	/*public void onNavigationDrawerItemSelected(int position) {
-		// TODO Auto-generated method stub
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.groups_toplevel_container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
-	}*/
-	
-	
-		
-		
 		
 	}
 	

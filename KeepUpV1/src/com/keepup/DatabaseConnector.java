@@ -351,11 +351,79 @@ public final class DatabaseConnector {
 	}
 	/* END UNITS */
 	
-	/**
-	 * IF PROBLEMS LOOK HERE. 
-	 * @param id
-	 * @return
-	 */
+	/* START GROUPS */
+	
+	public static boolean createGroup (int id, String groupName, String description){
+		
+		URL_SUFFIX = "GroupService.asmx";
+		SOAP_ACTION_SUFFIX = "createGroup";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		//Property which holds input parameters
+		PropertyInfo unitId = new PropertyInfo();
+		
+		unitId.setName("unitId");
+		unitId.setValue(id);
+		unitId.setType(int.class);
+		
+		PropertyInfo name = new PropertyInfo();
+		name.setName("groupName");
+		name.setValue(groupName);
+		name.setType(String.class);
+		
+		PropertyInfo desc = new PropertyInfo();
+		desc.setName("groupDescription");
+		desc.setValue(description);
+		desc.setType(String.class);
+		
+		
+		//Add the property to request object
+		request.addProperty(unitId);
+		request.addProperty(name);
+		request.addProperty(desc);
+		
+		fetchData(request);
+		
+		Log.v("KEEPUP", stringBuffer);
+		if(stringBuffer.contains("true"))
+			return true;
+		
+		return false;
+	}
+	
+public static boolean addUserToGroup (int groupId, int userId){
+		
+		URL_SUFFIX = "GroupService.asmx";
+		SOAP_ACTION_SUFFIX = "addUserToGroup";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		//Property which holds input parameters
+		PropertyInfo groupsId = new PropertyInfo();
+		
+		groupsId.setName("groupId");
+		groupsId.setValue(groupId);
+		groupsId.setType(int.class);
+		
+		PropertyInfo id = new PropertyInfo();
+		id.setName("userId");
+		id.setValue(userId);
+		id.setType(int.class);
+		
+		
+		//Add the property to request object
+		request.addProperty(groupsId);
+		request.addProperty(id);
+		
+		fetchData(request);
+		
+		Log.v("KEEPUP", stringBuffer);
+		if(stringBuffer.contains("true"))
+			return true;
+		
+		return false;
+	}
 	public static String getGroupsByUser(int id) {
 		URL_SUFFIX = "GroupService.asmx";
 		SOAP_ACTION_SUFFIX = "getAllGroupsByUser";
@@ -380,12 +448,6 @@ public final class DatabaseConnector {
 		return stringBuffer;
 	}
 
-	
-	/**
-	 * IF PROBLEMS LOOK HERE. 
-	 * @param id
-	 * @return
-	 */
 	public static int getGroupCountByUser(int id) {
 		URL_SUFFIX = "GroupService.asmx";
 		SOAP_ACTION_SUFFIX = "getGroupCountByUser";
@@ -407,11 +469,6 @@ public final class DatabaseConnector {
 		return Integer.parseInt(stringBuffer);
 	}
 	
-	/**
-	 * IF PROBLEMS LOOK HERE. 
-	 * @param id
-	 * @return
-	 */
 	public static String getGroups() {
 		URL_SUFFIX = "GroupService.asmx";
 		SOAP_ACTION_SUFFIX = "getAllGroups";
@@ -426,11 +483,6 @@ public final class DatabaseConnector {
 		return stringBuffer;
 	}
 	
-	/**
-	 * IF PROBLEMS LOOK HERE. 
-	 * @param id
-	 * @return
-	 */
 	public static int getGroupCount() {
 		URL_SUFFIX = "GroupService.asmx";
 		SOAP_ACTION_SUFFIX = "getGroupCount";

@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
+import com.keepup.activities.RegisterActivity.RegisterUser;
 import com.keepup.activities.UnitsActivity.AddUnitToUser;
 import com.keepup.activities.UnitsActivity.DisplayUnits;
 import com.keepup.activities.UnitsActivity.PopupAllUnits;
@@ -38,10 +39,6 @@ import android.widget.TextView;
 
 public class CreateGroupActivity extends Activity {
 
-	private List<User> selectedUsers = new ArrayList<User>();
-	
-	//private UserDatabaseController db;
-	private GroupDatabaseController groupDb;
 	ListView userList;
 	
 	@Override
@@ -52,14 +49,13 @@ public class CreateGroupActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.create_group_activity, new PlaceholderFragment()).commit();
 		}
-		groupDb = new GroupDatabaseController(this);
 		LayoutInflater inflater = (LayoutInflater) getBaseContext().
 				getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 
 		LinearLayout userList = (LinearLayout) findViewById(R.id.users_to_add);
-		for(int i = 0; i < usersForGrp.size(); i++)  {
+		for(int i = 0; i < usersForGroup.size(); i++)  {
 			View unitView = inflater.inflate(R.layout.member_details_template, null);
-			unitView = setupUnitView(usersForGrp.get(i), i, unitView);
+			unitView = setupUnitView(usersForGroup.get(i), i, unitView);
 			userList.addView(unitView);
 		}
 	}
@@ -70,10 +66,10 @@ public class CreateGroupActivity extends Activity {
 		name.setText(user.getUsername());
 		
 		TextView id = (TextView) rootView.findViewById(R.id.members_id);
-		id.setText(String.valueOf(usersForGrp.get(i).getId()));
+		id.setText(String.valueOf(user.getId()));
 		
-		TextView email = (TextView) rootView.findViewById(R.id.members_email);
-		email.setText(usersForGrp.get(i).getEmail());
+		//TextView email = (TextView) rootView.findViewById(R.id.members_email);
+		//email.setText(usersForGrp.get(i).getEmail());
 
 		 //Change background colour based on element id.
 		 if(i % 2 == 0)
@@ -87,27 +83,31 @@ public class CreateGroupActivity extends Activity {
 	public void createGroup(View v) {
 		
 		String groupName;
-		String members ="";
-		String membersId = "";
-		String description;
-		
-		for(User users: usersForGrp){
-			members += users.getUsername() + ",";
-			membersId += users.getId() + ",";
-		}
+		String groupDescription;
 		
 		EditText name = (EditText)findViewById(R.id.newGroupName);
 		EditText desc = (EditText)findViewById(R.id.group_description);
 		
 		groupName = name.getText().toString();
-		description = desc.getText().toString();
+		groupDescription = desc.getText().toString();
 		
-		Group newGroup = new Group (groupName,members,membersId,description);
-		groupDb.addGroup(newGroup);
+		RegisterGroup registerGroupThread = new RegisterGroup();
+		registerGroupThread.execute("1", groupName, groupDescription);
 		
-		Intent intent = new Intent(this, GroupActivity.class);
-		//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+		
+		for(Integer i: usersIdToAdd){
+			RegisterUserForGroup registerThread = new RegisterUserForGroup();
+			//Hard coding group ID not sure what to put.
+			registerThread.execute("1", String.valueOf(i));
+		}
+		
+		if(Success() == true){
+			Intent intent = new Intent(this, GroupActivity.class);
+			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        startActivity(intent);
+		}
+		else
+			Log.v("Problem adding Groups", "ERROR");
 	}
 
 	//HANDLE ALL ADD/REMOVE AND USER UNIT ALTERATIONS
@@ -121,7 +121,7 @@ public class CreateGroupActivity extends Activity {
 		
 		boolean[] checkedUser = new boolean[usersToDisplay.size()];
 		for(int i = 0; i < usersToDisplay.size(); i++) {
-			for(User u : usersForGrp)
+			for(User u : usersForGroup)
 		        if(u.getId() == usersToDisplay.get(i).getId())
 					checkedUser[i] = true;
 		}
@@ -159,7 +159,7 @@ public class CreateGroupActivity extends Activity {
 	int totalUserCount = 0; 
 	String[] unitCodes;
 	ArrayList<User> usersToDisplay = new ArrayList<User>();
-	List<User> usersForGrp = GlobalVariables.USERSFORGROUP;
+	List<User> usersForGroup = GlobalVariables.USERSFORGROUP;
 	public class PopupAllUsers extends AsyncTask<String, Void, Integer> {
 		
 			
@@ -173,10 +173,26 @@ public class CreateGroupActivity extends Activity {
 				
 				User user = new User();
 				/*
-				 * Had to remodel this method from users, could prob
-				 * put in as a Users Class method like the other one but ill
-				 * leave it here for now.
+				 * Had to remodel this method from users. For some
+				 * reason the below commented out code would keep 
+				 * throwing errors about string placement or some such.
+				 * The copied code from users works fine and displays
+				 * users. If you want to try the other method be my 
+				 * guest.
+				 * 
+				 * So you just told me its cause I have to change the 
+				 * numbers in the nthOcc method.. Me no comprenday, so
+				 * maybe you can fix it if you wish lol
 				 */
+				/*User user = new User();
+				
+				int endIndex = nthOccurrence(dbUsers, '^', (i+1)*2) + 1;
+				String builderString = dbUsers.substring(startOffset, endIndex);
+				//Log.v("BUILDERSTRING",builderString);
+				user.setupUser(builderString);
+				usersToDisplay.add(user);
+				startOffset = endIndex;*/
+				
 				String[] segmentedStrings = new String[5];
 				
 				segmentedStrings[0] = builderString.substring(offset, builderString.indexOf("^", offset));
@@ -203,14 +219,12 @@ public class CreateGroupActivity extends Activity {
 			showUserOptions();
         }
 	}
-
+	private ArrayList<Integer> usersIdToAdd = new ArrayList<Integer>();
 	public class AddUserToGroup extends AsyncTask<User, Void, Void> {
 		@Override
 		protected Void doInBackground(User... params) {
-			User user = new User();
-			user.setId(params[0].getId());
-			user.setUsername(params[0].getUsername());
-			GlobalVariables.USERSFORGROUP.add(user);
+			usersIdToAdd.add(params[0].getId());
+			GlobalVariables.USERSFORGROUP.add(params[0]);
 			return null;
 		}
 		protected void onPostExecute(Void result) {
@@ -220,13 +234,14 @@ public class CreateGroupActivity extends Activity {
 	public class RemoveUserFromGroup extends AsyncTask<User, Void, Void> {
 		@Override
 		protected Void doInBackground(User... params) {
-			User user = new User();
-			user.setId(params[0].getId());
-			for (User u: GlobalVariables.USERSFORGROUP){
-				if (u.getId() == user.getId())
-					GlobalVariables.USERSFORGROUP.remove(u);
-			}
 			
+			for(Integer i: usersIdToAdd){
+				if(params[0].getId() == i)
+					usersIdToAdd.remove(i);
+			}
+			for(User u: GlobalVariables.USERSFORGROUP)
+				if(u.getId() == params[0].getId())
+					GlobalVariables.USERSFORGROUP.remove(u);
 			return null;
 		}
 		protected void onPostExecute(Void result) {
@@ -243,7 +258,42 @@ public class CreateGroupActivity extends Activity {
 	        pos = str.indexOf(c, pos + 1);
 	    return pos;
 	}
-	
+	private boolean registerUser;
+	private boolean registerGroup;
+	public class RegisterUserForGroup extends AsyncTask<String, Void, Boolean> {
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			if(DatabaseConnector.addUserToGroup(Integer.valueOf(params[0]),Integer.valueOf(params[1]))) {
+				Log.v("KEEPUP", "Register User SUCCESS");
+				registerUser = true;
+				return true;
+			}
+			Log.v("KEEPUP", "Register User FAIL");
+			registerUser = false;
+			return false;
+		}
+	}
+	public class RegisterGroup extends AsyncTask<String, Void, Boolean> {
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			if(DatabaseConnector.createGroup(Integer.valueOf(params[0]),params[1], params[2])) {
+				Log.v("KEEPUP", "Register Group SUCCESS");
+				registerGroup = true;
+				return true;
+			}
+			Log.v("KEEPUP", "Register Group FAIL");
+			registerGroup = false;
+			return false;
+		}
+	}
+	public boolean Success(){
+		if (registerUser == true && registerGroup == true)
+			return true;
+		else
+			return false;
+	}
 	public static class PlaceholderFragment extends Fragment {
 
 		public PlaceholderFragment() {
