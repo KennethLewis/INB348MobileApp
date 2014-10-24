@@ -158,12 +158,14 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 				for(int i = 0; i < groupCount; i++){
 					Group group = new Group();
 					Log.v("GROUP NAME",dbGroups);
-					//int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
-					//String builderString = dbGroups.substring(startOffset, endIndex);
-					group.setupGroup(dbGroups);
+					int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
+					String builderString = dbGroups.substring(startOffset, endIndex);
+					Log.v("GROUP",builderString);
+						
+					group.setupGroup(builderString);
 					groupsToDisplay.add(group);
 					
-					//startOffset = endIndex;
+					startOffset = endIndex;
 				}
 			}
 			return null;

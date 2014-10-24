@@ -92,22 +92,8 @@ public class CreateGroupActivity extends Activity {
 		groupDescription = desc.getText().toString();
 		
 		RegisterGroup registerGroupThread = new RegisterGroup();
-		registerGroupThread.execute("1", groupName, groupDescription);
-		
-		
-		for(Integer i: usersIdToAdd){
-			RegisterUserForGroup registerThread = new RegisterUserForGroup();
-			//Hard coding group ID not sure what to put.
-			registerThread.execute("1", String.valueOf(i));
-		}
-		
-		if(Success() == true){
-			Intent intent = new Intent(this, GroupActivity.class);
-			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	        startActivity(intent);
-		}
-		else
-			Log.v("Problem adding Groups", "ERROR");
+		registerGroupThread.execute("14", groupName, groupDescription);
+			
 	}
 
 	//HANDLE ALL ADD/REMOVE AND USER UNIT ALTERATIONS
@@ -223,6 +209,7 @@ public class CreateGroupActivity extends Activity {
 	public class AddUserToGroup extends AsyncTask<User, Void, Void> {
 		@Override
 		protected Void doInBackground(User... params) {
+			Log.v("IN ADDUSERTOGROUP", params[0].getUsername());
 			usersIdToAdd.add(params[0].getId());
 			GlobalVariables.USERSFORGROUP.add(params[0]);
 			return null;
@@ -258,12 +245,15 @@ public class CreateGroupActivity extends Activity {
 	        pos = str.indexOf(c, pos + 1);
 	    return pos;
 	}
+	
 	private boolean registerUser;
 	private boolean registerGroup;
 	public class RegisterUserForGroup extends AsyncTask<String, Void, Boolean> {
 
 		@Override
 		protected Boolean doInBackground(String... params) {
+			Log.v("REGISTER USER params 0", params[0]);
+			Log.v("REGISTER USER params 0", params[1]);
 			if(DatabaseConnector.addUserToGroup(Integer.valueOf(params[0]),Integer.valueOf(params[1]))) {
 				Log.v("KEEPUP", "Register User SUCCESS");
 				registerUser = true;
@@ -273,26 +263,39 @@ public class CreateGroupActivity extends Activity {
 			registerUser = false;
 			return false;
 		}
+		
+		
 	}
+	private int groupId;
 	public class RegisterGroup extends AsyncTask<String, Void, Boolean> {
 
 		@Override
 		protected Boolean doInBackground(String... params) {
-			if(DatabaseConnector.createGroup(Integer.valueOf(params[0]),params[1], params[2])) {
+			groupId = DatabaseConnector.createGroup(Integer.valueOf(params[0]),params[1], params[2]);
+			if(groupId != 0){
 				Log.v("KEEPUP", "Register Group SUCCESS");
+				Log.v("GROUPID", String.valueOf(groupId));
 				registerGroup = true;
+				for(User u: usersForGroup){
+					RegisterUserForGroup registerThread = new RegisterUserForGroup();
+					registerThread.execute(String.valueOf(groupId), String.valueOf(u.getId()));
+				}
 				return true;
 			}
 			Log.v("KEEPUP", "Register Group FAIL");
 			registerGroup = false;
 			return false;
 		}
+		protected void onPostExecute(boolean result) {
+			if(result)
+				Success();
+        }
 	}
-	public boolean Success(){
-		if (registerUser == true && registerGroup == true)
-			return true;
-		else
-			return false;
+	public void Success(){
+			Intent intent = new Intent(this, GroupActivity.class);
+			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        	startActivity(intent);
+		
 	}
 	public static class PlaceholderFragment extends Fragment {
 

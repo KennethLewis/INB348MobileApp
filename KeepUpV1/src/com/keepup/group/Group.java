@@ -46,15 +46,17 @@ public class Group {
 			segmentedStrings[1] = builderString.substring(offset, builderString.indexOf("^", offset));
 			Log.v("SegmentedString 1", segmentedStrings[1]);
 			offset += segmentedStrings[1].length() + 1;
-			segmentedStrings[2] = builderString.substring(offset, offset + 45);
+			segmentedStrings[2] = builderString.substring(offset, offset + 50);
+			Log.v("SegmentedString 1", segmentedStrings[2]);
 			offset += segmentedStrings[2].length();
-			//segmentedStrings[3] = builderString.substring(offset, offset + 100);
-			//offset += segmentedStrings[3].length();
+			segmentedStrings[3] = builderString.substring(offset, offset + 100);
+			Log.v("SegmentedString 1", segmentedStrings[3]);
+			offset += segmentedStrings[3].length();
 			
 			this.groupId = Integer.parseInt(segmentedStrings[0].replace(" ", ""));
 			this.unitId = Integer.parseInt(segmentedStrings[1].replace(" ", ""));
 			this.name = segmentedStrings[2];
-			this.groupDescription = segmentedStrings[3];
+			this.groupDescription = "Group Doesnt Have a Description in db!";// segmentedStrings[3];
 
 			
 			

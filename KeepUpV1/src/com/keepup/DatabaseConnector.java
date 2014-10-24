@@ -353,7 +353,7 @@ public final class DatabaseConnector {
 	
 	/* START GROUPS */
 	
-	public static boolean createGroup (int id, String groupName, String description){
+	public static int createGroup (int id, String groupName, String description){
 		
 		URL_SUFFIX = "GroupService.asmx";
 		SOAP_ACTION_SUFFIX = "createGroup";
@@ -385,14 +385,11 @@ public final class DatabaseConnector {
 		
 		fetchData(request);
 		
-		Log.v("KEEPUP", stringBuffer);
-		if(stringBuffer.contains("true"))
-			return true;
+		return Integer.parseInt(stringBuffer);
 		
-		return false;
 	}
 	
-public static boolean addUserToGroup (int groupId, int userId){
+public static boolean addUserToGroup (int gId, int uId){
 		
 		URL_SUFFIX = "GroupService.asmx";
 		SOAP_ACTION_SUFFIX = "addUserToGroup";
@@ -400,21 +397,21 @@ public static boolean addUserToGroup (int groupId, int userId){
 		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
 		
 		//Property which holds input parameters
-		PropertyInfo groupsId = new PropertyInfo();
+		PropertyInfo groupId = new PropertyInfo();
 		
-		groupsId.setName("groupId");
-		groupsId.setValue(groupId);
-		groupsId.setType(int.class);
+		groupId.setName("groupId");
+		groupId.setValue(gId);
+		groupId.setType(int.class);
 		
-		PropertyInfo id = new PropertyInfo();
-		id.setName("userId");
-		id.setValue(userId);
-		id.setType(int.class);
+		PropertyInfo userId = new PropertyInfo();
+		userId.setName("userId");
+		userId.setValue(uId);
+		userId.setType(int.class);
 		
 		
 		//Add the property to request object
-		request.addProperty(groupsId);
-		request.addProperty(id);
+		request.addProperty(groupId);
+		request.addProperty(userId);
 		
 		fetchData(request);
 		
