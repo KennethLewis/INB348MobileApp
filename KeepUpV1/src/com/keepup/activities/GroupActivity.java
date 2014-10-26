@@ -8,6 +8,7 @@ import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
 import com.keepup.group.Group;
 import com.keepup.group.GroupDatabaseController;
+import com.keepup.unit.Unit;
 import com.keepup.R;
 import android.app.Activity;
 import android.content.Context;
@@ -118,12 +119,17 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		String name = (String) groupName.getText();
 		
 		Group clickedGroup = null;
-		for(Group g : groupsToDisplay)
-			Log.v("GROUP NAME:", g.getName());
+		for(Group g : groupsToDisplay){
+			if(g.getName().equals(name)){
+				clickedGroup = g;
+				Log.v("GROUP NAME:", g.getName());
+			}
+		}
+		Intent intent = new Intent(this, IndividualGroupActivity.class);
+		intent.putExtra("GROUP_ID",clickedGroup.getGroupId());
+		intent.putExtra("GROUP_NAME", clickedGroup.getName());
+		startActivity(intent);
 		
-		//Intent intent = new Intent(this, IndividualGroupActivity.class);
-		//intent.putExtra("groupName", name);
-        //startActivity(intent);
 	}
 	public void createGroup (View v) {
 		Intent intent = new Intent(this, CreateGroupActivity.class);

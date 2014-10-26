@@ -33,7 +33,21 @@ public class Group {
 		this.name = groupName;
 		this.groupDescription = groupDescription;
 	}
-	//Constructing a User from an SQL String
+	
+	
+	public int getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+	public int getUnitId() {
+		return unitId;
+	}
+	public void setUnitId(int unitId) {
+		this.unitId = unitId;
+	}
+		//Constructing a User from an SQL String
 		public int setupGroup(String builderString) {
 			String[] segmentedStrings = new String[4];
 			

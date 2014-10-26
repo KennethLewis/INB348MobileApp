@@ -12,5 +12,6 @@ public class GlobalVariables {
 	public static User USERLOGGEDIN;
 	public static ArrayList<User> USERSFORGROUP = new ArrayList<User>();
 	public static ArrayList<Post> POSTS = new ArrayList<Post>();
+	public static ArrayList<Post> GROUPPOSTS = new ArrayList<Post>();
 
 }
