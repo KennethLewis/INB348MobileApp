@@ -80,7 +80,7 @@
                 android:src="@drawable/post_icon" />
 
             <TextView
-                android:id="@+id/post_value_unit"
+                android:id="@+id/post_value_group"
                 android:layout_width="34dp"
                 android:layout_height="30dp"
                 android:layout_margin="2pt"
@@ -97,7 +97,7 @@
                 android:src="@drawable/your_post_icon" />
 
             <TextView
-                android:id="@+id/postsOnYours_value_unit"
+                android:id="@+id/postsOnYours_value_group"
                 android:layout_width="42dp"
                 android:layout_height="30dp"
                 android:layout_margin="2pt"

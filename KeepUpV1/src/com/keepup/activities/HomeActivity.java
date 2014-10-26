@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,14 @@ public class HomeActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
+		
+		TextView noOfUnits = (TextView) findViewById(R.id.news_unit_count);
+		TextView noOfGroups = (TextView) findViewById(R.id.news_group_count);
+		
+		
+		//@EDIT
+		noOfUnits.setText("Units: " + unitCount);
+		noOfGroups.setText("Groups: " + groupCount);
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
@@ -56,18 +65,11 @@ public class HomeActivity extends Activity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.home_layout));
 		mNavigationDrawerFragment.selectItem(0);
+	
 		
 		DisplayUnits displayUnitsThread = new DisplayUnits();
 		displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 		
-		
-		TextView noOfUnits = (TextView) findViewById(R.id.news_unit_count);
-		TextView noOfGroups = (TextView) findViewById(R.id.news_group_count);
-		
-		
-		//@EDIT
-		noOfUnits.setText("0 Units");
-		noOfGroups.setText("0 Groups");
 	}
 	
 	@Override
@@ -167,7 +169,46 @@ public class HomeActivity extends Activity implements
         startActivity(intent);
 	}
 	
+	protected void updateNewsView() {
+		LayoutInflater inflater = (LayoutInflater) getBaseContext().
+				getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        //ADD UNIT LISTINGS 1 BY 1
+		
+		LinearLayout unitNewsList = (LinearLayout) findViewById(R.id.news_post_list);
+		//unitNewsList.removeAllViews();
+		
+		for(int i = 0; i < unitPosts.size(); i++)  {
+			View unitView = inflater.inflate(R.layout.news_post_template, null);
 
+			unitView = setUpNewsArticle(unitPosts.get(i), i, unitView);
+		 
+			//Add to view.
+			unitNewsList.addView(unitView);
+		}
+    }
+		
+	private View setUpNewsArticle(Post p, int indexNum, View rootView) {
+		//Setup Unit Name.
+		User user = new User ();
+		//String name = DatabaseConnector.getUser(p.getUserId());
+		//user.setupUser(name);
+		TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
+		userName.setText(p.getUnitId() + " " + "by " + "Some Student");
+		
+		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
+		dateTime.setText(p.getTime());
+		
+		TextView post = (TextView) rootView.findViewById(R.id.published_news);
+		post.setText(p.getContent());
+
+		 //Change background colour based on element id.
+		 if(indexNum % 2 == 0)
+			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
+		 else
+			 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+		 
+		return rootView;
+	}
 	
 	/* ---------------- THREADED TASKS ----------------- */
 	
@@ -175,6 +216,7 @@ public class HomeActivity extends Activity implements
 	int postCount = 0;
 	ArrayList<Post> unitPosts = new ArrayList<Post>();
 	
+	int groupCount = 0;
 	int unitCount = 0;
 	ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
 	public class DisplayUnits extends AsyncTask<String, Void, Integer> {
@@ -182,6 +224,8 @@ public class HomeActivity extends Activity implements
 		protected Integer doInBackground(String... params) {
 			//Set the # of units we're keeping up with
 			unitCount = DatabaseConnector.getUnitCountByUser(Integer.parseInt(params[0]));
+			groupCount = DatabaseConnector.getGroupCountByUser(Integer.parseInt(params[0]));
+			
 			
 			int startOffset = 0;
 			String dbUnits = DatabaseConnector.getUnitsByUser(Integer.parseInt(params[0]));
@@ -194,7 +238,7 @@ public class HomeActivity extends Activity implements
 				
 				unit.setupUnit(builderString);
 				unitsToDisplay.add(unit);
-
+				Log.v("UNITTODISPLAY", String.valueOf(unitsToDisplay.size()));
 				startOffset = endIndex;
 			}
 			
@@ -205,7 +249,7 @@ public class HomeActivity extends Activity implements
 				String getPostsString = DatabaseConnector.getPostsInUnit(unitsToDisplay.get(i).getId(), GlobalVariables.USERLOGGEDIN.getId());
 				for(int c = 0; c < postCount; c++) {
 					Post post = new Post();
-
+					Log.v("POSTCOUNT", String.valueOf(postCount));
 					int endIndex = nthOccurrence(getPostsString, '^', (c+1)*5) + 1 + 512;
 
 					String builderString = getPostsString.substring(beginOffset, endIndex);
@@ -225,45 +269,6 @@ public class HomeActivity extends Activity implements
 			//if(requiresRefresh)
 				//recreate();
         }
-		protected void updateNewsView() {
-			LayoutInflater inflater = (LayoutInflater) getBaseContext().
-					getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-	        //ADD UNIT LISTINGS 1 BY 1
-			LinearLayout unitNewsList = (LinearLayout) findViewById(R.id.news_post_list);
-			//unitNewsList.removeAllViews();
-			
-			for(int i = 0; i < unitPosts.size(); i++)  {
-				View unitView = inflater.inflate(R.layout.news_post_template, null);
-
-				unitView = setUpNewsArticle(unitPosts.get(i), i, unitView);
-			 
-				//Add to view.
-				unitNewsList.addView(unitView);
-			}
-	    }
-			
-		private View setUpNewsArticle(Post p, int indexNum, View rootView) {
-			//Setup Unit Name.
-			User user = new User ();
-			//String name = DatabaseConnector.getUser(p.getUserId());
-			//user.setupUser(name);
-			TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
-			userName.setText(p.getUnitId() + " " + "by " + "Some Student");
-			
-			TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
-			dateTime.setText(p.getTime());
-			
-			TextView post = (TextView) rootView.findViewById(R.id.published_news);
-			post.setText(p.getContent());
-
-			 //Change background colour based on element id.
-			 if(indexNum % 2 == 0)
-				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-			 else
-				 rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
-			 
-			return rootView;
-		}
 		
 		public int nthOccurrence(String str, char c, int n) {
 		    int pos = str.indexOf(c, 0);

@@ -7,7 +7,6 @@ import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
 import com.keepup.group.Group;
-import com.keepup.group.GroupDatabaseController;
 import com.keepup.unit.Unit;
 import com.keepup.R;
 import android.app.Activity;
@@ -31,7 +30,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	
 	private CharSequence mTitle;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
-	private GroupDatabaseController groupDb; 
+	
 	@Override
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +68,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		
 		//CLICK SETTINGS BUTTON IN ACTION BAR
 		if (id == R.id.action_settings) {
-			groupDb.emptyDatabase();
 			return true;
 		}
 		
@@ -140,6 +138,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	
 	/* THREADED ACTIVITIES */
 	int groupCount = 0;
+	int[] postsUnread;
+	int[] unitMemberCount;
 	ArrayList<Group> groupsToDisplay = new ArrayList<Group>();
 	public class DisplayGroups extends AsyncTask<String, Void, Integer>{
 		
@@ -182,6 +182,11 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 					
 					groupsToDisplay.add(group);
 					
+					//Get unread post information
+					//postsUnread[i] = DatabaseConnector.getUnreadPostCountInGroupForUser(
+					//		group.getGroupId(), GlobalVariables.USERLOGGEDIN.getId());
+					//unitMemberCount[i] = DatabaseConnector.getGroupMemberCount(group.getGroupId());
+					
 					startOffset = endIndex - numberCounter ;
 				}
 			}
@@ -212,26 +217,20 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			TextView groupName = (TextView) rootView.findViewById(R.id.group_name);
 			groupName.setText(groupsToDisplay.get(i).getName());
 			
-			TextView groupMembers = (TextView) rootView.findViewById(R.id.group_members);
-			groupMembers.setText("Members: " + groupsToDisplay.get(i).getGroupMembers());
+			//TextView groupMembers = (TextView) rootView.findViewById(R.id.group_members);
+			//groupMembers.setText("Members: " + groupsToDisplay.get(i).getGroupMembers());
 			
 			//Setup last announcement.
 			TextView groupPost = (TextView) rootView.findViewById(R.id.last_group_post);
 			groupPost.setText("Test Post");
 			
 			//Setup notification counts.
-			/*TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);
-			announcementCount.setText("x " + String.valueOf(intTests[i][0]));
-			TextView postCount = (TextView) rootView.findViewById(R.id.post_value_unit);
-			postCount.setText("x " + String.valueOf(intTests[i][1]));
-			TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_unit);
-			postOnYoursCount.setText("x " + String.valueOf(intTests[i][2]));
-		*/
-			//Change background colour based on element id.
-			//if(i % 2 == 0)
-			//	rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_even));
-			//else
-			//	rootView.setBackgroundColor(getResources().getColor(R.color.unit_grey_odd));
+			
+			//TextView postCount = (TextView) rootView.findViewById(R.id.post_value_group);
+			//postCount.setText("x " + postsUnread[i]);
+			//TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_group);
+			//postOnYoursCount.setText("x " + unitMemberCount[i]);
+		
 			 
 			return rootView;
 		}
