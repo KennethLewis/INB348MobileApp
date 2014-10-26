@@ -177,7 +177,7 @@ public class HomeActivity extends Activity implements
 		LinearLayout unitNewsList = (LinearLayout) findViewById(R.id.news_post_list);
 		//unitNewsList.removeAllViews();
 		
-		for(int i = 0; i < unitPosts.size(); i++)  {
+		for(int i = unitPosts.size() - 1; i >= 0; i--)  {
 			View unitView = inflater.inflate(R.layout.news_post_template, null);
 
 			unitView = setUpNewsArticle(unitPosts.get(i), i, unitView);
@@ -264,7 +264,7 @@ public class HomeActivity extends Activity implements
 			return null;
 		}
 		protected void onPostExecute(Integer result) {
-			if(postCount > 0)
+			if(unitPosts.size() > 0)
 				updateNewsView();
 			//if(requiresRefresh)
 				//recreate();
