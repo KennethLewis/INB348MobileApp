@@ -31,6 +31,27 @@ public final class DatabaseConnector {
 	static String stringBuffer;
 
 	/* POSTS */
+	public static String getLastLecturePostInUnitForUser(int unitIdNum) {
+		URL_SUFFIX = "PostService.asmx";
+		SOAP_ACTION_SUFFIX = "getLastLecturePostInUnitForUser";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		PropertyInfo unitId = new PropertyInfo();
+		unitId.setName("unitId");
+		unitId.setValue(unitIdNum);
+		unitId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(unitId);
+		
+		fetchData(request);
+
+		if(stringBuffer.contains("NoResults"))
+			return "No recent posts";
+		
+		return stringBuffer;
+	}
 	public static int getUnreadLecturePostCountInUnitForUser(int unitIdNum, int userIdNum) {
 		URL_SUFFIX = "PostService.asmx";
 		SOAP_ACTION_SUFFIX = "getUnreadLecturePostCountInUnitForUser";
@@ -167,7 +188,7 @@ public final class DatabaseConnector {
 		
 		return Integer.parseInt(stringBuffer);
 	}
-	public static String getPostsInUnit(int unitIdNum, int userIdNum) {
+	public static String getPostsInUnit(int unitIdNum, int userIdNum, boolean markRead) {
 		URL_SUFFIX = "PostService.asmx";
 		SOAP_ACTION_SUFFIX = "getAllPostsInUnit";
 		
@@ -181,10 +202,15 @@ public final class DatabaseConnector {
 		userId.setName("userId");
 		userId.setValue(userIdNum);
 		userId.setType(int.class);
+		PropertyInfo markPosts = new PropertyInfo();
+		markPosts.setName("markRead");
+		markPosts.setValue(markRead);
+		markPosts.setType(int.class);
 		
 		//Add the property to request object
 		request.addProperty(unitId);
 		request.addProperty(userId);
+		request.addProperty(markPosts);
 		
 		fetchData(request);
 		
@@ -193,7 +219,7 @@ public final class DatabaseConnector {
 		
 		return stringBuffer;
 	}
-	public static String getPostsInGroup(int groupIdNum, int userIdNum) {
+	public static String getPostsInGroup(int groupIdNum, int userIdNum, boolean markRead) {
 		URL_SUFFIX = "PostService.asmx";
 		SOAP_ACTION_SUFFIX = "getAllPostsInGroup";
 		
@@ -207,6 +233,11 @@ public final class DatabaseConnector {
 		userId.setName("userId");
 		userId.setValue(userIdNum);
 		userId.setType(int.class);
+		PropertyInfo markPosts = new PropertyInfo();
+		markPosts.setName("markRead");
+		markPosts.setValue(markRead);
+		markPosts.setType(int.class);
+		request.addProperty(markPosts);
 		
 		//Add the property to request object
 		request.addProperty(groupId);
@@ -415,8 +446,7 @@ public final class DatabaseConnector {
 	
 	/* START GROUPS */
 	
-	public static int createGroup (int id, String groupName, String description){
-		
+	public static int createGroup (int id, String groupName, String description) {
 		URL_SUFFIX = "GroupService.asmx";
 		SOAP_ACTION_SUFFIX = "createGroup";
 		
@@ -451,8 +481,7 @@ public final class DatabaseConnector {
 		
 	}
 	
-	public static boolean addUserToGroup (int gId, int uId){
-		
+	public static boolean addUserToGroup (int groupIdVal, int unitIdVal) {
 		URL_SUFFIX = "GroupService.asmx";
 		SOAP_ACTION_SUFFIX = "addUserToGroup";
 		
@@ -462,12 +491,12 @@ public final class DatabaseConnector {
 		PropertyInfo groupId = new PropertyInfo();
 		
 		groupId.setName("groupId");
-		groupId.setValue(gId);
+		groupId.setValue(groupIdVal);
 		groupId.setType(int.class);
 		
 		PropertyInfo userId = new PropertyInfo();
 		userId.setName("userId");
-		userId.setValue(uId);
+		userId.setValue(unitIdVal);
 		userId.setType(int.class);
 		
 		

@@ -167,8 +167,6 @@ public class HomeActivity extends Activity implements
         startActivity(intent);
 	}
 	
-
-	
 	/* ---------------- THREADED TASKS ----------------- */
 	
 	int currentUnitId = 0;
@@ -202,7 +200,8 @@ public class HomeActivity extends Activity implements
 				postCount = DatabaseConnector.getPostCountInUnit(unitsToDisplay.get(i).getId());
 				
 				int beginOffset = 0;
-				String getPostsString = DatabaseConnector.getPostsInUnit(unitsToDisplay.get(i).getId(), GlobalVariables.USERLOGGEDIN.getId());
+				String getPostsString = DatabaseConnector.getPostsInUnit(unitsToDisplay.get(i).getId(), 
+						GlobalVariables.USERLOGGEDIN.getId(), false);
 				for(int c = 0; c < postCount; c++) {
 					Post post = new Post();
 

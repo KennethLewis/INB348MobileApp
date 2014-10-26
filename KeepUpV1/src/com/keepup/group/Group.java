@@ -34,19 +34,6 @@ public class Group {
 		this.groupDescription = groupDescription;
 	}
 	
-	
-	public int getGroupId() {
-		return groupId;
-	}
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
-	}
-	public int getUnitId() {
-		return unitId;
-	}
-	public void setUnitId(int unitId) {
-		this.unitId = unitId;
-	}
 		//Constructing a User from an SQL String
 		public int setupGroup(String builderString) {
 			String[] segmentedStrings = new String[4];
@@ -77,10 +64,24 @@ public class Group {
 			//Log.v("KEEPUP", this.getName());
 			//Log.v("KEEPUP", String.valueOf(this.getUserId()));
 		}
+		
+	public int getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+	
+	public int getUnitId() {
+		return unitId;
+	}
+	public void setUnitId(int unitId) {
+		this.unitId = unitId;
+	}
+	
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -88,7 +89,6 @@ public class Group {
 	public String getGroupMembers() {
 		return groupMembers;
 	}
-
 	public void setGroupMembers(String groupMembers) {
 		this.groupMembers = groupMembers;
 	}
@@ -117,7 +117,7 @@ public class Group {
 		this.groupDescription = groupDescription;
 	}
 	
-	public List<Integer> gatherUsers(){
+	public List<Integer> gatherUsers() {
 		
 		List<Integer> studentNoAfterParse = new ArrayList<Integer>();
 		String [] delimtedStudentNo = this.memberStudentId.split(",");
@@ -129,7 +129,7 @@ public class Group {
 		return studentNoAfterParse;
 	}
 	
-	public String returnLastPost(){
+	public String returnLastPost() {
 		return groupPosts.get(groupPosts.size()-1).getContent();
 	}
 }

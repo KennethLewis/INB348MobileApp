@@ -103,7 +103,8 @@ public class UnitsActivity extends Activity implements
 			break;
 		}
 	}
-	
+
+	public final static String UNIT_TITLE = "com.keepup.UNIT_TITLE";
 	public final static String UNIT_ID = "com.keepup.UNIT_ID";
 	public void clickedUnitName(View v) {
 		Log.v("text",((TextView) v).getText().toString().substring(0, 6) + ((TextView) v).getText().toString().substring(0, 6));
@@ -118,6 +119,7 @@ public class UnitsActivity extends Activity implements
 		
 		//Send information and then go to other Activity.
 		Intent intent = new Intent(this, IndividualUnitActivity.class);
+	    intent.putExtra(UNIT_TITLE, clickedUnit.getName());
 	    intent.putExtra(UNIT_ID, clickedUnit.getId());
 	    startActivity(intent);
 
@@ -227,6 +229,7 @@ public class UnitsActivity extends Activity implements
 	int[] lecturerPostsUnread;
 	int[] postsUnread;
 	int[] unitMemberCount;
+	String[] lastAnnouncement;
 	ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
 	public class DisplayUnits extends AsyncTask<String, Void, Integer> {
 		@Override
@@ -237,6 +240,7 @@ public class UnitsActivity extends Activity implements
 			lecturerPostsUnread = new int[unitCount];
 			postsUnread = new int[unitCount];
 			unitMemberCount = new int[unitCount];
+			lastAnnouncement = new String[unitCount];
 			
 			int startOffset = 0;
 			String dbUnits = DatabaseConnector.getUnitsByUser(Integer.parseInt(params[0]));
@@ -255,6 +259,7 @@ public class UnitsActivity extends Activity implements
 				unitsToDisplay.add(unit);
 
 				//Get unread post information
+				lastAnnouncement[i] = DatabaseConnector.getLastLecturePostInUnitForUser(unit.getId());
 				lecturerPostsUnread[i] = DatabaseConnector.getUnreadLecturePostCountInUnitForUser(
 						unit.getId(), Integer.parseInt(params[0]));
 				postsUnread[i] = DatabaseConnector.getUnreadPostCountInUnitByUser(
@@ -289,13 +294,14 @@ public class UnitsActivity extends Activity implements
 			//Setup Unit Name.
 			TextView unitCode = (TextView) rootView.findViewById(R.id.unitcode_code);
 			SpannableString content = new SpannableString(unit.getCode() + " - " + unit.getName());
-			content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+			//content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 			unitCode.setText(content);
 			
-			String announcementTest = "Last announcement text goes here, blah blah...";
 			//Setup last announcement.
+			String announcement = lastAnnouncement[indexNum].substring(0, 
+					lastAnnouncement[indexNum].equals("No recent posts") ? lastAnnouncement[indexNum].length() : 50);
 			TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
-			announcementLast.setText(announcementTest);
+			announcementLast.setText(announcement);
 			
 			//Setup notification counts.
 			TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);

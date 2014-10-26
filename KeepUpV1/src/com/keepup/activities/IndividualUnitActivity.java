@@ -43,6 +43,9 @@ public class IndividualUnitActivity extends Activity implements
 		//Grab information from what Unit we're going into.
 		Intent intent = getIntent();
 		currentUnitId = intent.getIntExtra(UnitsActivity.UNIT_ID, -1);
+		currentUnitTitle = intent.getStringExtra(UnitsActivity.UNIT_TITLE);
+		
+		this.setTitle(currentUnitTitle);
 		
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
@@ -158,6 +161,7 @@ public class IndividualUnitActivity extends Activity implements
 
 	/* THREADED ACTIVITIES */
 	int currentUnitId = 0;
+	String currentUnitTitle = "";
 	int postCount = 0;
 	ArrayList<Post> unitPosts = new ArrayList<Post>();
 	User[] postOwners;
@@ -172,7 +176,8 @@ public class IndividualUnitActivity extends Activity implements
 			postOwners = new User[postCount];
 			
 			int startOffset = 0;
-			String getPostsString = DatabaseConnector.getPostsInUnit(currentUnitId, GlobalVariables.USERLOGGEDIN.getId());
+			String getPostsString = DatabaseConnector.getPostsInUnit(currentUnitId, 
+					GlobalVariables.USERLOGGEDIN.getId(), true);
 			for(int i = 0; i < postCount; i++) {
 				Post post = new Post();
 

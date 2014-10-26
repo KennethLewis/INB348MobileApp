@@ -94,20 +94,19 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	
 	public void onNavigationDrawerItemSelected(int number) {
 		switch (number) {
-		
-		case 1:
+		case 0:
 			mTitle = getString(R.string.news);
 			Intent intentHome = new Intent(this, HomeActivity.class);
 			startActivity(intentHome);
 			break;
 			
-		case 2:
+		case 1:
 			mTitle = getString(R.string.units);
 			Intent intentUnits = new Intent(this, UnitsActivity.class);
 			startActivity(intentUnits);
 			break;
 			
-		case 3:
+		case 2:
 			mTitle = getString(R.string.groups);
 			break;
 		}

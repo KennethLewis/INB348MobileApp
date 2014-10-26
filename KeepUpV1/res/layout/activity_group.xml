@@ -6,36 +6,66 @@
     android:layout_height="match_parent"
     tools:context="com.keepup.activities.GroupActivity" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    xmlns:tools="http://schemas.android.com/tools"
-	    android:id="@+id/units_linear"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:orientation="vertical"
-	    android:paddingBottom="@dimen/activity_vertical_margin"
-	    android:paddingLeft="@dimen/activity_horizontal_margin"
-	    android:paddingRight="@dimen/activity_horizontal_margin"
-	    android:paddingTop="@dimen/activity_vertical_margin"
-	    tools:context="com.keepup.activities.GroupActivity" >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp" >
 
-        <TextView
-            android:id="@+id/register"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/headings"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/keeping_up_with"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/group_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/group_count"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/keepup_darkblue_headings" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/keeping_up_with"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/group_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/group_count"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/keepup_darkblue_headings" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scroll_window_groups"
+            android:layout_width="match_parent"
+            android:fadeScrollbars="false"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="55" >
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/groups_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1pt"
+                    android:orientation="vertical" >
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/add"
@@ -46,36 +76,6 @@
             android:text="@string/create_group" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginBottom="5dp"
-        android:layout_weight="55"
-        android:orientation="vertical" >
-
-        <ScrollView
-            android:id="@+id/scrollView1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="34.81" >
-
-            <LinearLayout
-                android:id="@+id/groups_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="1pt"
-                android:orientation="vertical" >
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-
-    
-
-
 
     <fragment
         android:id="@+id/group_navigation_drawer"

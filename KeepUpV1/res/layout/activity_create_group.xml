@@ -1,113 +1,85 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/create_group_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
     tools:context="com.keepup.activities.CreateGroupActivity"
     tools:ignore="MergeRootFrame" >
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="80pt"
-        android:layout_marginLeft="8pt"
-        android:layout_marginRight="8pt"
-        android:layout_marginBottom="20pt"
-        android:orientation="vertical" >
-
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="58dp">
-
-        <LinearLayout
-            android:id="@+id/users_to_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-        </LinearLayout>
-    </ScrollView>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/createGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:clickable="true"
-        android:onClick="createGroup"
-        android:text="@string/create_group" />
-
-    <TextView
-        android:id="@+id/username_caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/container"
-        android:layout_centerHorizontal="true"
-        android:text="@string/current_members_added"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/group_count"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/create_group"
+        android:text="@string/group_create_name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/newGroupName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/group_description"
-        android:layout_alignLeft="@+id/textView1"
-        android:text="@string/group_desc"
+        android:layout_marginTop="10dp"
+        android:text="@string/group_create_desc"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/group_description"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/add"
-        android:layout_alignLeft="@+id/username_caption"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="10dp"
         android:ems="10"
         android:inputType="text" />
-
-    <EditText
-        android:id="@+id/newGroupName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="text" />
-
-    <TextView
-        android:id="@+id/group_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/container"
-        android:layout_alignTop="@+id/add"
-        android:text="@string/add_group_members"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
         android:id="@+id/add"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/username_caption"
-        android:layout_marginBottom="15dp"
-        android:layout_toRightOf="@+id/createGroup"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp"
         android:clickable="true"
         android:onClick="clickAddRemoveUsers"
         android:text="@string/add" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/username_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_members_added"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:fadeScrollbars="false"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"
+        android:padding="6dp" >
+
+        <LinearLayout
+            android:id="@+id/users_to_add"
+            android:layout_width="match_parent"
+            android:layout_height="86dp"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/createGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="createGroup"
+        android:text="@string/create_group" />
+
+</LinearLayout>

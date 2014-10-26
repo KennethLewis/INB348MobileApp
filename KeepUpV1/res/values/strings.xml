@@ -52,22 +52,22 @@
     <string name="newAnnouncementsNOTIFY">New Announcements Notify Icon</string>
     <string name="newPostsNOTIFY">New Posts Notify Icon</string>
     <string name="newPostsToYoursNOTIFY">New Posts On Your Questions Notify Icon</string>
-    <string name="title_activity_individual_unit">IndividualUnitActivity</string>
+    <string name="title_activity_individual_unit">Unit</string>
     <string name="example_time">Thursday 12:01pm</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <string name="title_activity_create_group">CreateGroupActivity</string>
+    <string name="title_activity_register">Register for KeepUp</string>
+    <string name="title_activity_create_group">Create a new Group</string>
     <string name="create_group">Create Group</string>
-    <string name="add_group_members">Add Group Members</string>
     <string name="member_name">Member Name</string>
     <string name="member_id">QUT Student No</string>
     <string name="member_email">Member Email</string>
     <string name="example_grp_name">Example Group Name</string>
     <string name="example_members_list">Ken, Jackson, Test, Test, Test</string>
-    <string name="group_desc">Group Description</string>
-    <string name="current_members_added">Currently Added Members</string>
+    <string name="group_create_name">Group Name:</string>
+    <string name="group_create_desc">Group Description:</string>
+    <string name="current_members_added">Current Members</string>
     <string name="add_remove_units">Add/Remove Units</string>
-    <string name="title_activity_individual_grp">IndividualGrpActivity</string>
+    <string name="title_activity_individual_grp">Group</string>
     <string name="send">Send</string>
-    <string name="add">Add</string>
+    <string name="add">Add/Remove Members</string>
 
 </resources>

@@ -179,7 +179,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 			postOwners = new User[postCount];
 					
 			int startOffset = 0;
-			String getPostsString = DatabaseConnector.getPostsInGroup(currentGroupId, GlobalVariables.USERLOGGEDIN.getId());
+			String getPostsString = DatabaseConnector.getPostsInGroup(currentGroupId, 
+					GlobalVariables.USERLOGGEDIN.getId(), true);
 			
 			for(int i = 0; i < postCount; i++) {
 				Post post = new Post();
