@@ -170,8 +170,6 @@ public class HomeActivity extends Activity implements
         startActivity(intent);
 	}
 	
-<<<<<<< HEAD
-=======
 	protected void updateNewsView() {
 		LayoutInflater inflater = (LayoutInflater) getBaseContext().
 				getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -212,8 +210,7 @@ public class HomeActivity extends Activity implements
 		 
 		return rootView;
 	}
-	
->>>>>>> origin/master
+
 	/* ---------------- THREADED TASKS ----------------- */
 	
 	int currentUnitId = 0;
@@ -297,7 +294,7 @@ public class HomeActivity extends Activity implements
 							
 					int startOffsetGroups = 0;
 					String getPostsString = DatabaseConnector.getPostsInGroup
-							(groupsToDisplay.get(i).getGroupId(), GlobalVariables.USERLOGGEDIN.getId());
+							(groupsToDisplay.get(i).getGroupId(), GlobalVariables.USERLOGGEDIN.getId(), false);
 					
 					for(int j = 0; j < postCount; j++) {
 						Post post = new Post();

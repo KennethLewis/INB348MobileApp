@@ -1,11 +1,6 @@
 package com.keepup.group;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.util.Log;
-
-import com.keepup.post.Post;
 
 public class Group {
 
@@ -74,58 +69,11 @@ public class Group {
 		this.name = name;
 	}
 
-<<<<<<< HEAD
-	public String getGroupMembers() {
-		return groupMembers;
-	}
-	public void setGroupMembers(String groupMembers) {
-		this.groupMembers = groupMembers;
-	}
-
-	public String getMemberStudentId() {
-		return memberStudentId;
-	}
-
-	public void setMemberStudentId(String memberStudentId) {
-		this.memberStudentId = memberStudentId;
-	}
-
-	public List<Post> getGroupPosts() {
-		return groupPosts;
-	}
-
-	public void setGroupPosts(List<Post> groupPosts) {
-		this.groupPosts = groupPosts;
-	}
-
-=======
-	
->>>>>>> origin/master
 	public String getGroupDescription() {
 		return groupDescription;
 	}
-
 	public void setGroupDescription(String groupDescription) {
 		this.groupDescription = groupDescription;
 	}
-	
-<<<<<<< HEAD
-	public List<Integer> gatherUsers() {
-		
-		List<Integer> studentNoAfterParse = new ArrayList<Integer>();
-		String [] delimtedStudentNo = this.memberStudentId.split(",");
-		
-		for(String s: delimtedStudentNo){
-			s = s.replace(",","");
-			studentNoAfterParse.add(Integer.parseInt(s));
-		}
-		return studentNoAfterParse;
-	}
-	
-	public String returnLastPost() {
-		return groupPosts.get(groupPosts.size()-1).getContent();
-	}
-=======
-	
->>>>>>> origin/master
+
 }
