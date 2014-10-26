@@ -193,6 +193,32 @@ public final class DatabaseConnector {
 		
 		return stringBuffer;
 	}
+	public static String getPostsInGroup(int groupIdNum, int userIdNum) {
+		URL_SUFFIX = "PostService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllPostsInGroup";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		PropertyInfo groupId = new PropertyInfo();
+		groupId.setName("groupId");
+		groupId.setValue(groupIdNum);
+		groupId.setType(int.class);
+		PropertyInfo userId = new PropertyInfo();
+		userId.setName("userId");
+		userId.setValue(userIdNum);
+		userId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(groupId);
+		request.addProperty(userId);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
 	public static String getPostsByUserInUnit(int userIdNum, int unitIdNum) {
 		URL_SUFFIX = "PostService.asmx";
 		SOAP_ACTION_SUFFIX = "getAllPostsByUserInUnit";
@@ -528,7 +554,7 @@ public final class DatabaseConnector {
 	}
 	public static int getPostCountInGroup(int groupIdNum) {
 		URL_SUFFIX = "PostService.asmx";
-		SOAP_ACTION_SUFFIX = "getPostCountInUnit";
+		SOAP_ACTION_SUFFIX = "getPostCountInGroup";
 		
 		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
 		

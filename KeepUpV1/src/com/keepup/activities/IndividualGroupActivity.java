@@ -48,6 +48,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 			String activityName = (String) extras.get("GROUP_NAME");
 			this.setTitle(activityName);
 			currentGroupId = (Integer) extras.getInt("GROUP_ID");
+			Log.v("GROUPID",String.valueOf(currentGroupId));
 		}
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
@@ -172,17 +173,19 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 		protected Integer doInBackground(String... params) {
 			//Set the # of units we're keeping up with
 			postCount = DatabaseConnector.getPostCountInGroup(currentGroupId);
+			Log.v("GROUPID",String.valueOf(currentGroupId));
 			Log.v("GROUP POST COUNTER",String.valueOf(postCount));		
 			groupPosts.clear();
 			postOwners = new User[postCount];
 					
 			int startOffset = 0;
 			String getPostsString = DatabaseConnector.getPostsInGroup(currentGroupId, GlobalVariables.USERLOGGEDIN.getId());
+			
 			for(int i = 0; i < postCount; i++) {
 				Post post = new Post();
 
 				int endIndex = nthOccurrence(getPostsString, '^', (i+1)*5) + 1 + 512;
-
+				
 				String builderString = getPostsString.substring(startOffset, endIndex);
 						
 						//Log.v("KEEPUP", String.valueOf(endIndex));
