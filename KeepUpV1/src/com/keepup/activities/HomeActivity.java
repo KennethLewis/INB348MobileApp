@@ -8,6 +8,7 @@ import com.keepup.NavigationDrawerFragment;
 import com.keepup.R;
 import com.keepup.activities.IndividualUnitActivity.UpdatePostData;
 import com.keepup.activities.UnitsActivity.DisplayUnits;
+import com.keepup.group.Group;
 import com.keepup.post.Post;
 import com.keepup.unit.Unit;
 import com.keepup.user.User;
@@ -177,10 +178,10 @@ public class HomeActivity extends Activity implements
 		LinearLayout unitNewsList = (LinearLayout) findViewById(R.id.news_post_list);
 		//unitNewsList.removeAllViews();
 		
-		for(int i = unitPosts.size() - 1; i >= 0; i--)  {
+		for(int i = allPosts.size() - 1; i >= 0; i--)  {
 			View unitView = inflater.inflate(R.layout.news_post_template, null);
 
-			unitView = setUpNewsArticle(unitPosts.get(i), i, unitView);
+			unitView = setUpNewsArticle(allPosts.get(i), i, unitView);
 		 
 			//Add to view.
 			unitNewsList.addView(unitView);
@@ -214,11 +215,12 @@ public class HomeActivity extends Activity implements
 	
 	int currentUnitId = 0;
 	int postCount = 0;
-	ArrayList<Post> unitPosts = new ArrayList<Post>();
+	ArrayList<Post> allPosts = new ArrayList<Post>();
 	
 	int groupCount = 0;
 	int unitCount = 0;
 	ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
+	ArrayList<Group> groupsToDisplay = new ArrayList<Group>();
 	public class DisplayUnits extends AsyncTask<String, Void, Integer> {
 		@Override
 		protected Integer doInBackground(String... params) {
@@ -226,20 +228,20 @@ public class HomeActivity extends Activity implements
 			unitCount = DatabaseConnector.getUnitCountByUser(Integer.parseInt(params[0]));
 			groupCount = DatabaseConnector.getGroupCountByUser(Integer.parseInt(params[0]));
 			
-			
-			int startOffset = 0;
+			//Gather posts for units
+			int startOffsetUnits = 0;
 			String dbUnits = DatabaseConnector.getUnitsByUser(Integer.parseInt(params[0]));
 			for(int i = 0; i < unitCount; i++) {
 				Unit unit = new Unit();
 				
 				int endIndex = nthOccurrence(dbUnits, '^', (i+1)*2) + 1;
 
-				String builderString = dbUnits.substring(startOffset, endIndex);
+				String builderString = dbUnits.substring(startOffsetUnits, endIndex);
 				
 				unit.setupUnit(builderString);
 				unitsToDisplay.add(unit);
 				Log.v("UNITTODISPLAY", String.valueOf(unitsToDisplay.size()));
-				startOffset = endIndex;
+				startOffsetUnits = endIndex;
 			}
 			
 			for(int i = 0; i < unitsToDisplay.size(); i ++){
@@ -256,15 +258,63 @@ public class HomeActivity extends Activity implements
 					
 					post.setupPost(builderString);
 					
-					unitPosts.add(post);
+					allPosts.add(post);
 					//GlobalVariables.POSTS.add(post); //Add post to complete list for news display
 					beginOffset = endIndex;
 					}
 				}
+			
+			//Gather posts for groups
+			String dbGroups = DatabaseConnector.getGroupsByUser
+					(GlobalVariables.USERLOGGEDIN.getId());
+			groupCount = DatabaseConnector.getGroupCountByUser(GlobalVariables.USERLOGGEDIN.getId());
+			
+			if(dbGroups != null){
+				
+				int startOffset = 0;
+				for(int i = 0; i < groupCount; i++){
+					Group group = new Group();
+					String builderString;
+					int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
+					if(i == (groupCount -1) )
+						builderString = dbGroups.substring(startOffset, (startOffset + 205));
+					else
+						builderString = dbGroups.substring(startOffset, endIndex);
+					
+					int numberCounter = group.setupGroup(builderString);
+					
+					groupsToDisplay.add(group);
+					
+					startOffset = endIndex - numberCounter ;
+				}
+				for(int i = 0; i < groupsToDisplay.size();i++){
+					postCount = DatabaseConnector.getPostCountInGroup(groupsToDisplay.get(i).getGroupId());		
+					
+							
+					int startOffsetGroups = 0;
+					String getPostsString = DatabaseConnector.getPostsInGroup
+							(groupsToDisplay.get(i).getGroupId(), GlobalVariables.USERLOGGEDIN.getId());
+					
+					for(int j = 0; j < postCount; j++) {
+						Post post = new Post();
+
+						int endIndex = nthOccurrence(getPostsString, '^', (j+1)*5) + 1 + 512;
+						
+						String builderString = getPostsString.substring(startOffsetGroups, endIndex);
+						
+						post.setupPost(builderString);
+						
+								
+						allPosts.add(post);
+						startOffsetGroups = endIndex;
+					}
+				}
+				
+			}
 			return null;
 		}
 		protected void onPostExecute(Integer result) {
-			if(unitPosts.size() > 0)
+			if(allPosts.size() > 0)
 				updateNewsView();
 			//if(requiresRefresh)
 				//recreate();
