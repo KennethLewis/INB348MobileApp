@@ -14,7 +14,6 @@ import com.keepup.activities.UnitsActivity.RemoveUnitFromUser;
 import com.keepup.group.Group;
 import com.keepup.unit.Unit;
 import com.keepup.user.User;
-import com.keepup.group.GroupDatabaseController;
 import com.keepup.R;
 import android.app.Activity;
 import android.app.AlertDialog;

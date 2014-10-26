@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.keepup.user.User;
-
+/*
 public class GroupDatabaseController extends SQLiteOpenHelper {
 
 	// All Static variables
@@ -34,8 +34,10 @@ public class GroupDatabaseController extends SQLiteOpenHelper {
 		public GroupDatabaseController(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
+
 		// Creating Tables
-		@Override
+		
+		/*
 		public void onCreate(SQLiteDatabase db) {
 			String CREATE_GROUPS_TABLE = "CREATE TABLE " + TABLE_GROUPS + "("
 					+ KEY_ID + " INTEGER PRIMARY KEY,"
@@ -56,7 +58,8 @@ public class GroupDatabaseController extends SQLiteOpenHelper {
 			// Create tables again
 			onCreate(db);
 		}
-
+		}
+/*
 		// Adding new User
 		public void addGroup(Group group) {
 			SQLiteDatabase db = this.getWritableDatabase();
@@ -167,4 +170,4 @@ public class GroupDatabaseController extends SQLiteOpenHelper {
 		}
 
 	
-}
+}*/
