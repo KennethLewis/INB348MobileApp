@@ -45,16 +45,13 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 				(DrawerLayout) findViewById(R.id.group_drawer_layout));
 		
 		mNavigationDrawerFragment.selectItem(3);
-		//groupDb = new GroupDatabaseController(this);
 		DisplayGroups displayGroupsThread = new DisplayGroups();
 		displayGroupsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
-		//displayGroupsThread.execute("8600572");
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (!mNavigationDrawerFragment.isDrawerOpen()) {
 			getMenuInflater().inflate(R.menu.global, menu);
-			//restoreActionBar();
 			return true;
 		}
 		return super.onCreateOptionsMenu(menu);
@@ -111,7 +108,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	}
 
 	public void groupDetails(View v){
-		Log.v("KEEPUP", "Clicked on a Group from Group Listing");
 		TextView groupName = (TextView) v.findViewById(R.id.group_name);
 		String name = (String) groupName.getText();
 		
@@ -119,7 +115,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		for(Group g : groupsToDisplay){
 			if(g.getName().equals(name)){
 				clickedGroup = g;
-				Log.v("GROUP NAME:", g.getName());
 			}
 		}
 		Intent intent = new Intent(this, IndividualGroupActivity.class);

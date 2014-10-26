@@ -40,8 +40,6 @@ public class RegisterActivity extends Activity {
 		EditText userUniId = (EditText)findViewById(R.id.new_student_no);
 		int id = Integer.parseInt(userUniId.getText().toString());
 		
-		//Log.v("KEEPUP", String.valueOf(id));
-		
 		FindUser findUserThread = new FindUser();
 		findUserThread.execute(id);
 	}

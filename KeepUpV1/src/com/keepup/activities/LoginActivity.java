@@ -39,7 +39,6 @@ public class LoginActivity extends Activity {
     	if(userId == -1 || userPw == null)
     		return;
     	
-    	Log.v("KEEPUP", String.valueOf(userId));
     	Login loginThread = new Login();
     	loginThread.setId(userId);
     	loginThread.setPassword(userPw);

@@ -176,13 +176,10 @@ public class HomeActivity extends Activity implements
         //ADD UNIT LISTINGS 1 BY 1
 		
 		LinearLayout unitNewsList = (LinearLayout) findViewById(R.id.news_post_list);
-		//unitNewsList.removeAllViews();
 		
 		for(int i = allPosts.size() - 1; i >= 0; i--)  {
 			View unitView = inflater.inflate(R.layout.news_post_template, null);
-
 			unitView = setUpNewsArticle(allPosts.get(i), i, unitView);
-		 
 			//Add to view.
 			unitNewsList.addView(unitView);
 		}
@@ -191,8 +188,6 @@ public class HomeActivity extends Activity implements
 	private View setUpNewsArticle(Post p, int indexNum, View rootView) {
 		//Setup Unit Name.
 		User user = new User ();
-		//String name = DatabaseConnector.getUser(p.getUserId());
-		//user.setupUser(name);
 		TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
 		userName.setText(p.getUnitId() + " " + "by " + "Some Student");
 		
@@ -240,7 +235,6 @@ public class HomeActivity extends Activity implements
 				
 				unit.setupUnit(builderString);
 				unitsToDisplay.add(unit);
-				Log.v("UNITTODISPLAY", String.valueOf(unitsToDisplay.size()));
 				startOffsetUnits = endIndex;
 			}
 			
@@ -252,7 +246,6 @@ public class HomeActivity extends Activity implements
 						GlobalVariables.USERLOGGEDIN.getId(), false);
 				for(int c = 0; c < postCount; c++) {
 					Post post = new Post();
-					Log.v("POSTCOUNT", String.valueOf(postCount));
 					int endIndex = nthOccurrence(getPostsString, '^', (c+1)*5) + 1 + 512;
 
 					String builderString = getPostsString.substring(beginOffset, endIndex);
@@ -260,7 +253,6 @@ public class HomeActivity extends Activity implements
 					post.setupPost(builderString);
 					
 					allPosts.add(post);
-					//GlobalVariables.POSTS.add(post); //Add post to complete list for news display
 					beginOffset = endIndex;
 					}
 				}
@@ -317,8 +309,6 @@ public class HomeActivity extends Activity implements
 		protected void onPostExecute(Integer result) {
 			if(allPosts.size() > 0)
 				updateNewsView();
-			//if(requiresRefresh)
-				//recreate();
         }
 		
 		public int nthOccurrence(String str, char c, int n) {

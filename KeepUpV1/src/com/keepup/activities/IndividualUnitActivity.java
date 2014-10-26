@@ -118,7 +118,6 @@ public class IndividualUnitActivity extends Activity implements
 	public void publishUserPost(View v) {
 		PublishPost publishPostThread = new PublishPost();
 		publishPostThread.execute(((TextView) findViewById(R.id.text_to_publish)).getText().toString());
-		Log.v("KEEPUP", "Clicked to submit a post to Unit: ");
 	}
 	
 	//Method to show the unit options and enable them to be clicked.
@@ -184,11 +183,6 @@ public class IndividualUnitActivity extends Activity implements
 				int endIndex = nthOccurrence(getPostsString, '^', (i+1)*5) + 1 + 512;
 
 				String builderString = getPostsString.substring(startOffset, endIndex);
-				
-				//Log.v("KEEPUP", String.valueOf(endIndex));
-				//Log.v("KEEPUP", String.valueOf(startOffset));
-				//Log.v("KEEPUP", builderString);
-				
 				post.setupPost(builderString);
 				
 				//Fetch and create a User object for the posts
@@ -206,8 +200,6 @@ public class IndividualUnitActivity extends Activity implements
 		protected void onPostExecute(Integer result) {
 			if(postCount > 0)
 				updatePostViews();
-			//if(requiresRefresh)
-				//recreate();
         }
 	}
 
