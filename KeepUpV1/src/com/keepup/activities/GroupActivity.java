@@ -139,33 +139,44 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		
 		
 		protected Integer doInBackground(String... params) {
-			//Set the # of units we're keeping up with
+			//Set the # of Groups we're keeping up with
 			String dbGroups = DatabaseConnector.getGroupsByUser
 					(GlobalVariables.USERLOGGEDIN.getId());
 			groupCount = DatabaseConnector.getGroupCountByUser(GlobalVariables.USERLOGGEDIN.getId());
+			Log.v("DBGROUPS",dbGroups);
 			/*
 			 * Have to check if the builder string was null.
 			 * If a user wasnt part of any groups the string 
 			 * would be null and thus throw errors with the 
 			 * nthOccurrence method.
 			 */
-			if(dbGroups != null || groupCount > 0){
-				
+			if(dbGroups != null){
 				
 				int startOffset = 0;
-				
-				
 				for(int i = 0; i < groupCount; i++){
+					
 					Group group = new Group();
-					Log.v("GROUP NAME",dbGroups);
+					String builderString;
 					int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
-					String builderString = dbGroups.substring(startOffset, endIndex);
-					Log.v("GROUP",builderString);
-						
-					group.setupGroup(builderString);
+					/* nthOccurrence wasnt liking the last group because I've
+					 * prob fucked something in returning group strings. So if
+					 * the group is the last one it hard codes the end of the
+					 * index. 
+					 */
+					if(i == (groupCount -1) )
+						builderString = dbGroups.substring(startOffset, (startOffset + 205));
+					else
+						builderString = dbGroups.substring(startOffset, endIndex);
+					
+					/* Again prob cause my endIndex = nthOcc is wrong. NumberCounter
+					 * Just gets the total string length of the 2 ids to help set the
+					 * index at the right place when reading in the next group. 
+					 */
+					int numberCounter = group.setupGroup(builderString);
+					
 					groupsToDisplay.add(group);
 					
-					startOffset = endIndex;
+					startOffset = endIndex - numberCounter ;
 				}
 			}
 			return null;

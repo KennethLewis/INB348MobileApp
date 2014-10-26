@@ -34,11 +34,10 @@ public class Group {
 		this.groupDescription = groupDescription;
 	}
 	//Constructing a User from an SQL String
-		public void setupGroup(String builderString) {
+		public int setupGroup(String builderString) {
 			String[] segmentedStrings = new String[4];
 			
 			int offset = 0;
-			Log.v("KEEPUP", builderString);
 			Log.v("Length", String.valueOf(builderString.length()));
 			segmentedStrings[0] = builderString.substring(offset, builderString.indexOf("^", offset));
 			Log.v("SegmentedString 0", segmentedStrings[0]);
@@ -46,19 +45,20 @@ public class Group {
 			segmentedStrings[1] = builderString.substring(offset, builderString.indexOf("^", offset));
 			Log.v("SegmentedString 1", segmentedStrings[1]);
 			offset += segmentedStrings[1].length() + 1;
+			int numberCounter = offset;
 			segmentedStrings[2] = builderString.substring(offset, offset + 50);
-			Log.v("SegmentedString 1", segmentedStrings[2]);
+			Log.v("SegmentedString 2", segmentedStrings[2]);
 			offset += segmentedStrings[2].length();
 			segmentedStrings[3] = builderString.substring(offset, offset + 100);
-			Log.v("SegmentedString 1", segmentedStrings[3]);
+			Log.v("SegmentedString 3", segmentedStrings[3]);
 			offset += segmentedStrings[3].length();
 			
 			this.groupId = Integer.parseInt(segmentedStrings[0].replace(" ", ""));
 			this.unitId = Integer.parseInt(segmentedStrings[1].replace(" ", ""));
 			this.name = segmentedStrings[2];
-			this.groupDescription = "Group Doesnt Have a Description in db!";// segmentedStrings[3];
+			this.groupDescription = segmentedStrings[3];
 
-			
+			return numberCounter;
 			
 			//Log.v("KEEPUP", this.getName());
 			//Log.v("KEEPUP", String.valueOf(this.getUserId()));

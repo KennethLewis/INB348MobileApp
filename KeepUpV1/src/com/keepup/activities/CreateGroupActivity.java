@@ -93,6 +93,12 @@ public class CreateGroupActivity extends Activity {
 		
 		RegisterGroup registerGroupThread = new RegisterGroup();
 		registerGroupThread.execute("14", groupName, groupDescription);
+		
+		if(registerUser == true && registerGroup == true){
+			Intent intent = new Intent(this, GroupActivity.class);
+			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        	startActivity(intent);
+		}
 			
 	}
 
@@ -287,14 +293,11 @@ public class CreateGroupActivity extends Activity {
 			return false;
 		}
 		protected void onPostExecute(boolean result) {
-			if(result)
-				Success();
+			
         }
 	}
 	public void Success(){
-			Intent intent = new Intent(this, GroupActivity.class);
-			//intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        	startActivity(intent);
+			
 		
 	}
 	public static class PlaceholderFragment extends Fragment {
