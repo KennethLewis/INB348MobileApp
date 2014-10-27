@@ -10,27 +10,40 @@ import com.keepup.unit.Unit;
 import com.keepup.user.User;
 import com.keepup.R;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 	
+	
+	private ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        
+        progress = new ProgressDialog(this);
+        
     }
 
     public void goToHome(View v) {
     	EditText usernameField = (EditText)findViewById(R.id.username);
     	EditText userPassword = (EditText)findViewById(R.id.password);
+    	
+    	progress.setMessage("Logging In");
+    	progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    	progress.setIndeterminate(false);
+    	progress.show();
     	
     	int userId = -1;
     	String userPw = null;
@@ -115,6 +128,7 @@ public class LoginActivity extends Activity {
 		@Override
 		protected Void doInBackground(String... params) {
 			lastFetchedUser = null;
+			 
 			if(DatabaseConnector.getLoggedIn(id, password)) {
 				lastFetchedUser = new User();
 				lastFetchedUser.setupUser(DatabaseConnector.getUser(id));
@@ -124,6 +138,10 @@ public class LoginActivity extends Activity {
 				unitCount = DatabaseConnector.getUnitCountByUser(lastFetchedUser.getId());
 				groupCount = DatabaseConnector.getGroupCountByUser(lastFetchedUser.getId());
 				
+				progress.setProgress(10);
+				
+				GlobalVariables.UNITCOUNT = unitCount;
+				GlobalVariables.GROUPCOUNT = groupCount;
 				//Gather posts for units
 				int startOffsetUnits = 0;
 				String dbUnits = DatabaseConnector.getUnitsByUser(lastFetchedUser.getId());
@@ -138,7 +156,7 @@ public class LoginActivity extends Activity {
 					GlobalVariables.UNITSWITHPOSTS.add(unit);
 					startOffsetUnits = endIndex;
 				}
-				
+				progress.setProgress(25);
 				for(int i = 0; i < GlobalVariables.UNITSWITHPOSTS.size(); i ++){
 					postCount = DatabaseConnector.getPostCountInUnit(GlobalVariables.UNITSWITHPOSTS.get(i).getId());
 					
@@ -161,7 +179,7 @@ public class LoginActivity extends Activity {
 						beginOffset = endIndex;
 						}
 					}
-				
+				progress.setProgress(50);
 				//Gather posts for groups
 				String dbGroups = DatabaseConnector.getGroupsByUser
 						(lastFetchedUser.getId());
@@ -185,6 +203,7 @@ public class LoginActivity extends Activity {
 						
 						startOffset = endIndex - numberCounter ;
 					}
+					progress.setProgress(75);
 					for(int i = 0; i < GlobalVariables.GROUPSWITHPOSTS.size();i++){
 						postCount = DatabaseConnector.getPostCountInGroup(GlobalVariables.GROUPSWITHPOSTS.get(i).getGroupId());		
 						
@@ -211,7 +230,7 @@ public class LoginActivity extends Activity {
 							startOffsetGroups = endIndex;
 						}
 					}
-					
+					progress.setProgress(90);
 				}
 				
 			}

@@ -16,6 +16,9 @@ public class GlobalVariables {
 	
 	public static ArrayList<Post> GROUPPOSTS = new ArrayList<Post>();
 
+	public static int UNITCOUNT;
+	public static int GROUPCOUNT;
+	
 	//All variables to hold news feed items
 	public static ArrayList<Post> POSTS = new ArrayList<Post>();
 	public static ArrayList<User> USERSWHOPOSTED = new ArrayList<User>();
