@@ -201,7 +201,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 							builderStringUsers = allUsers.substring(startUserOffset, endIndexUser);
 							Log.v("BUILDERSTRING",builderStringUsers);
 							user.setupUser(builderStringUsers);
-							names = names + user.getUsername() + "";
+							names = names + user.getUsername() + " ";
 							startUserOffset = endIndexUser;
 							
 						}
