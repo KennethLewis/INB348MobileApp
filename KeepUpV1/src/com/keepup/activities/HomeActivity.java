@@ -56,8 +56,8 @@ public class HomeActivity extends Activity implements
 		
 		
 		//@EDIT
-		//noOfUnits.setText("Units: " + unitCount);
-		//noOfGroups.setText("Groups: " + groupCount);
+		noOfUnits.setText("Units: " + GlobalVariables.UNITCOUNT);
+		noOfGroups.setText("Groups: " + GlobalVariables.GROUPCOUNT);
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);

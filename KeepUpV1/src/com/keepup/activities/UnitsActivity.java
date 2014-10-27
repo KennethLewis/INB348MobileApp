@@ -237,6 +237,9 @@ public class UnitsActivity extends Activity implements
 			//Set the # of units we're keeping up with
 			unitCount = DatabaseConnector.getUnitCountByUser(Integer.parseInt(params[0]));
 			
+			//Change the global variable counter to keep news feed updated
+			GlobalVariables.UNITCOUNT = unitCount;
+			
 			lecturerPostsUnread = new int[unitCount];
 			postsUnread = new int[unitCount];
 			unitMemberCount = new int[unitCount];

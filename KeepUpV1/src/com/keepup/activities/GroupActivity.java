@@ -45,6 +45,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 				(DrawerLayout) findViewById(R.id.group_drawer_layout));
 		
 		mNavigationDrawerFragment.selectItem(3);
+		
 		DisplayGroups displayGroupsThread = new DisplayGroups();
 		displayGroupsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
 	}
@@ -143,7 +144,9 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			String dbGroups = DatabaseConnector.getGroupsByUser
 					(GlobalVariables.USERLOGGEDIN.getId());
 			groupCount = DatabaseConnector.getGroupCountByUser(GlobalVariables.USERLOGGEDIN.getId());
-			Log.v("DBGROUPS",dbGroups);
+			
+			//Change the global variable counter to keep news feed updated
+			GlobalVariables.GROUPCOUNT = groupCount;
 			/*
 			 * Have to check if the builder string was null.
 			 * If a user wasnt part of any groups the string 
