@@ -1,19 +1,16 @@
 package com.keepup.activities;
 
-import java.util.ArrayList;
-
 import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
 import com.keepup.R;
-import com.keepup.activities.IndividualUnitActivity.UpdatePostData;
-import com.keepup.activities.UnitsActivity.DisplayUnits;
 import com.keepup.group.Group;
 import com.keepup.post.Post;
 import com.keepup.unit.Unit;
 import com.keepup.user.User;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 
 import android.app.ActionBar;
 import android.content.Context;
@@ -45,15 +42,17 @@ public class HomeActivity extends Activity implements
 	 */
 	private CharSequence mTitle;
 
+	private ProgressDialog progress;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		
+	    
+	    progress = new ProgressDialog(this);
 		
 		TextView noOfUnits = (TextView) findViewById(R.id.news_unit_count);
 		TextView noOfGroups = (TextView) findViewById(R.id.news_group_count);
-		
 		
 		//@EDIT
 		noOfUnits.setText("Units: " + GlobalVariables.UNITCOUNT);
@@ -66,11 +65,15 @@ public class HomeActivity extends Activity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.home_layout));
 		mNavigationDrawerFragment.selectItem(0);
-	
-		
-		DisplayUnits displayUnitsThread = new DisplayUnits();
-		displayUnitsThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
-		
+
+    	progress.setMessage("Loading News Items...");
+    	progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    	progress.setProgressNumberFormat("");
+    	progress.setIndeterminate(false);
+    	progress.show();
+    	
+		UpdateNews updateNewsThread = new UpdateNews();
+		updateNewsThread.execute();
 	}
 	
 	@Override
@@ -138,14 +141,6 @@ public class HomeActivity extends Activity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		
-		//CLICK SETTINGS BUTTON IN ACTION BAR
-		if (id == R.id.action_settings) {
-			
-			
-			
-			return true;
-		}
-		
 		//CLICK LOGOUT BUTTON
 		if (id == R.id.action_logout) {
 			GlobalVariables.USERLOGGEDIN = null;
@@ -158,7 +153,6 @@ public class HomeActivity extends Activity implements
 		if (id == R.id.action_home) {
 			Intent intentUnits = new Intent(this, HomeActivity.class);
 			startActivity(intentUnits);
-			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();
 			return true;
 		}
 		
@@ -176,53 +170,39 @@ public class HomeActivity extends Activity implements
         //ADD UNIT LISTINGS 1 BY 1
 		
 		LinearLayout unitNewsList = (LinearLayout) findViewById(R.id.news_post_list);
+		unitCount = 0;
 		
-		for(int i = GlobalVariables.POSTS.size() - 1; i >= 0; i--)  {
+		for(int i = 0; i < GlobalVariables.POSTS.size(); i++)  {
 			View unitView = inflater.inflate(R.layout.news_post_template, null);
+
 			unitView = setUpNewsArticle(GlobalVariables.POSTS.get(i), i, unitView);
 			//Add to view.
 			unitNewsList.addView(unitView);
 		}
     }
-		
+
+	int unitNameIndex = 0;
 	private View setUpNewsArticle(Post p, int indexNum, View rootView) {
-		//Setup Unit Name.
-		User user = new User ();
-		Unit unit = new Unit();
-		Group group = new Group();
+		String nameOfGroupOrUnit = "";
+		Group group = null;
 		
-		for(User u: GlobalVariables.USERSWHOPOSTED){
-			if (p.getUserId() == u.getId())
-				user = u;
+		if(p.getGroupId() == 0) {
+			if(unitNameIndex < GlobalVariables.UNITNAMES.size()) {
+				nameOfGroupOrUnit = GlobalVariables.UNITNAMES.get(unitNameIndex);
+				unitNameIndex++;
+			}
+		} else {
+			for(Group g: GlobalVariables.GROUPSWITHPOSTS) {
+				if(p.getGroupId() == g.getGroupId())
+					group = g;
+			}
+			if(group != null)
+				nameOfGroupOrUnit = group.getName().trim();
 		}
-		for(Unit u: GlobalVariables.UNITSWITHPOSTS){
-			if(p.getUnitId() == u.getId())
-				unit = u;
-		}
-		
-		for(Group g: GlobalVariables.GROUPSWITHPOSTS){
-			if(p.getGroupId() == g.getGroupId())
-				group = g;
-		}
-		String nameOfGroupOrUnit = null;
-		
-		if(unit.getName() != null)
-			nameOfGroupOrUnit = unit.getName().trim();
-		
-		boolean unitOrGroup = false;
-		if(nameOfGroupOrUnit == null){
-			nameOfGroupOrUnit = group.getName().trim();
-			unitOrGroup = true;
-		}
-		
-		String title;
-		if(unitOrGroup == true)
-			title = "Group";
-		else
-			title = "Unit";
-		
+
 		TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
-		userName.setText(title + ": " + nameOfGroupOrUnit + " " + "by " + user.getUsername());
+		userName.setText(nameOfGroupOrUnit + " by " + 
+				GlobalVariables.USERSWHOPOSTED.get(indexNum).getUsername());
 		
 		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
 		dateTime.setText(p.getTime());
@@ -241,24 +221,136 @@ public class HomeActivity extends Activity implements
 
 	/* ---------------- THREADED TASKS ----------------- */
 	
-	public class DisplayUnits extends AsyncTask<String, Void, Integer> {
+	int postCount = 0;
+	int groupCount = 0;
+	int unitCount = 0;
+    public class UpdateNews extends AsyncTask<String, Void, Void> {
+		
 		@Override
-		protected Integer doInBackground(String... params) {
-			//Set the # of units we're keeping up with
-			
+		protected Void doInBackground(String... params) {
+			prepareNewsList();
 			return null;
 		}
-		protected void onPostExecute(Integer result) {
+		@Override
+        protected void onPostExecute(Void result) {
 			if(GlobalVariables.POSTS.size() > 0)
 				updateNewsView();
         }
-		
-		public int nthOccurrence(String str, char c, int n) {
-		    int pos = str.indexOf(c, 0);
-		    n--;
-		    while (n-- > 0 && pos != -1)
-		        pos = str.indexOf(c, pos + 1);
-		    return pos;
-		}
 	}
+    
+    public void prepareNewsList() {
+    	GlobalVariables.POSTS.clear();
+    	GlobalVariables.UNITNAMES.clear();
+    	GlobalVariables.UNITSWITHPOSTS.clear();
+    	GlobalVariables.GROUPSWITHPOSTS.clear();
+    	
+    	unitCount = DatabaseConnector.getUnitCountByUser(GlobalVariables.USERLOGGEDIN.getId());
+		groupCount = DatabaseConnector.getGroupCountByUser(GlobalVariables.USERLOGGEDIN.getId());
+		
+		progress.setProgress(10);
+		
+		GlobalVariables.UNITCOUNT = unitCount;
+		GlobalVariables.GROUPCOUNT = groupCount;
+		
+		//Gather posts for units
+		int startOffsetUnits = 0;
+		String dbUnits = DatabaseConnector.getUnitsByUser(GlobalVariables.USERLOGGEDIN.getId());
+		for(int i = 0; i < unitCount; i++) {
+			Unit unit = new Unit();
+			
+			int endIndex = nthOccurrence(dbUnits, '^', (i+1)*2) + 1;
+			String builderString = dbUnits.substring(startOffsetUnits, endIndex);
+			
+			unit.setupUnit(builderString);
+			GlobalVariables.UNITSWITHPOSTS.add(unit);
+			startOffsetUnits = endIndex;
+		}
+		
+		progress.setProgress(25);
+		
+		for(int i = 0; i < GlobalVariables.UNITSWITHPOSTS.size(); i ++) {
+			postCount = DatabaseConnector.getPostCountInUnit(GlobalVariables.UNITSWITHPOSTS.get(i).getId());
+			
+			int beginOffset = 0;
+			String getPostsString = DatabaseConnector.getPostsInUnit(GlobalVariables.UNITSWITHPOSTS.get(i).getId(), 
+					GlobalVariables.USERLOGGEDIN.getId(), false);
+			for(int j = 0; j < postCount; j++) {
+				Post post = new Post();
+				int endIndex = nthOccurrence(getPostsString, '^', (j+1)*5) + 1 + 512;
+
+				String builderString = getPostsString.substring(beginOffset, endIndex);
+				
+				post.setupPost(builderString);
+				
+				GlobalVariables.UNITNAMES.add(GlobalVariables.UNITSWITHPOSTS.get(i).getName());
+				GlobalVariables.POSTS.add(post);
+				
+				User user = new User();
+				String userDetails = DatabaseConnector.getUser(post.getUserId());
+				user.setupUser(userDetails);
+				GlobalVariables.USERSWHOPOSTED.add(user);
+				beginOffset = endIndex;
+			}
+		}
+		
+		progress.setProgress(50);
+		
+		//Gather posts for groups
+		String dbGroups = DatabaseConnector.getGroupsByUser
+				(GlobalVariables.USERLOGGEDIN.getId());
+		groupCount = DatabaseConnector.getGroupCountByUser(GlobalVariables.USERLOGGEDIN.getId());
+		
+		int startOffset = 0;
+		for(int i = 0; i < groupCount; i++){
+			Group group = new Group();
+			String builderString;
+			int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
+			if(i == (groupCount -1))
+				builderString = dbGroups.substring(startOffset, (startOffset + 205));
+			else
+				builderString = dbGroups.substring(startOffset, endIndex);
+			
+			int numberCounter = group.setupGroup(builderString);
+			
+			GlobalVariables.GROUPSWITHPOSTS.add(group);
+			
+			startOffset = endIndex - numberCounter ;
+		}
+		progress.setProgress(75);
+		for(int i = 0; i < GlobalVariables.GROUPSWITHPOSTS.size();i++) {
+			postCount = DatabaseConnector.getPostCountInGroup(GlobalVariables.GROUPSWITHPOSTS.get(i).getGroupId());	
+					
+			int startOffsetGroups = 0;
+			String getPostsString = DatabaseConnector.getPostsInGroup
+					(GlobalVariables.GROUPSWITHPOSTS.get(i).getGroupId(), GlobalVariables.USERLOGGEDIN.getId(), false);
+			
+			for(int j = 0; j < postCount; j++) {
+				Post post = new Post();
+
+				int endIndex = nthOccurrence(getPostsString, '^', (j+1)*5) + 1 + 512;
+				
+				String builderString = getPostsString.substring(startOffsetGroups, endIndex);
+				
+				post.setupPost(builderString);
+				
+				GlobalVariables.POSTS.add(post);
+				User user = new User();
+				String userDetails = DatabaseConnector.getUser(post.getUserId());
+				user.setupUser(userDetails);
+				GlobalVariables.USERSWHOPOSTED.add(user);
+				startOffsetGroups = endIndex;
+			}
+			progress.setProgress(100);
+		}
+		progress.dismiss();
+    }
+    
+	public int nthOccurrence(String str, char c, int n) {
+	    int pos = str.indexOf(c, 0);
+	    n--;
+	    while (n-- > 0 && pos != -1)
+	        pos = str.indexOf(c, pos + 1);
+	    return pos;
+	}
+	
 }

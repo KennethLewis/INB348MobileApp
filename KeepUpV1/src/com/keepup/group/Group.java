@@ -22,19 +22,19 @@ public class Group {
 			String[] segmentedStrings = new String[4];
 			
 			int offset = 0;
-			Log.v("Length", String.valueOf(builderString.length()));
+			//Log.v("Length", String.valueOf(builderString.length()));
 			segmentedStrings[0] = builderString.substring(offset, builderString.indexOf("^", offset));
-			Log.v("SegmentedString 0", segmentedStrings[0]);
+			//Log.v("SegmentedString 0", segmentedStrings[0]);
 			offset += segmentedStrings[0].length() + 1;
 			segmentedStrings[1] = builderString.substring(offset, builderString.indexOf("^", offset));
-			Log.v("SegmentedString 1", segmentedStrings[1]);
+			//Log.v("SegmentedString 1", segmentedStrings[1]);
 			offset += segmentedStrings[1].length() + 1;
 			int numberCounter = offset;
 			segmentedStrings[2] = builderString.substring(offset, offset + 50);
-			Log.v("SegmentedString 2", segmentedStrings[2]);
+			//Log.v("SegmentedString 2", segmentedStrings[2]);
 			offset += segmentedStrings[2].length();
 			segmentedStrings[3] = builderString.substring(offset, offset + 100);
-			Log.v("SegmentedString 3", segmentedStrings[3]);
+			//Log.v("SegmentedString 3", segmentedStrings[3]);
 			offset += segmentedStrings[3].length();
 			
 			this.groupId = Integer.parseInt(segmentedStrings[0].replace(" ", ""));

@@ -13,11 +13,11 @@
         android:id="@+id/unit_group_user_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/prefill_username"
         android:clickable="true"
         android:onClick="moveTo"
+        android:text="@string/prefill_username"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="10pt" />
+        android:textSize="8pt" />
 
     <TextView
         android:id="@+id/date_time"
@@ -26,7 +26,7 @@
         android:clickable="false"
         android:text="@string/example_time"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="4pt" />
+        android:textSize="5pt" />
 
     <TextView
         android:id="@+id/published_news"

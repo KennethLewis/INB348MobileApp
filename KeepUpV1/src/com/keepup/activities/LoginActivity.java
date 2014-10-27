@@ -1,12 +1,7 @@
 package com.keepup.activities;
 
-import java.util.ArrayList;
-
 import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
-import com.keepup.group.Group;
-import com.keepup.post.Post;
-import com.keepup.unit.Unit;
 import com.keepup.user.User;
 import com.keepup.R;
 import android.app.Activity;
@@ -14,37 +9,24 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 	
-	
-	private ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        
-        progress = new ProgressDialog(this);
         
     }
 
     public void goToHome(View v) {
     	EditText usernameField = (EditText)findViewById(R.id.username);
     	EditText userPassword = (EditText)findViewById(R.id.password);
-    	
-    	progress.setMessage("Logging In");
-    	progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-    	progress.setProgressNumberFormat("");
-    	progress.setIndeterminate(false);
-    	progress.show();
     	
     	int userId = -1;
     	String userPw = null;
@@ -83,11 +65,6 @@ public class LoginActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		
-		//CLICK SETTINGS BUTTON IN ACTION BAR
-		if (id == R.id.action_settings) {
-			
-		}
-		
 		//CLICK HOME BUTTON -JACK
 		if (id == R.id.action_home) {
 			Toast.makeText(this, "Please login first.", Toast.LENGTH_SHORT).show();
@@ -105,15 +82,8 @@ public class LoginActivity extends Activity {
     	startActivity(intent);
 		Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
     }
-
-	private static User lastFetchedUser;
-	
-	int postCount = 0;
-	
-	
-	int groupCount = 0;
-	int unitCount = 0;
     
+    User lastFetchedUser = null;
     public class Login extends AsyncTask<String, Void, Void> {
 		protected int id;
 		protected String password;
@@ -133,126 +103,19 @@ public class LoginActivity extends Activity {
 			if(DatabaseConnector.getLoggedIn(id, password)) {
 				lastFetchedUser = new User();
 				lastFetchedUser.setupUser(DatabaseConnector.getUser(id));
-				
-				
-				
-				unitCount = DatabaseConnector.getUnitCountByUser(lastFetchedUser.getId());
-				groupCount = DatabaseConnector.getGroupCountByUser(lastFetchedUser.getId());
-				
-				progress.setProgress(10);
-				
-				GlobalVariables.UNITCOUNT = unitCount;
-				GlobalVariables.GROUPCOUNT = groupCount;
-				//Gather posts for units
-				int startOffsetUnits = 0;
-				String dbUnits = DatabaseConnector.getUnitsByUser(lastFetchedUser.getId());
-				for(int i = 0; i < unitCount; i++) {
-					Unit unit = new Unit();
-					
-					int endIndex = nthOccurrence(dbUnits, '^', (i+1)*2) + 1;
-
-					String builderString = dbUnits.substring(startOffsetUnits, endIndex);
-					
-					unit.setupUnit(builderString);
-					GlobalVariables.UNITSWITHPOSTS.add(unit);
-					startOffsetUnits = endIndex;
-				}
-				progress.setProgress(25);
-				for(int i = 0; i < GlobalVariables.UNITSWITHPOSTS.size(); i ++){
-					postCount = DatabaseConnector.getPostCountInUnit(GlobalVariables.UNITSWITHPOSTS.get(i).getId());
-					
-					int beginOffset = 0;
-					String getPostsString = DatabaseConnector.getPostsInUnit(GlobalVariables.UNITSWITHPOSTS.get(i).getId(), 
-							lastFetchedUser.getId(), false);
-					for(int c = 0; c < postCount; c++) {
-						Post post = new Post();
-						int endIndex = nthOccurrence(getPostsString, '^', (c+1)*5) + 1 + 512;
-
-						String builderString = getPostsString.substring(beginOffset, endIndex);
-						
-						post.setupPost(builderString);
-						
-						GlobalVariables.POSTS.add(post);
-						User user = new User();
-						String userDetails = DatabaseConnector.getUser(post.getUserId());
-						user.setupUser(userDetails);
-						GlobalVariables.USERSWHOPOSTED.add(user);
-						beginOffset = endIndex;
-						}
-					}
-				progress.setProgress(50);
-				//Gather posts for groups
-				String dbGroups = DatabaseConnector.getGroupsByUser
-						(lastFetchedUser.getId());
-				groupCount = DatabaseConnector.getGroupCountByUser(lastFetchedUser.getId());
-				
-				if(dbGroups != null){
-					
-					int startOffset = 0;
-					for(int i = 0; i < groupCount; i++){
-						Group group = new Group();
-						String builderString;
-						int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
-						if(i == (groupCount -1) )
-							builderString = dbGroups.substring(startOffset, (startOffset + 205));
-						else
-							builderString = dbGroups.substring(startOffset, endIndex);
-						
-						int numberCounter = group.setupGroup(builderString);
-						
-						GlobalVariables.GROUPSWITHPOSTS.add(group);
-						
-						startOffset = endIndex - numberCounter ;
-					}
-					progress.setProgress(75);
-					for(int i = 0; i < GlobalVariables.GROUPSWITHPOSTS.size();i++){
-						postCount = DatabaseConnector.getPostCountInGroup(GlobalVariables.GROUPSWITHPOSTS.get(i).getGroupId());		
-						
-								
-						int startOffsetGroups = 0;
-						String getPostsString = DatabaseConnector.getPostsInGroup
-								(GlobalVariables.GROUPSWITHPOSTS.get(i).getGroupId(), lastFetchedUser.getId(), false);
-						
-						for(int j = 0; j < postCount; j++) {
-							Post post = new Post();
-
-							int endIndex = nthOccurrence(getPostsString, '^', (j+1)*5) + 1 + 512;
-							
-							String builderString = getPostsString.substring(startOffsetGroups, endIndex);
-							
-							post.setupPost(builderString);
-							
-									
-							GlobalVariables.POSTS.add(post);
-							User user = new User();
-							String userDetails = DatabaseConnector.getUser(post.getUserId());
-							user.setupUser(userDetails);
-							GlobalVariables.USERSWHOPOSTED.add(user);
-							startOffsetGroups = endIndex;
-						}
-					}
-					progress.setProgress(90);
-				}
-				
 			}
 			return null;
-		}
-		public int nthOccurrence(String str, char c, int n) {
-		    int pos = str.indexOf(c, 0);
-		    n--;
-		    while (n-- > 0 && pos != -1)
-		        pos = str.indexOf(c, pos + 1);
-		    return pos;
 		}
 		@Override
         protected void onPostExecute(Void result) {
 			if(lastFetchedUser != null) {
 	            GlobalVariables.USERLOGGEDIN = lastFetchedUser;
 	            loginSuccess();
-	            Log.v("POST#",String.valueOf(GlobalVariables.POSTS.size()));
+	            //Log.v("POST#",String.valueOf(GlobalVariables.POSTS.size()));
 			} else {
 				loginFail();
 			}
         }
 	}
+	
 }

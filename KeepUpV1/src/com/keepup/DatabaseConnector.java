@@ -48,7 +48,7 @@ public final class DatabaseConnector {
 		fetchData(request);
 
 		if(stringBuffer.contains("NoResults"))
-			return "No recent posts";
+			return "No recent annoucements.";
 		
 		return stringBuffer;
 	}
@@ -372,13 +372,36 @@ public final class DatabaseConnector {
 		
 		fetchData(request);
 		
-		Log.v("KEEPUP", stringBuffer);
+		//Log.v("KEEPUP", stringBuffer);
 		if(stringBuffer.contains("true"))
 			return true;
 		
 		return false;
 	}
 
+	public static String getUnitCode(int id) {
+		URL_SUFFIX = "UnitService.asmx";
+		SOAP_ACTION_SUFFIX = "getUnitCode";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		//Property which holds input parameters
+		PropertyInfo unitId = new PropertyInfo();
+		//Set Name
+		unitId.setName("unitId");
+		unitId.setValue(id);
+		unitId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(unitId);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
 	public static String getUnit(int id) {
 		URL_SUFFIX = "UnitService.asmx";
 		SOAP_ACTION_SUFFIX = "getUnit";
@@ -550,7 +573,7 @@ public final class DatabaseConnector {
 		
 		fetchData(request);
 		
-		Log.v("KEEPUP", stringBuffer);
+		//Log.v("KEEPUP", stringBuffer);
 		if(stringBuffer.contains("true"))
 			return true;
 		
@@ -763,7 +786,7 @@ public final class DatabaseConnector {
 		
 		fetchData(request);
 		
-		Log.v("KEEPUP", stringBuffer);
+		//Log.v("KEEPUP", stringBuffer);
 		if(stringBuffer.contains("true"))
 			return true;
 		
@@ -812,7 +835,7 @@ public final class DatabaseConnector {
 		
 		fetchData(request);
 		
-		Log.v("KEEPUP", stringBuffer);
+		//Log.v("KEEPUP", stringBuffer);
 		if(stringBuffer.contains("true"))
 			return true;
 		

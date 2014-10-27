@@ -49,8 +49,7 @@ public final class R {
         public static final int Register=0x7f0a0036;
         public static final int StudentID=0x7f0a002f;
         public static final int action_home=0x7f0a0050;
-        public static final int action_logout=0x7f0a0052;
-        public static final int action_settings=0x7f0a0051;
+        public static final int action_logout=0x7f0a0051;
         public static final int add=0x7f0a0005;
         public static final int announcement_icon_unit=0x7f0a003e;
         public static final int announcement_last_unit=0x7f0a004d;

@@ -62,14 +62,6 @@ public class UnitsActivity extends Activity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		
-		//CLICK SETTINGS BUTTON IN ACTION BAR
-		if (id == R.id.action_settings) {
-			
-			
-			
-			return true;
-		}
-		
 		//CLICK LOGOUT BUTTON
 		if (id == R.id.action_logout) {
 			GlobalVariables.USERLOGGEDIN = null;
@@ -82,7 +74,6 @@ public class UnitsActivity extends Activity implements
 		if (id == R.id.action_home) {
 			Intent intentUnits = new Intent(this, HomeActivity.class);
 			startActivity(intentUnits);
-			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();
 			return true;
 		}
 		
@@ -107,8 +98,6 @@ public class UnitsActivity extends Activity implements
 	public final static String UNIT_TITLE = "com.keepup.UNIT_TITLE";
 	public final static String UNIT_ID = "com.keepup.UNIT_ID";
 	public void clickedUnitName(View v) {
-		Log.v("text",((TextView) v).getText().toString().substring(0, 6) + ((TextView) v).getText().toString().substring(0, 6));
-		Log.v("text", String.valueOf(unitsToDisplay.size()));
 		Unit clickedUnit = null;
 		for(Unit u : unitsToDisplay)
 	        if(u.getCode().equals(((TextView) v).getText().toString().substring(0, 6)))
@@ -123,7 +112,7 @@ public class UnitsActivity extends Activity implements
 	    intent.putExtra(UNIT_ID, clickedUnit.getId());
 	    startActivity(intent);
 
-		Log.v("KEEPUP", "Clicked on a Unit from Unit Listing");
+		//Log.v("KEEPUP", "Clicked on a Unit from Unit Listing");
 	}
 	
 	//HANDLE ALL ADD/REMOVE AND USER UNIT ALTERATIONS
@@ -157,11 +146,9 @@ public class UnitsActivity extends Activity implements
 				if(isChecked) {
 					AddUnitToUser addUnitToUserThread = new AddUnitToUser();
 					addUnitToUserThread.execute(distinctUnits[which]);
-					Log.v("KEEPUP", "ADD");
 				} else {
 					RemoveUnitFromUser removeUnitFromUserThread = new RemoveUnitFromUser();
 					removeUnitFromUserThread.execute(distinctUnits[which]);
-					Log.v("KEEPUP", "REMOVE");
 				}
 			}
 		};
@@ -302,9 +289,9 @@ public class UnitsActivity extends Activity implements
 			
 			//Setup last announcement.
 			String announcement = lastAnnouncement[indexNum].substring(0, 
-					lastAnnouncement[indexNum].equals("No recent posts") ? lastAnnouncement[indexNum].length() : 50);
+					lastAnnouncement[indexNum].equals("No recent annoucements.") ? lastAnnouncement[indexNum].length() : 50).trim();
 			TextView announcementLast = (TextView) rootView.findViewById(R.id.announcement_last_unit);
-			announcementLast.setText(announcement);
+			announcementLast.setText(announcement + "...");
 			
 			//Setup notification counts.
 			TextView announcementCount = (TextView) rootView.findViewById(R.id.announcement_value_unit);

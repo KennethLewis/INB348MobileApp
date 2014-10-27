@@ -128,7 +128,6 @@ public class CreateGroupActivity extends Activity {
 				} else {
 					RemoveUserFromGroup removeUserFromGroup = new RemoveUserFromGroup();
 					removeUserFromGroup.execute(usersToDisplay.get(which));
-					Log.v("KEEPUP", "REMOVE");
 				}
 			}
 		};
@@ -214,7 +213,6 @@ public class CreateGroupActivity extends Activity {
 	public class AddUserToGroup extends AsyncTask<User, Void, Void> {
 		@Override
 		protected Void doInBackground(User... params) {
-			Log.v("IN ADDUSERTOGROUP", params[0].getUsername());
 			usersIdToAdd.add(params[0].getId());
 			GlobalVariables.USERSFORGROUP.add(params[0]);
 			return null;
@@ -257,14 +255,12 @@ public class CreateGroupActivity extends Activity {
 
 		@Override
 		protected Boolean doInBackground(String... params) {
-			Log.v("REGISTER USER params 0", params[0]);
-			Log.v("REGISTER USER params 0", params[1]);
 			if(DatabaseConnector.addUserToGroup(Integer.valueOf(params[0]),Integer.valueOf(params[1]))) {
-				Log.v("KEEPUP", "Register User SUCCESS");
+				//Log.v("KEEPUP", "Register User SUCCESS");
 				registerUser = true;
 				return true;
 			}
-			Log.v("KEEPUP", "Register User FAIL");
+			//Log.v("KEEPUP", "Register User FAIL");
 			registerUser = false;
 			return false;
 		}
@@ -278,8 +274,7 @@ public class CreateGroupActivity extends Activity {
 		protected Boolean doInBackground(String... params) {
 			groupId = DatabaseConnector.createGroup(Integer.valueOf(params[0]),params[1], params[2]);
 			if(groupId != 0){
-				Log.v("KEEPUP", "Register Group SUCCESS");
-				Log.v("GROUPID", String.valueOf(groupId));
+				//Log.v("KEEPUP", "Register Group SUCCESS");
 				registerGroup = true;
 				for(User u: usersForGroup){
 					RegisterUserForGroup registerThread = new RegisterUserForGroup();
@@ -287,7 +282,7 @@ public class CreateGroupActivity extends Activity {
 				}
 				return true;
 			}
-			Log.v("KEEPUP", "Register Group FAIL");
+			//Log.v("KEEPUP", "Register Group FAIL");
 			registerGroup = false;
 			return false;
 		}

@@ -44,11 +44,11 @@ public class User {
 		this.rights = Integer.parseInt(segmentedStrings[3].replace(" ", ""));
 		this.password = segmentedStrings[4].replace(" ", "");
 
-		Log.v("KEEPUP", String.valueOf(this.getId()));
-		Log.v("KEEPUP", this.getUsername());
-		Log.v("KEEPUP", this.getEmail());
-		Log.v("KEEPUP", this.getPw());
-		Log.v("KEEPUP", String.valueOf(this.getRights()));
+		//Log.v("KEEPUP", String.valueOf(this.getId()));
+		//Log.v("KEEPUP", this.getUsername());
+		//Log.v("KEEPUP", this.getEmail());
+		//Log.v("KEEPUP", this.getPw());
+		//Log.v("KEEPUP", String.valueOf(this.getRights()));
 	}
 	
 	//Constructors

@@ -48,7 +48,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 			String activityName = (String) extras.get("GROUP_NAME");
 			this.setTitle(activityName);
 			currentGroupId = (Integer) extras.getInt("GROUP_ID");
-			Log.v("GROUPID",String.valueOf(currentGroupId));
+			//Log.v("GROUPID",String.valueOf(currentGroupId));
 		}
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
@@ -74,15 +74,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 				
-		//CLICK SETTINGS BUTTON IN ACTION BAR
-		if (id == R.id.action_settings) {
-					
-					
-					
-			return true;
-		}
-				
-				//CLICK LOGOUT BUTTON
+		//CLICK LOGOUT BUTTON
 		if (id == R.id.action_logout) {
 			GlobalVariables.USERLOGGEDIN = null;
 			Intent intent = new Intent(this, LoginActivity.class);
@@ -94,7 +86,6 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 		if (id == R.id.action_home) {
 			Intent intentUnits = new Intent(this, HomeActivity.class);
 			startActivity(intentUnits);
-			Toast.makeText(this, "# unread notifications.", Toast.LENGTH_SHORT).show();
 			return true;
 		}
 				

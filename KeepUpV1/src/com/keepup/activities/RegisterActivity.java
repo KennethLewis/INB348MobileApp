@@ -107,17 +107,6 @@ public class RegisterActivity extends Activity {
 		}
 		
 	}
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify as parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
 	/**
 	 * A placeholder fragment containing a simple view.
@@ -136,7 +125,7 @@ public class RegisterActivity extends Activity {
 	}
 	
 	private void registerSuccess() {
-		Log.v("KEEPUP", "TEST SUCCESS REGISTERED");
+		//Log.v("KEEPUP", "TEST SUCCESS REGISTERED");
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 	}
@@ -166,10 +155,10 @@ public class RegisterActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(String... params) {
 			if(DatabaseConnector.registerUser(Integer.valueOf(params[0]), params[1], params[2], Integer.valueOf(params[3]), params[4])) {
-				Log.v("KEEPUP", "SUCCESS");
+				//Log.v("KEEPUP", "SUCCESS");
 				return true;
 			}
-			Log.v("KEEPUP", "FAIL");
+			//Log.v("KEEPUP", "FAIL");
 			return false;
 		}
 		
