@@ -2,7 +2,9 @@ package com.keepup;
 
 import java.util.ArrayList;
 
+import com.keepup.unit.Unit;
 import com.keepup.user.User;
+import com.keepup.group.Group;
 import com.keepup.post.*;
 
 public class GlobalVariables {
@@ -11,7 +13,12 @@ public class GlobalVariables {
 	//We shall see though.
 	public static User USERLOGGEDIN;
 	public static ArrayList<User> USERSFORGROUP = new ArrayList<User>();
-	public static ArrayList<Post> POSTS = new ArrayList<Post>();
+	
 	public static ArrayList<Post> GROUPPOSTS = new ArrayList<Post>();
 
+	//All variables to hold news feed items
+	public static ArrayList<Post> POSTS = new ArrayList<Post>();
+	public static ArrayList<User> USERSWHOPOSTED = new ArrayList<User>();
+	public static ArrayList<Unit> UNITSWITHPOSTS = new ArrayList<Unit>();
+	public static ArrayList<Group> GROUPSWITHPOSTS = new ArrayList<Group>();
 }

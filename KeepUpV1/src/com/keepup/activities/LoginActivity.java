@@ -1,7 +1,12 @@
 package com.keepup.activities;
 
+import java.util.ArrayList;
+
 import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
+import com.keepup.group.Group;
+import com.keepup.post.Post;
+import com.keepup.unit.Unit;
 import com.keepup.user.User;
 import com.keepup.R;
 import android.app.Activity;
@@ -88,6 +93,12 @@ public class LoginActivity extends Activity {
     }
 
 	private static User lastFetchedUser;
+	
+	int postCount = 0;
+	
+	
+	int groupCount = 0;
+	int unitCount = 0;
     
     public class Login extends AsyncTask<String, Void, Void> {
 		protected int id;
@@ -107,15 +118,118 @@ public class LoginActivity extends Activity {
 			if(DatabaseConnector.getLoggedIn(id, password)) {
 				lastFetchedUser = new User();
 				lastFetchedUser.setupUser(DatabaseConnector.getUser(id));
+				
+				
+				
+				unitCount = DatabaseConnector.getUnitCountByUser(lastFetchedUser.getId());
+				groupCount = DatabaseConnector.getGroupCountByUser(lastFetchedUser.getId());
+				
+				//Gather posts for units
+				int startOffsetUnits = 0;
+				String dbUnits = DatabaseConnector.getUnitsByUser(lastFetchedUser.getId());
+				for(int i = 0; i < unitCount; i++) {
+					Unit unit = new Unit();
+					
+					int endIndex = nthOccurrence(dbUnits, '^', (i+1)*2) + 1;
+
+					String builderString = dbUnits.substring(startOffsetUnits, endIndex);
+					
+					unit.setupUnit(builderString);
+					GlobalVariables.UNITSWITHPOSTS.add(unit);
+					startOffsetUnits = endIndex;
+				}
+				
+				for(int i = 0; i < GlobalVariables.UNITSWITHPOSTS.size(); i ++){
+					postCount = DatabaseConnector.getPostCountInUnit(GlobalVariables.UNITSWITHPOSTS.get(i).getId());
+					
+					int beginOffset = 0;
+					String getPostsString = DatabaseConnector.getPostsInUnit(GlobalVariables.UNITSWITHPOSTS.get(i).getId(), 
+							lastFetchedUser.getId(), false);
+					for(int c = 0; c < postCount; c++) {
+						Post post = new Post();
+						int endIndex = nthOccurrence(getPostsString, '^', (c+1)*5) + 1 + 512;
+
+						String builderString = getPostsString.substring(beginOffset, endIndex);
+						
+						post.setupPost(builderString);
+						
+						GlobalVariables.POSTS.add(post);
+						User user = new User();
+						String userDetails = DatabaseConnector.getUser(post.getUserId());
+						user.setupUser(userDetails);
+						GlobalVariables.USERSWHOPOSTED.add(user);
+						beginOffset = endIndex;
+						}
+					}
+				
+				//Gather posts for groups
+				String dbGroups = DatabaseConnector.getGroupsByUser
+						(lastFetchedUser.getId());
+				groupCount = DatabaseConnector.getGroupCountByUser(lastFetchedUser.getId());
+				
+				if(dbGroups != null){
+					
+					int startOffset = 0;
+					for(int i = 0; i < groupCount; i++){
+						Group group = new Group();
+						String builderString;
+						int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
+						if(i == (groupCount -1) )
+							builderString = dbGroups.substring(startOffset, (startOffset + 205));
+						else
+							builderString = dbGroups.substring(startOffset, endIndex);
+						
+						int numberCounter = group.setupGroup(builderString);
+						
+						GlobalVariables.GROUPSWITHPOSTS.add(group);
+						
+						startOffset = endIndex - numberCounter ;
+					}
+					for(int i = 0; i < GlobalVariables.GROUPSWITHPOSTS.size();i++){
+						postCount = DatabaseConnector.getPostCountInGroup(GlobalVariables.GROUPSWITHPOSTS.get(i).getGroupId());		
+						
+								
+						int startOffsetGroups = 0;
+						String getPostsString = DatabaseConnector.getPostsInGroup
+								(GlobalVariables.GROUPSWITHPOSTS.get(i).getGroupId(), lastFetchedUser.getId(), false);
+						
+						for(int j = 0; j < postCount; j++) {
+							Post post = new Post();
+
+							int endIndex = nthOccurrence(getPostsString, '^', (j+1)*5) + 1 + 512;
+							
+							String builderString = getPostsString.substring(startOffsetGroups, endIndex);
+							
+							post.setupPost(builderString);
+							
+									
+							GlobalVariables.POSTS.add(post);
+							User user = new User();
+							String userDetails = DatabaseConnector.getUser(post.getUserId());
+							user.setupUser(userDetails);
+							GlobalVariables.USERSWHOPOSTED.add(user);
+							startOffsetGroups = endIndex;
+						}
+					}
+					
+				}
+				
 			}
 			return null;
 		}
-		
+		public int nthOccurrence(String str, char c, int n) {
+		    int pos = str.indexOf(c, 0);
+		    n--;
+		    while (n-- > 0 && pos != -1)
+		        pos = str.indexOf(c, pos + 1);
+		    return pos;
+		}
 		@Override
         protected void onPostExecute(Void result) {
 			if(lastFetchedUser != null) {
 	            GlobalVariables.USERLOGGEDIN = lastFetchedUser;
 	            loginSuccess();
+	            Log.v("POST#",String.valueOf(GlobalVariables.POSTS.size()));
 			} else {
 				loginFail();
 			}

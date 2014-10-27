@@ -56,8 +56,8 @@ public class HomeActivity extends Activity implements
 		
 		
 		//@EDIT
-		noOfUnits.setText("Units: " + unitCount);
-		noOfGroups.setText("Groups: " + groupCount);
+		//noOfUnits.setText("Units: " + unitCount);
+		//noOfGroups.setText("Groups: " + groupCount);
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
@@ -177,9 +177,9 @@ public class HomeActivity extends Activity implements
 		
 		LinearLayout unitNewsList = (LinearLayout) findViewById(R.id.news_post_list);
 		
-		for(int i = allPosts.size() - 1; i >= 0; i--)  {
+		for(int i = GlobalVariables.POSTS.size() - 1; i >= 0; i--)  {
 			View unitView = inflater.inflate(R.layout.news_post_template, null);
-			unitView = setUpNewsArticle(allPosts.get(i), i, unitView);
+			unitView = setUpNewsArticle(GlobalVariables.POSTS.get(i), i, unitView);
 			//Add to view.
 			unitNewsList.addView(unitView);
 		}
@@ -188,8 +188,41 @@ public class HomeActivity extends Activity implements
 	private View setUpNewsArticle(Post p, int indexNum, View rootView) {
 		//Setup Unit Name.
 		User user = new User ();
+		Unit unit = new Unit();
+		Group group = new Group();
+		
+		for(User u: GlobalVariables.USERSWHOPOSTED){
+			if (p.getUserId() == u.getId())
+				user = u;
+		}
+		for(Unit u: GlobalVariables.UNITSWITHPOSTS){
+			if(p.getUnitId() == u.getId())
+				unit = u;
+		}
+		
+		for(Group g: GlobalVariables.GROUPSWITHPOSTS){
+			if(p.getGroupId() == g.getGroupId())
+				group = g;
+		}
+		String nameOfGroupOrUnit = null;
+		
+		if(unit.getName() != null)
+			nameOfGroupOrUnit = unit.getName().trim();
+		
+		boolean unitOrGroup = false;
+		if(nameOfGroupOrUnit == null){
+			nameOfGroupOrUnit = group.getName().trim();
+			unitOrGroup = true;
+		}
+		
+		String title;
+		if(unitOrGroup == true)
+			title = "Group";
+		else
+			title = "Unit";
+		
 		TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
-		userName.setText(p.getUnitId() + " " + "by " + "Some Student");
+		userName.setText(title + ": " + nameOfGroupOrUnit + " " + "by " + user.getUsername());
 		
 		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
 		dateTime.setText(p.getTime());
@@ -208,106 +241,15 @@ public class HomeActivity extends Activity implements
 
 	/* ---------------- THREADED TASKS ----------------- */
 	
-	int currentUnitId = 0;
-	int postCount = 0;
-	ArrayList<Post> allPosts = new ArrayList<Post>();
-	
-	int groupCount = 0;
-	int unitCount = 0;
-	ArrayList<Unit> unitsToDisplay = new ArrayList<Unit>();
-	ArrayList<Group> groupsToDisplay = new ArrayList<Group>();
 	public class DisplayUnits extends AsyncTask<String, Void, Integer> {
 		@Override
 		protected Integer doInBackground(String... params) {
 			//Set the # of units we're keeping up with
-			unitCount = DatabaseConnector.getUnitCountByUser(Integer.parseInt(params[0]));
-			groupCount = DatabaseConnector.getGroupCountByUser(Integer.parseInt(params[0]));
 			
-			//Gather posts for units
-			int startOffsetUnits = 0;
-			String dbUnits = DatabaseConnector.getUnitsByUser(Integer.parseInt(params[0]));
-			for(int i = 0; i < unitCount; i++) {
-				Unit unit = new Unit();
-				
-				int endIndex = nthOccurrence(dbUnits, '^', (i+1)*2) + 1;
-
-				String builderString = dbUnits.substring(startOffsetUnits, endIndex);
-				
-				unit.setupUnit(builderString);
-				unitsToDisplay.add(unit);
-				startOffsetUnits = endIndex;
-			}
-			
-			for(int i = 0; i < unitsToDisplay.size(); i ++){
-				postCount = DatabaseConnector.getPostCountInUnit(unitsToDisplay.get(i).getId());
-				
-				int beginOffset = 0;
-				String getPostsString = DatabaseConnector.getPostsInUnit(unitsToDisplay.get(i).getId(), 
-						GlobalVariables.USERLOGGEDIN.getId(), false);
-				for(int c = 0; c < postCount; c++) {
-					Post post = new Post();
-					int endIndex = nthOccurrence(getPostsString, '^', (c+1)*5) + 1 + 512;
-
-					String builderString = getPostsString.substring(beginOffset, endIndex);
-					
-					post.setupPost(builderString);
-					
-					allPosts.add(post);
-					beginOffset = endIndex;
-					}
-				}
-			
-			//Gather posts for groups
-			String dbGroups = DatabaseConnector.getGroupsByUser
-					(GlobalVariables.USERLOGGEDIN.getId());
-			groupCount = DatabaseConnector.getGroupCountByUser(GlobalVariables.USERLOGGEDIN.getId());
-			
-			if(dbGroups != null){
-				
-				int startOffset = 0;
-				for(int i = 0; i < groupCount; i++){
-					Group group = new Group();
-					String builderString;
-					int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
-					if(i == (groupCount -1) )
-						builderString = dbGroups.substring(startOffset, (startOffset + 205));
-					else
-						builderString = dbGroups.substring(startOffset, endIndex);
-					
-					int numberCounter = group.setupGroup(builderString);
-					
-					groupsToDisplay.add(group);
-					
-					startOffset = endIndex - numberCounter ;
-				}
-				for(int i = 0; i < groupsToDisplay.size();i++){
-					postCount = DatabaseConnector.getPostCountInGroup(groupsToDisplay.get(i).getGroupId());		
-					
-							
-					int startOffsetGroups = 0;
-					String getPostsString = DatabaseConnector.getPostsInGroup
-							(groupsToDisplay.get(i).getGroupId(), GlobalVariables.USERLOGGEDIN.getId(), false);
-					
-					for(int j = 0; j < postCount; j++) {
-						Post post = new Post();
-
-						int endIndex = nthOccurrence(getPostsString, '^', (j+1)*5) + 1 + 512;
-						
-						String builderString = getPostsString.substring(startOffsetGroups, endIndex);
-						
-						post.setupPost(builderString);
-						
-								
-						allPosts.add(post);
-						startOffsetGroups = endIndex;
-					}
-				}
-				
-			}
 			return null;
 		}
 		protected void onPostExecute(Integer result) {
-			if(allPosts.size() > 0)
+			if(GlobalVariables.POSTS.size() > 0)
 				updateNewsView();
         }
 		
