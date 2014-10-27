@@ -91,8 +91,8 @@ public final class R {
         public static final int news_post_list=0x7f0a0017;
         public static final int news_post_template=0x7f0a0047;
         public static final int news_unit_count=0x7f0a0015;
-        public static final int password=0x7f0a0023;
-        public static final int password_caption=0x7f0a0025;
+        public static final int password=0x7f0a0025;
+        public static final int password_caption=0x7f0a0024;
         public static final int post_icon_unit=0x7f0a0040;
         public static final int post_value_group=0x7f0a0041;
         public static final int post_value_unit=0x7f0a004e;
@@ -121,7 +121,7 @@ public final class R {
         public static final int units_layout=0x7f0a0027;
         public static final int units_linear=0x7f0a0028;
         public static final int units_toplevel_container=0x7f0a0021;
-        public static final int username=0x7f0a0024;
+        public static final int username=0x7f0a0023;
         public static final int username_caption=0x7f0a0006;
         public static final int users_to_add=0x7f0a0008;
     }

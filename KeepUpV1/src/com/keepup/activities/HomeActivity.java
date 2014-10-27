@@ -303,18 +303,16 @@ public class HomeActivity extends Activity implements
 		int startOffset = 0;
 		for(int i = 0; i < groupCount; i++){
 			Group group = new Group();
-			String builderString;
-			int endIndex = nthOccurrence(dbGroups, '^', (i+2)*2) + 1;
-			if(i == (groupCount -1))
-				builderString = dbGroups.substring(startOffset, (startOffset + 205));
-			else
-				builderString = dbGroups.substring(startOffset, endIndex);
+
+			int endIndex = nthOccurrence(dbGroups, '^', (i+1)*2) + 1 + 50 + 150;
 			
-			int numberCounter = group.setupGroup(builderString);
+			String builderString = dbGroups.substring(startOffset, endIndex);
+			
+			group.setupGroup(builderString);
 			
 			GlobalVariables.GROUPSWITHPOSTS.add(group);
 			
-			startOffset = endIndex - numberCounter ;
+			startOffset = endIndex;
 		}
 		progress.setProgress(75);
 		for(int i = 0; i < GlobalVariables.GROUPSWITHPOSTS.size();i++) {

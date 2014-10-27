@@ -545,10 +545,9 @@ public final class DatabaseConnector {
 		fetchData(request);
 		
 		return Integer.parseInt(stringBuffer);
-		
 	}
 	
-	public static boolean addUserToGroup (int groupIdVal, int unitIdVal) {
+	public static boolean addUserToGroup (int groupIdVal, int userIdVal) {
 		URL_SUFFIX = "GroupService.asmx";
 		SOAP_ACTION_SUFFIX = "addUserToGroup";
 		
@@ -563,7 +562,7 @@ public final class DatabaseConnector {
 		
 		PropertyInfo userId = new PropertyInfo();
 		userId.setName("userId");
-		userId.setValue(unitIdVal);
+		userId.setValue(userIdVal);
 		userId.setType(int.class);
 		
 		
