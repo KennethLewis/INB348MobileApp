@@ -135,6 +135,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	int groupCount = 0;
 	int[] postsUnread;
 	int[] unitMemberCount;
+	String[] lastAnnouncement;
 	ArrayList<Group> groupsToDisplay = new ArrayList<Group>();
 	public class DisplayGroups extends AsyncTask<String, Void, Integer>{
 		
@@ -154,6 +155,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			 * nthOccurrence method.
 			 */
 			if(dbGroups != null){
+				lastAnnouncement = new String[groupCount];
 				
 				int startOffset = 0;
 				for(int i = 0; i < groupCount; i++){

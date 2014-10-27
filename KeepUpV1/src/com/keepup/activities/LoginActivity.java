@@ -42,6 +42,7 @@ public class LoginActivity extends Activity {
     	
     	progress.setMessage("Logging In");
     	progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    	progress.setProgressNumberFormat("");
     	progress.setIndeterminate(false);
     	progress.show();
     	
