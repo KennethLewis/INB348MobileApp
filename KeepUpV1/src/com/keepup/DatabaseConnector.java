@@ -52,6 +52,27 @@ public final class DatabaseConnector {
 		
 		return stringBuffer;
 	}
+	public static String getLastPostInGroup(int groupIdNum) {
+		URL_SUFFIX = "PostService.asmx";
+		SOAP_ACTION_SUFFIX = "getLastPostInGroup";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		PropertyInfo groupId = new PropertyInfo();
+		groupId.setName("groupId");
+		groupId.setValue(groupIdNum);
+		groupId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(groupId);
+		
+		fetchData(request);
+
+		if(stringBuffer.contains("NoResults"))
+			return "No recent posts";
+		
+		return stringBuffer;
+	}
 	public static int getUnreadLecturePostCountInUnitForUser(int unitIdNum, int userIdNum) {
 		URL_SUFFIX = "PostService.asmx";
 		SOAP_ACTION_SUFFIX = "getUnreadLecturePostCountInUnitForUser";
@@ -616,6 +637,50 @@ public final class DatabaseConnector {
 		groupId.setType(int.class);
 		
 		//Add the property to request object
+		request.addProperty(groupId);
+		
+		fetchData(request);
+		
+		return Integer.parseInt(stringBuffer);
+	}
+	public static String getAllUsersFromGroup(int groupIdNum) {
+		URL_SUFFIX = "GroupService.asmx";
+		SOAP_ACTION_SUFFIX = "getAllUsersFromGroup";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		//Property which holds input parameters
+		PropertyInfo groupId = new PropertyInfo();
+		//Set Name
+		groupId.setName("groupId");
+		groupId.setValue(groupIdNum);
+		groupId.setType(int.class);
+		
+		//Add the property to request object
+		request.addProperty(groupId);
+		
+		fetchData(request);
+		
+		if(stringBuffer.contains("NoResults"))
+			return null;
+		
+		return stringBuffer;
+	}
+	
+	public static int getUserCountByGroup(int groupIdNum) {
+		URL_SUFFIX = "GroupService.asmx";
+		SOAP_ACTION_SUFFIX = "getUserCountByGroup";
+		
+		SoapObject request = new SoapObject(NAMESPACE, SOAP_ACTION_SUFFIX);
+		
+		//Property which holds input parameters
+		PropertyInfo groupId = new PropertyInfo();
+		//Set Name
+		groupId.setName("groupId");
+		groupId.setValue(groupIdNum);
+		groupId.setType(int.class);
+		
+		//Add the property to request objects
 		request.addProperty(groupId);
 		
 		fetchData(request);

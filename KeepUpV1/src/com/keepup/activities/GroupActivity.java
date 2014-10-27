@@ -8,6 +8,7 @@ import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
 import com.keepup.group.Group;
 import com.keepup.unit.Unit;
+import com.keepup.user.User;
 import com.keepup.R;
 import android.app.Activity;
 import android.content.Context;
@@ -133,9 +134,12 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 	
 	/* THREADED ACTIVITIES */
 	int groupCount = 0;
+	int userCount = 0;
 	int[] postsUnread;
 	int[] unitMemberCount;
 	String[] lastAnnouncement;
+	String allUsers;
+	ArrayList<String> usersNamesInGroup = new ArrayList<String>(); 
 	ArrayList<Group> groupsToDisplay = new ArrayList<Group>();
 	public class DisplayGroups extends AsyncTask<String, Void, Integer>{
 		
@@ -180,7 +184,34 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 					int numberCounter = group.setupGroup(builderString);
 					
 					groupsToDisplay.add(group);
+					lastAnnouncement[i] = DatabaseConnector.getLastPostInGroup(group.getGroupId());
 					
+					allUsers = DatabaseConnector.getAllUsersFromGroup(group.getGroupId());
+					
+					if(allUsers != null){
+						Log.v("USERS IN GROUP", allUsers);
+						userCount = DatabaseConnector.getUserCountByGroup(group.getGroupId());
+						String names = "";
+						int startUserOffset = 0;
+						for(int j =0; j < userCount; j++){
+							User user = new User();
+							String builderStringUsers;
+							int endIndexUser = nthOccurrence(allUsers, '^', (j+1)*2) + 26;
+							
+							builderStringUsers = allUsers.substring(startUserOffset, endIndexUser);
+							Log.v("BUILDERSTRING",builderStringUsers);
+							user.setupUser(builderStringUsers);
+							names = names + user.getUsername() + "";
+							startUserOffset = endIndexUser;
+							
+						}
+						
+						usersNamesInGroup.add(names);
+					}
+					if(allUsers == null){
+						String nullString = "No Users in this Groups";
+						usersNamesInGroup.add(nullString);
+					}
 					//Get unread post information
 					//postsUnread[i] = DatabaseConnector.getUnreadPostCountInGroupForUser(
 					//		group.getGroupId(), GlobalVariables.USERLOGGEDIN.getId());
@@ -210,18 +241,20 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 					groupList.addView(groupView);
 			}
 		}
-		private View setUpGroupView(Group group, int i, View rootView) {
+		private View setUpGroupView(Group group, int index, View rootView) {
 			
 			//Setup Unit Name.
 			TextView groupName = (TextView) rootView.findViewById(R.id.group_name);
-			groupName.setText(groupsToDisplay.get(i).getName());
+			groupName.setText(groupsToDisplay.get(index).getName());
 			
-			//TextView groupMembers = (TextView) rootView.findViewById(R.id.group_members);
-			//groupMembers.setText("Members: " + groupsToDisplay.get(i).getGroupMembers());
+			TextView groupMembers = (TextView) rootView.findViewById(R.id.group_members);
+			groupMembers.setText("Members: " + usersNamesInGroup.get(index));
 			
 			//Setup last announcement.
+			String announcement = lastAnnouncement[index].substring(0, 
+					lastAnnouncement[index].equals("No recent posts") ? lastAnnouncement[index].length() : 50);
 			TextView groupPost = (TextView) rootView.findViewById(R.id.last_group_post);
-			groupPost.setText("Test Post");
+			groupPost.setText(announcement);
 			
 			//Setup notification counts.
 			
