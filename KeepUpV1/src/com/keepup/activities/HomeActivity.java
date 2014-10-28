@@ -193,7 +193,7 @@ public class HomeActivity extends Activity implements
 
 	private View setUpNewsArticle(Post p, int indexNum, View rootView) {
 		TextView userName = (TextView) rootView.findViewById(R.id.unit_group_user_title);
-		userName.setText(p.getHeader().trim());
+		userName.setText(p.getHeader());
 		
 		TextView dateTime = (TextView) rootView.findViewById(R.id.date_time);
 		dateTime.setText(p.getTime());
@@ -304,7 +304,7 @@ public class HomeActivity extends Activity implements
 				String userDetails = DatabaseConnector.getUser(post.getUserId());
 				user.setupUser(userDetails);
 
-				post.setHeader(GlobalVariables.UNITSWITHPOSTS.get(i).getName() + " by " + user.getUsername());
+				post.setHeader(GlobalVariables.UNITSWITHPOSTS.get(i).getName().trim() + " by " + user.getUsername());
 				GlobalVariables.POSTS.add(post);
 				
 				beginOffset = endIndex;
@@ -333,7 +333,7 @@ public class HomeActivity extends Activity implements
 				String userDetails = DatabaseConnector.getUser(post.getUserId());
 				user.setupUser(userDetails);
 				
-				post.setHeader(GlobalVariables.GROUPSWITHPOSTS.get(i).getName() + " by " + user.getUsername());
+				post.setHeader(GlobalVariables.GROUPSWITHPOSTS.get(i).getName().trim() + " by " + user.getUsername());
 				GlobalVariables.POSTS.add(post);
 
 				startOffsetGroups = endIndex;
