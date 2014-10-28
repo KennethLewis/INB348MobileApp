@@ -8,6 +8,7 @@ public class Post {
 	private int userId;
 	private int unitId;
 	private int groupId;
+	private String header;
 	private String time;
 	private String content;
 	
@@ -90,6 +91,13 @@ public class Post {
 	}
 	public void setTime(String time) {
 		this.time = time;
+	}
+	
+	public String getHeader() {
+		return header;
+	}
+	public void setHeader(String header) {
+		this.header = header;
 	}
 	
 	public String getContent() {

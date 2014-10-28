@@ -216,11 +216,11 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 	//Helper method, understands Strings from MySQL web service results.
 	//essentially splits up user ids of variable length
 	public int nthOccurrence(String str, char c, int n) {
-			 int pos = str.indexOf(c, 0);
-			  n--;
-			  while (n-- > 0 && pos != -1)
-			      pos = str.indexOf(c, pos + 1);
-			  return pos;
+		int pos = str.indexOf(c, 0);
+		n--;
+		while (n-- > 0 && pos != -1)
+			pos = str.indexOf(c, pos + 1);
+		return pos;
 	}
 			
 }

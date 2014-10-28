@@ -21,8 +21,6 @@ public class GlobalVariables {
 	
 	//All variables to hold news feed items
 	public static ArrayList<Post> POSTS = new ArrayList<Post>();
-	public static ArrayList<User> USERSWHOPOSTED = new ArrayList<User>();
-	public static ArrayList<String> UNITNAMES = new ArrayList<String>();
 	public static ArrayList<Unit> UNITSWITHPOSTS = new ArrayList<Unit>();
 	public static ArrayList<Group> GROUPSWITHPOSTS = new ArrayList<Group>();
 }
