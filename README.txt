@@ -1,5 +1,7 @@
 KeepUp - Updated Final Version Readme.
 
+The application was built and tested with the latest version of Android 4.4 KitKat, on a HTC One.
+
 Start off the Application and then either use a login you've been given or if you have no account and need to register, select the register button and provide valid details in order to register to the application. Once you've logged in using your correct details and your User account is correct you'll arrive in the News section.
 
 You can navigate through the pages using on-page navigation or using the slider that is visible from every page within the app, the slider allows for easy navigation no matter where you are, although some areas work well with the back button. The slider is the guaranteed solution to new posts however, much like a refresh button in a browser it works as (one of, not the only) main sources of data updating. i.e. if you were to post to a Unit and then back out of it, the posts will not show up on the Unit's latest details as you're just returning to a previous page rather than refreshing it. This saves power when not/read only. 
@@ -10,8 +12,13 @@ You can click on Unit/Group names to progress to their individual pages and then
 
 If you need help with the application, feel free to email the developers, or if you have any ideas on how to improve it, we're always welcome.
 
-insidesin@live.com.au
+The application is run via an external server which must be running in order to access the applicaiton. If problems arrise due to server connections please contact Jackson Powell.
 
+Jackson Powell : insidesin@live.com.au
+Ken Lewis : kenstretchlewis@live.com.au, ph 0421 447 386
+
+Test Account 1: Id = 5279615  Pw = testing
+Test Account 2: Id = 
 
 
 KeepUp - Prototype Readme.
