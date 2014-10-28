@@ -73,7 +73,7 @@ public class RegisterActivity extends Activity {
 				Toast.makeText(this, "Sorry, that user already exists.", Toast.LENGTH_SHORT)
 				.show();
 			}
-			else if (id > 99999999 || id < 0) {
+			else if (id < 999999 || id > 9999999 || id < 0) {
 				Toast.makeText(this, "Invalid student number.", Toast.LENGTH_SHORT)
 				.show();
 			}
