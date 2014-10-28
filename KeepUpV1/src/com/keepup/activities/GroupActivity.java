@@ -137,9 +137,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 		protected Integer doInBackground(String... params) {
 			
 			//Set the # of Groups we're keeping up with
-			String dbGroups = DatabaseConnector.getGroupsByUser
-					(GlobalVariables.USERLOGGEDIN.getId());
-			groupCount = DatabaseConnector.getGroupCountByUser(GlobalVariables.USERLOGGEDIN.getId());
+			String dbGroups = DatabaseConnector.getGroupsByUser(Integer.parseInt(params[0]));
+			groupCount = DatabaseConnector.getGroupCountByUser(Integer.parseInt(params[0]));
 			
 			//Change the global variable counter to keep news feed updated
 			GlobalVariables.GROUPCOUNT = groupCount;
@@ -150,8 +149,10 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			 * nthOccurrence method.
 			 */
 			if(dbGroups != null) {
-				lastAnnouncement = new String[groupCount];
 				memberList = new String[groupCount];
+				lastAnnouncement = new String[groupCount];
+				groupMemberCount = new int[groupCount];
+				postsUnread = new int[groupCount];
 				
 				int startOffset = 0;
 				for(int i = 0; i < groupCount; i++) {
@@ -166,6 +167,8 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 					groupsToDisplay.add(group);
 					
 					lastAnnouncement[i] = DatabaseConnector.getLastPostInGroup(group.getGroupId());
+					groupMemberCount[i] = DatabaseConnector.getUserCountByGroup(group.getGroupId());
+					postsUnread[i] = DatabaseConnector.getUnreadPostCountInGroupForUser(group.getGroupId(), Integer.parseInt(params[0]));
 					int userCount = DatabaseConnector.getUserCountByGroup(group.getGroupId());
 					String allUsers = DatabaseConnector.getAllUsersFromGroup(group.getGroupId());
 					
@@ -217,16 +220,15 @@ NavigationDrawerFragment.NavigationDrawerCallbacks{
 			
 			//Setup last announcement.
 			String announcement = lastAnnouncement[index].substring(0, 
-					lastAnnouncement[index].equals("No recent posts") ? lastAnnouncement[index].length() : 50);
-			TextView groupPost = (TextView) rootView.findViewById(R.id.last_group_post);
-			groupPost.setText(announcement);
+					lastAnnouncement[index].equals("No recent posts.") ? lastAnnouncement[index].length() : 50).trim();
+			TextView announcementLast = (TextView) rootView.findViewById(R.id.last_group_post);
+			announcementLast.setText(announcement + "...");
 			
 			//Setup notification counts.
-			
-			//TextView postCount = (TextView) rootView.findViewById(R.id.post_value_group);
-			//postCount.setText("x " + postsUnread[i]);
-			//TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.postsOnYours_value_group);
-			//postOnYoursCount.setText("x " + unitMemberCount[i]);
+			TextView postCount = (TextView) rootView.findViewById(R.id.post_value_group);
+			postCount.setText("x " + postsUnread[index]);
+			TextView postOnYoursCount = (TextView) rootView.findViewById(R.id.membercount_value_group);
+			postOnYoursCount.setText("x " + groupMemberCount[index]);
 		
 			return rootView;
 		}

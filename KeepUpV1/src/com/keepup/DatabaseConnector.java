@@ -69,7 +69,7 @@ public final class DatabaseConnector {
 		fetchData(request);
 
 		if(stringBuffer.contains("NoResults"))
-			return "No recent posts";
+			return "No recent posts.";
 		
 		return stringBuffer;
 	}

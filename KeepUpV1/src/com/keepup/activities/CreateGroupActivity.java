@@ -147,7 +147,10 @@ public class CreateGroupActivity extends Activity {
 				String builderString = dbUsers.substring(startOffset, endIndex);
 
 				user.setupUser(builderString);
-				usersToDisplay.add(user);
+				
+				if(user.getId() != GlobalVariables.USERLOGGEDIN.getId())
+					usersToDisplay.add(user);
+				
 				startOffset = endIndex;
 			}
 			return null;
@@ -162,7 +165,10 @@ public class CreateGroupActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(String... params) {
 			int groupId = DatabaseConnector.createGroup(Integer.valueOf(params[0]), params[1], params[2]);
-			Log.v("KEEPUP", String.valueOf(groupId));
+			//Log.v("KEEPUP", String.valueOf(groupId));
+			//Add self to group, then add all the users we selected.
+			if(!DatabaseConnector.addUserToGroup(groupId, GlobalVariables.USERLOGGEDIN.getId()))
+				return false;
 			if(groupId != 0)
 				for(User u: usersForGroup) 
 					if(!DatabaseConnector.addUserToGroup(groupId, u.getId()))

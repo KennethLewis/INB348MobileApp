@@ -1,5 +1,8 @@
 package com.keepup.activities;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import com.keepup.DatabaseConnector;
 import com.keepup.GlobalVariables;
 import com.keepup.NavigationDrawerFragment;
@@ -51,12 +54,6 @@ public class HomeActivity extends Activity implements
 	    
 	    progress = new ProgressDialog(this);
 		
-		TextView noOfUnits = (TextView) findViewById(R.id.news_unit_count);
-		TextView noOfGroups = (TextView) findViewById(R.id.news_group_count);
-		
-		//@EDIT
-		noOfUnits.setText("Units: " + GlobalVariables.UNITCOUNT);
-		noOfGroups.setText("Groups: " + GlobalVariables.GROUPCOUNT);
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
@@ -164,7 +161,17 @@ public class HomeActivity extends Activity implements
         startActivity(intent);
 	}
 	
+	//Used to help sort the posts seeing as Ken fetched them a bit awkwardly.
+	public class CustomComparator implements Comparator<Post> {
+	    @Override
+	    public int compare(Post o1, Post o2) {
+	        return o2.getTime().compareTo(o1.getTime());
+	    }
+	}
+	
 	protected void updateNewsView() {
+		Collections.sort(GlobalVariables.POSTS, new CustomComparator());
+		
 		LayoutInflater inflater = (LayoutInflater) getBaseContext().
 				getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         //ADD UNIT LISTINGS 1 BY 1
@@ -235,6 +242,13 @@ public class HomeActivity extends Activity implements
         protected void onPostExecute(Void result) {
 			if(GlobalVariables.POSTS.size() > 0)
 				updateNewsView();
+			
+			TextView noOfUnits = (TextView) findViewById(R.id.news_unit_count);
+			TextView noOfGroups = (TextView) findViewById(R.id.news_group_count);
+
+			//@EDIT
+			noOfUnits.setText("Units: " + GlobalVariables.UNITCOUNT);
+			noOfGroups.setText("Groups: " + GlobalVariables.GROUPCOUNT);
         }
 	}
     

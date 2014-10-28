@@ -1,4 +1,20 @@
-KeepUp
+KeepUp - Updated Final Version Readme.
+
+Start off the Application and then either use a login you've been given or if you have no account and need to register, select the register button and provide valid details in order to register to the application. Once you've logged in using your correct details and your User account is correct you'll arrive in the News section.
+
+You can navigate through the pages using on-page navigation or using the slider that is visible from every page within the app, the slider allows for easy navigation no matter where you are, although some areas work well with the back button. The slider is the guaranteed solution to new posts however, much like a refresh button in a browser it works as (one of, not the only) main sources of data updating. i.e. if you were to post to a Unit and then back out of it, the posts will not show up on the Unit's latest details as you're just returning to a previous page rather than refreshing it. This saves power when not/read only. 
+
+Everything in the application should be self-explanitory.
+
+You can click on Unit/Group names to progress to their individual pages and then post towards that specific area. You can also form and join new groups and units by selecting the option to do so from each's respective listing.
+
+If you need help with the application, feel free to email the developers, or if you have any ideas on how to improve it, we're always welcome.
+
+insidesin@live.com.au
+
+
+
+KeepUp - Prototype Readme.
 
 Currently the application contains a few main pages but mainly to navigate through to certain areas.
 The main implementation of the application is contained in the "UnitsActivity" where by students can

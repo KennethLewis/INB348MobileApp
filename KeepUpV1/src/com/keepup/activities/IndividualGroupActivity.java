@@ -9,7 +9,6 @@ import com.keepup.NavigationDrawerFragment;
 import com.keepup.activities.IndividualUnitActivity.PublishPost;
 import com.keepup.activities.IndividualUnitActivity.UpdatePostData;
 import com.keepup.post.Post;
-import com.keepup.post.PostDatabaseController;
 import com.keepup.user.User;
 import com.keepup.R;
 import android.app.Activity;
@@ -34,7 +33,6 @@ import android.widget.Toast;
 public class IndividualGroupActivity extends Activity implements
 NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-	private PostDatabaseController postDb;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +41,10 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 		
 		//Retrieve title name from where we've clicked from's data.
 		Intent intent = getIntent();
-		Bundle extras = intent.getExtras();
-		if(extras!= null) {
-			String activityName = (String) extras.get("GROUP_NAME");
-			this.setTitle(activityName);
-			currentGroupId = (Integer) extras.getInt("GROUP_ID");
-			//Log.v("GROUPID",String.valueOf(currentGroupId));
-		}
+		currentGroupId = intent.getIntExtra(GroupActivity.GROUP_ID, -1);
+		currentGroupName = intent.getStringExtra(UnitsActivity.UNIT_TITLE);
+		this.setTitle(currentGroupName);
+		
 		//Navigation Drawer
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
@@ -154,6 +149,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 	/* THREADED ACTIVITIES */
 	int currentGroupId = 0;
+	String currentGroupName = "";
 	int postCount = 0;
 	ArrayList<Post> groupPosts = new ArrayList<Post>();
 	User[] postOwners;
@@ -201,7 +197,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 				@Override
 		protected Boolean doInBackground(String... params) {
 			//Let's post to the database online.
-			if(DatabaseConnector.addPostToGroup(GlobalVariables.USERLOGGEDIN.getId(),14, currentGroupId, params[0])) {
+			if(DatabaseConnector.addPostToGroup(GlobalVariables.USERLOGGEDIN.getId(), 14, currentGroupId, params[0])) {
 				requiresRefresh = true;
 				return true;
 			}
@@ -213,7 +209,7 @@ NavigationDrawerFragment.NavigationDrawerCallbacks {
 				((TextView) findViewById(R.id.group_text_to_publish)).setText("");
 				UpdatePostData updatePostDataThread = new UpdatePostData();
 				updatePostDataThread.execute(String.valueOf(GlobalVariables.USERLOGGEDIN.getId()));
-				}
+			}
 		 }
 	}
 
