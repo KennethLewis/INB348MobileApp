@@ -19,8 +19,6 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import android.util.Log;
-
 public final class DatabaseConnector {
 	static final String NAMESPACE = "http://keepup.com/";
 	static final String BASE_URL = "http://101.163.35.210/";
