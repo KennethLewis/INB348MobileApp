@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 	
+	public static boolean serverIssue = false;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +77,10 @@ public class LoginActivity extends Activity {
 	}
     
     public void loginFail() {
-    	Toast.makeText(this, "Id or Password Incorrect.", Toast.LENGTH_SHORT).show();
+    	if(serverIssue)
+    		Toast.makeText(this, "Issue connecting to Server.", Toast.LENGTH_SHORT).show();
+    	else
+    		Toast.makeText(this, "Id or Password Incorrect.", Toast.LENGTH_SHORT).show();
     }
     public void loginSuccess() {
         Intent intent = new Intent(this, HomeActivity.class);

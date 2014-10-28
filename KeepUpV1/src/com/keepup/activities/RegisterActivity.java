@@ -37,11 +37,8 @@ public class RegisterActivity extends Activity {
 	}
 	
 	public void startUserRegistration(View v) {
-		EditText userUniId = (EditText)findViewById(R.id.new_student_no);
-		int id = Integer.parseInt(userUniId.getText().toString());
-		
 		FindUser findUserThread = new FindUser();
-		findUserThread.execute(id);
+		findUserThread.execute();
 	}
 
 	public void registerUser() {
@@ -101,11 +98,13 @@ public class RegisterActivity extends Activity {
 		}
 		catch (Exception e){
 			//Delete this toast after testing.
-			Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT)
-			.show();
+			//Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
 			this.recreate();
 		}
-		
+	}
+	
+	public void cantRegister() {
+		Toast.makeText(this, "Please enter only numbers as a student Id.", Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -132,21 +131,31 @@ public class RegisterActivity extends Activity {
 	
 	/* ---------------- THREADED TASKS ----------------- */
 	User lastFetchedUser;
-	public class FindUser extends AsyncTask<Integer, Void, Void> {
+	public class FindUser extends AsyncTask<Integer, Void, Boolean> {
 
 		@Override
-		protected Void doInBackground(Integer... params) {
-			String buildString = DatabaseConnector.getUser(params[0]);
+		protected Boolean doInBackground(Integer... params) {
+			EditText userUniId = (EditText)findViewById(R.id.new_student_no);
+			
+			if(userUniId.getText().toString().isEmpty())
+				return false;
+			
+			int id = Integer.parseInt(userUniId.getText().toString());
+			
+			String buildString = DatabaseConnector.getUser(id);
 			lastFetchedUser = null;
 			if(buildString != null) {
 				lastFetchedUser = new User();
 				lastFetchedUser.setupUser(buildString);
 			}
-			return null;
+			return true;
 		}
 		
-		protected void onPostExecute(Void result) {
-			registerUser();
+		protected void onPostExecute(Boolean result) {
+			if(result)
+				registerUser();
+			else
+				cantRegister();
         }
 	}
 	

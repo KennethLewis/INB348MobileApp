@@ -12,13 +12,13 @@ You can click on Unit/Group names to progress to their individual pages and then
 
 If you need help with the application, feel free to email the developers, or if you have any ideas on how to improve it, we're always welcome.
 
-The application is run via an external server which must be running in order to access the applicaiton. If problems arrise due to server connections please contact Jackson Powell.
+The application is run via an external server which must be running in order to access the applicaiton. If problems arrise due to server connections please contact Jackson Powell first by email, then by mobile. This should not be required but is definitely only a personal machine so I can't guarantee it's uptime is eternal. If possible, could you provide a 12-24 hour gap where you send me an email before attempting to test the app, this would give us the best chances of providing a strain-free connection for the time following.
 
-Jackson Powell : insidesin@live.com.au
+Jackson Powell, 8600571 : desider101@hotmail.com, ph 0439 325 791
 Ken Lewis : kenstretchlewis@live.com.au, ph 0421 447 386
 
 Test Account 1: Id = 5279615  Pw = testing
-Test Account 2: Id = 
+Test Account 2: Id = 8600571  Pw = password
 
 
 KeepUp - Prototype Readme.

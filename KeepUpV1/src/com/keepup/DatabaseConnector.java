@@ -19,6 +19,10 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import com.keepup.activities.LoginActivity;
+
+import android.util.Log;
+
 public final class DatabaseConnector {
 	static final String NAMESPACE = "http://keepup.com/";
 	static final String BASE_URL = "http://101.163.35.210/";
@@ -840,6 +844,7 @@ public final class DatabaseConnector {
 	}
 	/* END USERS */
 	
+	
 	//MAIN CONNECTOR AND FETCHER FOR SQL DATA
 	//Uses SOAP web services to retrieve data.
 	public static void fetchData(SoapObject request) {
@@ -850,8 +855,8 @@ public final class DatabaseConnector {
 		//Set output SOAP object
 		envelope.setOutputSoapObject(request);
 		//Create HTTP call object
-		HttpTransportSE androidHttpTransport = new HttpTransportSE(BASE_URL + URL_SUFFIX);
-
+		HttpTransportSE androidHttpTransport = new HttpTransportSE(BASE_URL + URL_SUFFIX, 5000);
+		
 		try {
 			//Invole web service
 			androidHttpTransport.call(SOAP_ACTION_BASE + SOAP_ACTION_SUFFIX, envelope);
@@ -861,6 +866,8 @@ public final class DatabaseConnector {
             stringBuffer = response.toString();
 
 		} catch (Exception e) {
+			stringBuffer = "SERVER-ISSUE";
+			LoginActivity.serverIssue = true;
 			e.printStackTrace();
 		}
 	}
